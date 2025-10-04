@@ -1,0 +1,140 @@
+* {
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.signup-section {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    margin: 40px 90px 60px 90px;
+    margin-bottom: 100px;
+    height: 80vh;
+    box-shadow: 0 3px 8px rgba(34, 4, 90, 0.122);
+}
+
+.signup-form-container {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+
+.bg-img-container {
+    flex: 1;
+    background: url(/frontend/assets/images/bg.jpg) center/cover no-repeat;
+    opacity: 0.6;
+}
+
+.signup-form-container p, 
+.signup-form-container h2 {
+    color: #47156c;
+    font-family: "Inter", sans-serif;
+}
+
+.signup-form-header{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.role-switch-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px 20px 0px 30px;
+    border: 1px solid #321875;
+    border-radius: 10px;
+    gap: 15px;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 5px;
+}
+
+.signup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.signup-actions button {
+    width: 100%;
+}
+
+#createAccount-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#createAccount-btn:disabled:hover {
+    opacity: 0.5;
+}
+
+#createAccount-btn:enabled {
+    opacity: 1;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+/* Form Styles */
+.form-box {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.form-box .textbox input {
+    width: 100%;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s;
+}
+.form-box .textbox input:focus {
+    border-color: #512BB2; 
+}
+
+.form-box .btn {
+    background: #512BB2;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 0;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .2s;
+}
+.form-box .btn:hover {
+    background: #5a37a8;
+}
+
+.form-box a, 
+.form-box p {
+    margin-top: 20px;
+    text-align: center;
+    color: #512BB2;
+    text-decoration: none;
+}
+
+#error-message {
+    color: rgb(241, 99, 99);
+    font-size: 16px;
+    margin-top: -10px;
+    text-align: center;
+}

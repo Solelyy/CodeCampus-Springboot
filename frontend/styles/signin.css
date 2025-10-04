@@ -1,0 +1,110 @@
+.form-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.form-box .textbox input {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 15px;
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    border-radius: 8px;
+    outline: none;
+
+    transition: all 0.3s ease;
+}
+
+.form-box .textbox input:focus {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid #9f7aea;
+    box-shadow: 0 0 8px rgba(159, 122, 234, 0.6);
+}
+
+.form-box .textbox input::placeholder {
+    color: rgba(219, 219, 219, 0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.forgot-password-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.login-actions {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+}
+
+.login-actions button {
+    width: 100%;
+}
+
+#sign-in-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#sign-in-btn:disabled:hover {
+    opacity: 0.5;
+}
+
+#sign-in-btn:enabled {
+    opacity: 1;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.sign-in-container h2 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: clamp(22px, 5vw, 32px);
+}
+
+#error-message {
+    color: rgb(119, 211, 119);
+    font-size: 16px;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    margin: 0;
+}
+
+#forgot-password:link,
+#forgot-password:visited,
+#forgot-password:active {
+    color: rgb(220, 220, 220);
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    transition: color 0.2s ease;
+}
+
+#create-account,
+#create-account:link, 
+#create-account:visited, 
+#create-account:active {
+    color: rgb(220, 220, 220);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+    transition: color 0.2s ease;
+}
+
+#forgot-password:hover,
+#create-account:hover {
+    color: #9f7aea; /* purple accent */
+}

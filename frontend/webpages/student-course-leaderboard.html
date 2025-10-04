@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="/frontend/assets/fav-icon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/frontend/assets/fav-icon/favicon.svg" />
+    <link rel="shortcut icon" href="/frontend/assets/fav-icon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/frontend/assets/fav-icon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CodeCampus" />
+    <link rel="manifest" href="/frontend/assets/fav-icon/site.webmanifest" />
+
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <!--Styles-->
+    <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
+    <link rel="stylesheet" href="/frontend/styles/student-course-overview.css">
+    <link rel="stylesheet" href="/frontend/styles/student-course-leaderboard.css">
+
+    <title>CodeCampus</title>
+</head>
+
+<body class="leaderboard-page">
+    <header>
+        <nav class="navbar">
+            <div class="left">
+                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+            </div>
+
+            <div class="right">
+                <ul class="nav-links" id="nav-links"> 
+                    <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
+                    <li><a href="/frontend/webpages/student-profile.html"><img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon"></a></li>
+                    <li><a href="/frontend/webpages/student-menu.html"><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="course-overview">
+            <div class="course-navs">
+                <div class="course-tab" onclick="location.href='/frontend/webpages/student-course-overview.html'">
+                    <h3>Overview</h3>
+                </div>
+                <div class="course-tab" onclick="location.href='/frontend/webpages/student-course-activities.html'">
+                    <h3>Activities</h3>
+                </div>
+                <div class="course-tab active" onclick="location.href='/frontend/webpages/student-course-leaderboard.html'">
+                    <h3>Leaderboard</h3>
+                </div>
+                <div class="course-tab" onclick="location.href='/frontend/webpages/student-course-announcement.html'">
+                    <h3>Announcement</h3>
+                </div>
+            </div>
+
+            <section class="leaderboard-content">
+                <h1 class="title">Leaderboard — Course Name</h1>
+
+                <div class="table-container">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Student Name</th>
+                                <th>Points</th>
+                                <th>Activities Done</th>
+                                <th>Last Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Maria Santos</td>
+                                <td>100</td>
+                                <td>10/10</td>
+                                <td>Sept 13, 8:12 PM 🥇</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Juan Dela Cruz</td>
+                                <td>100</td>
+                                <td>10/10</td>
+                                <td>Sept 13, 9:30 PM 🥈</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Taylor Swift</td>
+                                <td>90</td>
+                                <td>9/10</td>
+                                <td>Sept 12, 7:10 PM 🥉</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Mark Roxas</td>
+                                <td>90</td>
+                                <td>9/10</td>
+                                <td>Sept 12, 9:10 PM</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Gilbert Ruiz</td>
+                                <td>80</td>
+                                <td>8/10</td>
+                                <td>Sept 12, 8:12 PM</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Juan Dela</td>
+                                <td>70</td>
+                                <td>7/10</td>
+                                <td>Sept 11, 9:30 AM</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Yoohan Des</td>
+                                <td>70</td>
+                                <td>7/10</td>
+                                <td>Sept 11, 7:10 PM</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Gorgi Jeni</td>
+                                <td>60</td>
+                                <td>6/10</td>
+                                <td>Sept 11, 9:10 PM</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Bib Ko</td>
+                                <td>60</td>
+                                <td>6/10</td>
+                                <td>Sept 11, 7:10 PM</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Heji Do</td>
+                                <td>50</td>
+                                <td>5/10</td>
+                                <td>Sept 10, 9:10 PM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025. All rights reserved.</p>
+    </footer>
+</body>
+</html>
