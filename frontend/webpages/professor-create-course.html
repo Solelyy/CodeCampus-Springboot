@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course - Professor Dashboard</title>
 
     <!--Favicon-->
     <link rel="icon" type="image/png" href="/frontend/assets/fav-icon/favicon-96x96.png" sizes="96x96" />
@@ -18,136 +19,143 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
     <!--Styles-->
-    <link rel="stylesheet" href="/frontend/styles/professor-create-course.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
-    <link rel="stylesheet" href="/frontend/styles/common-styles/course-card.css">
-    <!-- <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css"> -->
-
-    <title>CodeCampus - Professor Create Course</title>
+    <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
+    <link rel="stylesheet" href="/frontend/styles/professor-create-course.css">
 </head>
-<script src="/frontend/scripts/professor-create-course.js"></script>
 <body>
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
             </div>
 
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
                     <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
-                    <li><a href=""><img src="/frontend/assets/icons/icon-profile.png" alt="menu-icon"></a></li>
-                    <li><a href= ""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    
+                    <li>
+                        <a href="/frontend/webpages/student-profile.html">
+                            <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
+                        </a>
+                    </li>
+
+                    <li><a href=""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
     <main>
-        <!-- Main content goes here -->
-
-        <section class="professor-create-course">
-            <div class="hero">
-
-                <!-- Create Course -->
-                <div id="create-courses" class="form create-course">
-                    <h1>Create Course</h1>
-                    <div class="form-fields course-fields">
-                        <div class="course-title-field">
-                            <label for="course-title">Course Title:</label>
-                            <input type="text" id="course-title" name="course-title" placeholder="Enter course title" required>
-                        </div>
-
-                        <div>
-                            <label for="course-description">Description:</label>
-                            <textarea id="course-description" name="course-description" placeholder="Write a description of your course." required></textarea>
-                        </div>
-
-                        <div class="inline-fields">                          
-                            <label for="category">Category:</label>
-                            <select name="category" id="category">
-                                <option value="java">Java</option>
-                                <option value="js">JavaScript</option>
-                                <option value="python">Python</option>
-                            </select>
-                            
-                        </div>
-
-                        <div class="inline-fields">
-                            <label for="image">Image:</label>
-                            <select name="image" id="image">
-                                <option  value="upload">Upload</option>
-                            </select>
-                        </div>
-
-                        <div class="inline-fields">
-                            <label for="visibility">Visibility:</label>
-                            <select name="visibility" id="visibility">
-                                <option value="public">Public</option>
-                                <option value="private">Private</option>
-                            </select>
-                        </div>
-
-                        <div class="course-buttons">
-                            <button>Cancel</button>
-                            <button id="create-course-btn">Create</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Create Course -->
-
-                <!-- Add Activities -->
-                <div id="add-activities" class="form add-activities">
-                    <div class="add-header">
-                        <h1>Add Activities</h1>
-                        <button>Add Another</button>
-                    </div>
-
-                    <div class="form-fields activity-fields">
-                        <div>
-                        <label for="activity-title">Activity Title:</label>
-                        <input type="text" id="activity-title" name="activity-title" placeholder="Enter activity title" required>
-                        </div>
-
-                        <div>
-                        <label for="problem-statement">Problem Statement:</label>
-                        <textarea id="problem-statement" name="problem-statement" placeholder="Write the challenge problem here. Example: Print 'Hello, World!'" required></textarea>
-                        </div>
-
-                        <div class="inline-fields">
-                            <label for="difficulty">Difficulty:</label>
-                            <select name="difficulty" id="difficulty">
-                                <option>Easy</option>
-                                <option>Medium</option>
-                                <option>Hard</option>
-                            </select>
-                        </div>
-
-                        <div>
-                        <label for="correct-answer">Correct Answer / Test Cases:</label>
-                        <textarea id="correct-answer" name="correct-answer" placeholder="Example: Expected Output/s: 'Hello, World!'" required></textarea>
-                        </div>
-
-                        <div class="course-buttons">
-                            <button id="cancel-create-activity">Cancel</button>
-                            <button id="create-activity-btn">Create</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Add Activities -->
-
-                <div id="preview-course" class="form preview-course">
-                    <h2>Preview Course</h2>
-                    <p>This is a preview of your course. No Design yet.</p>
-                </div>
-
+        <div class="container">
+            <div class="header">
+                <h1>Create New Course</h1>
+                <p style="color: #666;">Build your course step by step</p>
             </div>
-        </section>
 
+            <div class="progress-bar" data-step="1">
+                <div class="step-indicator active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Course Info</div>
+                </div>
+                <div class="step-indicator" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Activities</div>
+                </div>
+                <div class="step-indicator" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Assessment</div>
+                </div>
+            </div>
+
+            <form id="courseForm">
+                <!-- Step 1: Course Information -->
+                <div class="form-step active" data-step="1">
+                    <fieldset>
+                        <legend>Course Information</legend>
+                        
+                        <div class="form-group">
+                            <label for="courseTitle">
+                                Course Title <span class="required">*</span>
+                            </label>
+                            <input type="text" id="courseTitle" name="courseTitle" required placeholder="e.g., Introduction to Python Programming">
+                            <div class="error-message" id="titleError">Please enter a course title</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="courseDescription">
+                                Course Description <span class="required">*</span>
+                            </label>
+                            <textarea id="courseDescription" name="courseDescription" required placeholder="Describe what students will learn in this course..."></textarea>
+                            <div class="error-message" id="descriptionError">Please enter a course description</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                Visibility <span class="required">*</span>
+                            </label>
+                            <div class="toggle-group">
+                                <div class="toggle-option">
+                                    <input type="radio" id="visibilityPublic" name="visibility" value="public" checked>
+                                    <label for="visibilityPublic">🌍 Public</label>
+                                </div>
+                                <div class="toggle-option">
+                                    <input type="radio" id="visibilityPrivate" name="visibility" value="private">
+                                    <label for="visibilityPrivate">🔒 Private</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+                        <button type="button" class="btn-next" id="step1Next">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Add Activities -->
+                <div class="form-step" data-step="2">
+                    <fieldset>
+                        <legend>Add Activities</legend>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Create coding exercises for your students</p>
+
+                        <div id="activitiesContainer"></div>
+
+                        <button type="button" class="btn-add" id="addActivity">+ Add Activity</button>
+                        <div class="error-message" id="activitiesError">Please add at least one activity</div>
+                    </fieldset>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-prev" id="step2Prev">Previous</button>
+                        <button type="button" class="btn-next" id="step2Next" disabled>Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Pre-Assessment Questions -->
+                <div class="form-step" data-step="3">
+                    <fieldset>
+                        <legend>Pre-Assessment Questions</legend>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Add up to 10 questions to assess student knowledge (at least 1 required)</p>
+
+                        <div id="questionsContainer"></div>
+
+                        <button type="button" class="btn-add" id="addQuestion">+ Add Question</button>
+                        <div class="error-message" id="questionsError">Please add at least one question</div>
+                    </fieldset>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-prev" id="step3Prev">Previous</button>
+                        <button type="button" class="btn-submit" id="submitCourse" disabled>Submit Course</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
+
+    <script src="/frontend/scripts/professor-create-course.js"></script>
 </body>
 </html>
