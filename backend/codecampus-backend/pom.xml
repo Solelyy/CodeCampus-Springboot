@@ -22,6 +22,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>10.11.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- Spring Web -->
         <dependency>
@@ -43,14 +53,17 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- Flyway -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>10.11.0</version>
         </dependency>
     </dependencies>
 
@@ -66,12 +79,24 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>10.13.0</version>
+                <version>10.11.0</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/codecampus</url>
+                    <url>jdbc:mysql://127.0.0.1:3306/codecampus</url>
                     <user>root</user>
                     <password>Taytay1989</password>
+                    <schemas>codecampus</schemas>
+                    <driver>com.mysql.cj.jdbc.Driver</driver>
+                    <locations>
+                        <location>filesystem:src/main/resources/database/migration</location>
+                    </locations>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <version>8.0.33</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
