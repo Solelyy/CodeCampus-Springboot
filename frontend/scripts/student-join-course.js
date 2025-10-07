@@ -2,7 +2,7 @@
 // js to nung searchbar
 document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("search-courses");
-    const courses = document.querySelectorAll(".course-card");
+    const courses = document.querySelectorAll(".course-card-template");
 
     // if walang match na course upon entry
     const noResultMsg = document.createElement("p");

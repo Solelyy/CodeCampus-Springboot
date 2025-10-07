@@ -64,35 +64,19 @@
 
 
             <div class="joined-courses-container">
-                <div class="course-card">
+                <div class="course-card-template course-card">
                     <div class="course-image-container">
                         <img src="/frontend/assets/images/java.png" alt="course-image">
                     </div>
                     <div class="course-info-container">
                         <div class="course-info">
-                            <div id="course-title-progress">
-                               <h3>Intro to Java</h3>
-                                <p></p>
+                            <div class="course-title-progress">
+                               <h3 class="course-title">Intro to Java</h3>
+                                <p class="course-progress"></p>
                             </div>
-                            <p>By codemaster</p>
+                            <p class="course-author">By codemaster</p>
                         </div>
-                        <button onclick=location.href='/frontend/webpages/student-view-course.html'>View</button>
-                    </div>
-                </div>
-
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="/frontend/assets/images/java.png" alt="course-image">
-                    </div>
-                    <div class="course-info-container">
-                        <div class="course-info">
-                            <div id="course-title-progress">
-                               <h3>Intermediate Java</h3>
-                                <p></p>
-                            </div>
-                            <p>By codemaster</p>
-                        </div>
-                        <button onclick=location.href='/frontend/webpages/student-view-course.html'>View</button>
+                        <button class="view-button" onclick=location.href='/frontend/webpages/student-view-course.html'>View</button>
                     </div>
                 </div>
             </div>

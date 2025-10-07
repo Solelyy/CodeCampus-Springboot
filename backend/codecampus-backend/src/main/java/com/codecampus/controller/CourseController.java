@@ -41,6 +41,7 @@ public class CourseController {
     }
 
     // --- 2. Get all courses of logged-in professor ---
+    @PreAuthorize("hasRole('PROFESSOR')")
     @GetMapping("/my-courses")
     public ResponseEntity<List<CourseDTO>> getMyCourses(@AuthenticationPrincipal UserDetails userDetails) {
         User professor = userService.findByUsername(userDetails.getUsername());
