@@ -41,3 +41,7 @@
 footer {
     color: white !important;
 }
+
+#greet {
+    color: rgb(80, 80, 99);
+}

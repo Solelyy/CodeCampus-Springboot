@@ -20,7 +20,6 @@
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/student-view-course.css">
 
     <title>CodeCampus</title>
 </head>
@@ -28,46 +27,31 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
             </div>
 
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
                     <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
-                    <li><a href="/frontend/webpages/student-profile.html"><img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon"></a></li>
-                    <li><a href= ""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    
+                    <li>
+                        <a href="/frontend/webpages/student-profile.html">
+                            <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
+                        </a>
+                    </li>
+
+                    <li><a href=""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <main>
-        <section class="student-view-course">
-            <h2 id="course-title"></h2>
-            <div class="gif-container">
-                <img src="" alt="course-gif">
-            </div>
-            <div class="course-info">
-                <div class="course-metadata">
-                    <p class="course-author" id="course-author"></p>
-                    <p class="course-students-count" id="course-students-count"></p>   
-                </div>
+<main>
+</main>
 
-                <div class="course-description" id="course-description">
-                    <p id="course-description-text">
-                    </p>
-                </div>
-
-                <div class="join-course-btn-container">
-                    <button id="join-course-btn" onclick="location.href='/frontend/webpages/student-course-overview.html'" type="submit">Join Course</button>
-                </div>
-            </div>
-        </section>
-    </main>
 
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
-<script src="/frontend/scripts/student-view-course.js"></script>
 </html>
