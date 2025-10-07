@@ -3,49 +3,16 @@
 }
 
 .course-activities p, 
-.course-activities h4 {
+.course-activities h3 {
     color: #47156c;
     font-family: "Inter", sans-serif;
+    text-align: center;
 }
-
-.activity-difficulty {
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
-    width: fit-content;
-    align-items: center;
-}
-
-#difficulty-select {     
-    padding: 0px 15px 0px 15px; 
-    font-size: 14px;
-    font-family: "Inter", sans-serif;
-    color: #350d51ca;
-    border: 1px solid #47156c;
-    border-radius: 8px;
-    background-color: #fff;
-    cursor: pointer;
-    transition: border 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    width: fit-content;
-    height: 40px;
-}
-
-#difficulty-select img {
-    width: auto;
-    height: 20px;
-}
-
-/* Dropdown Menu */
 
 /* Activities */
 .activities {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     justify-content: center;
     justify-items: start;
     gap: 20px;
@@ -72,4 +39,44 @@
     box-shadow: 0 0 6px rgba(83, 27, 186, 0.2);
     transition: box-shadow 0.2s ease;
     cursor: pointer;
+}
+
+.activity-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: auto; /* still allow click for modal */
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+}
+
+#close-modal-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#close-modal-btn:hover {
+    background-color: #0056b3;
 }

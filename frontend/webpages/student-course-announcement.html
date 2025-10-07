@@ -23,12 +23,11 @@
 
     <title>CodeCampus</title>
 </head>
-<script src="/frontend/scripts/student-course-overview.js"></script>
 <body>
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
             </div>
 
             <div class="right">
@@ -44,16 +43,16 @@
     <main>
         <section class="course-overview">
             <div class="course-navs">
-                <div class="course-tab" onclick="location.href='/frontend/webpages/student-course-overview.html'">
+                <div class="course-tab" id="tab-overview">
                     <h3>Overview</h3>
                 </div>
-                <div class="course-tab" onclick="location.href='/frontend/webpages/student-course-activities.html'">
+                <div class="course-tab" id="tab-activities">
                     <h3>Activities</h3>
                 </div>
-                <div class="course-tab" onclick="location.href='/frontend/webpages/student-course-leaderboard.html'">
+                <div class="course-tab" id="tab-leaderboard">
                     <h3>Leaderboard</h3>
                 </div>
-                <div class="course-tab active" onclick="location.href='/frontend/webpages/student-course-announcement.html'">
+                <div class="course-tab" id="tab-announcement">
                     <h3>Announcement</h3>
                 </div>
             </div>
@@ -65,4 +64,5 @@
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
+<script src="/frontend/scripts/student-course-tabs.js"></script>
 </html>

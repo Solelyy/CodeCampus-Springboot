@@ -1,26 +1,41 @@
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded for student-course-overview');
 
-    // Get courseId from URL
     const courseId = new URLSearchParams(window.location.search).get('courseId');
     console.log('Course ID from URL:', courseId);
-    if (!courseId) return console.error('No course ID provided in URL');
+    if (!courseId) return console.error('❌ No course ID provided in URL');
 
     const token = localStorage.getItem('token');
     console.log('JWT Token:', token);
-    if (!token) return console.error('No authentication token found. User might not be logged in.');
+    if (!token) return console.error('❌ No authentication token found. User might not be logged in.');
 
-    // Elements
+    // DOM elements
+    const courseTitleEl = document.getElementById('course-title');
     const courseDescriptionEl = document.getElementById('course-description-text');
     const startActivityBtn = document.getElementById('start-activity-btn');
     const viewLeaderboardBtn = document.getElementById('view-leaderboard-btn');
 
+    // Debug: detailed element check
+    const elements = {
+        'course-title': courseTitleEl,
+        'course-description-text': courseDescriptionEl,
+        'start-activity-btn': startActivityBtn,
+        'view-leaderboard-btn': viewLeaderboardBtn
+    };
+
+    const missing = Object.entries(elements)
+        .filter(([key, el]) => !el)
+        .map(([key]) => key);
+
+    if (missing.length > 0) {
+        console.error(`❌ Missing DOM elements: ${missing.join(', ')}`);
+        console.log('🧩 Current body HTML:', document.body.innerHTML);
+        return;
+    }
+
     try {
-        // Fetch course details
         const response = await fetch(`http://localhost:8081/api/courses/${courseId}`, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
+            headers: { 'Authorization': 'Bearer ' + token }
         });
         console.log('Fetch response:', response);
 
@@ -29,11 +44,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const course = await response.json();
         console.log('Fetched course object:', course);
 
-        // Fill course description
-        courseDescriptionEl.textContent = course.description;
-        courseDescriptionEl.previousElementSibling.textContent = course.title;
+        // Populate course details
+        courseTitleEl.textContent = course.title || 'No Title';
+        courseDescriptionEl.textContent = course.description || 'No description available';
 
-        // Update buttons to include courseId in the URL
+        // Setup buttons
         startActivityBtn.onclick = () => {
             window.location.href = `/frontend/webpages/student-course-activities.html?courseId=${courseId}`;
         };
@@ -42,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
     } catch (err) {
-        console.error('Error fetching course:', err);
+        console.error('❌ Error fetching course:', err);
         alert('Failed to load course overview. Please refresh the page.');
     }
 });

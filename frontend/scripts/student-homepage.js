@@ -53,7 +53,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const btn = card.querySelector('button');
             btn.textContent = 'Continue';
             btn.onclick = () => {
-                window.location.href = `/frontend/webpages/student-course-overview.html?courseId=${course.id}`;
+                const baseUrl = course.preAssessmentCompleted
+                    ? '/frontend/webpages/student-course-overview.html'
+                    : '/frontend/webpages/student-course-preassessment.html';
+                window.location.href = `${baseUrl}?courseId=${course.id}`;
             };
 
             container.appendChild(card);
