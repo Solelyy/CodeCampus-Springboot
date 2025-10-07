@@ -100,3 +100,24 @@
     color: white;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
+
+#course-description-text {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #350d51;
+    margin-top: 20px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+#course-title {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    color: #350d51;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.course-description {
+    min-height: 450px;
+}

@@ -49,6 +49,10 @@
             </div>
             <h2>Joined Courses</h2>
 
+            <div class="greet-container">
+                <p id="greet"> 👋 Welcome to CodeCampus! You haven't joined any courses yet. Click "Join Course" to explore available courses!</p>
+            </div>
+
             <div class="joined-courses-container">
                 <div class="course-card-template course-card">
                     <div class="course-image-container">
@@ -62,7 +66,7 @@
                             </div>
                             <p class="course-author"></p>
                         </div>
-                        <button onclick="location.href='/frontend/webpages/student-course-overview.html'"></button>
+                        <button onclick="location.href='/frontend/webpages/student-course-overview.html?courseId=${course.id}'"></button>
                     </div>
                 </div>
 
@@ -74,4 +78,5 @@
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
+<script src="/frontend/scripts/student-homepage.js"></script>
 </html>

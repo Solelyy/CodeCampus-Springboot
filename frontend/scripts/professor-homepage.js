@@ -1,6 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
+    const noCoursesMessage = document.getElementById('greet');
+
+    const coursesContainer = document.querySelector('.joined-courses-container');
+
+    // Function to update visibility
+    function updateNoCoursesMessage() {
+    const courses = container.querySelectorAll('.course-card');
+    const template = container.querySelector('.course-card-template');
+    const actualCourses = Array.from(courses).filter(card => card !== template);
+
+    if (actualCourses.length > 0) {
+        noCoursesMessage.style.display = 'none'; // hide message
+    } else {
+        noCoursesMessage.style.display = 'block'; // show message
+    }
+}
+
 
     async function fetchProfessorCourses() {
         try {
@@ -47,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             container.appendChild(card);
-        });
+        }); 
+        updateNoCoursesMessage();
     }
-
     fetchProfessorCourses();
 });
