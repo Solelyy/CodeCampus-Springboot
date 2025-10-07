@@ -1,11 +1,15 @@
 package com.codecampus.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class CourseCreationRequest {
 
     private String title;
     private String description;
+
+    @JsonProperty("isPublic")
     private boolean isPublic;
 
     private List<ActivityDTO> activities;
@@ -32,8 +36,8 @@ public class CourseCreationRequest {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
     public List<ActivityDTO> getActivities() {

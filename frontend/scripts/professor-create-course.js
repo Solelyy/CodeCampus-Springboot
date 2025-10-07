@@ -302,6 +302,8 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
     const title = document.getElementById('courseTitle').value.trim();
     const description = document.getElementById('courseDescription').value.trim();
     const isPublic = document.querySelector('input[name="visibility"]:checked').value === 'public';
+    console.log('Selected radio:', isPublic);
+    console.log('Selected value:', isPublic ? 'public' : 'private');
 
     // Collect activities
     const activities = Array.from(document.querySelectorAll('.activity-item')).map(item => ({
@@ -374,6 +376,7 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
             creationMessage.style.color = 'green';
             creationMessage.textContent = 'Course created successfully!';
             creationMessage.style.display = 'block';
+            console.log('Course created' + (isPublic ? ' as Public' : ' as Private'));
 
         setTimeout(() => {
         creationMessage.style.display = 'none';
