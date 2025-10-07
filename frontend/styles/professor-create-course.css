@@ -417,3 +417,8 @@ button {
         width: 100%;
     }
 }
+
+#course-creation-message {
+    color: green;
+    text-align: center;
+}

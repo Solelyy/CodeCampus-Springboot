@@ -8,6 +8,8 @@ const form = document.getElementById('courseForm');
 const progressBar = document.querySelector('.progress-bar');
 const stepIndicators = document.querySelectorAll('.step-indicator');
 const formSteps = document.querySelectorAll('.form-step');
+const creationMessage = document.getElementById('course-creation-message');
+const submitBtn = document.getElementById('submitCourse');
 
 // Step navigation
 function goToStep(step) {
@@ -296,56 +298,100 @@ document.getElementById('addQuestion').addEventListener('click', createQuestion)
 document.getElementById('step3Prev').addEventListener('click', () => goToStep(2));
 
 // Form Submission
-document.getElementById('submitCourse').addEventListener('click', () => {
-    const courseData = {
-        title: document.getElementById('courseTitle').value,
-        description: document.getElementById('courseDescription').value,
-        visibility: document.querySelector('input[name="visibility"]:checked').value,
-        activities: [],
-        questions: []
-    };
+document.getElementById('submitCourse').addEventListener('click', async () => {
+    const title = document.getElementById('courseTitle').value.trim();
+    const description = document.getElementById('courseDescription').value.trim();
+    const isPublic = document.querySelector('input[name="visibility"]:checked').value === 'public';
 
     // Collect activities
-    document.querySelectorAll('.activity-item').forEach(item => {
-        courseData.activities.push({
-            title: item.querySelector('.activity-title-input').value,
-            difficulty: item.querySelector('.activity-difficulty').value,
-            problem: item.querySelector('.activity-problem').value,
-            testCases: item.querySelector('.activity-tests').value
-        });
-    });
+    const activities = Array.from(document.querySelectorAll('.activity-item')).map(item => ({
+        title: item.querySelector('.activity-title-input').value.trim(),
+        problemStatement: item.querySelector('.activity-problem').value.trim(),
+        difficulty: item.querySelector('.activity-difficulty').value,
+        points: 100, // default placeholder value
+        testCases: item.querySelector('.activity-tests').value.trim()
+    }));
 
     // Collect questions
-    document.querySelectorAll('.question-item').forEach(item => {
+    const preAssessments = Array.from(document.querySelectorAll('.question-item')).map(item => {
         const type = item.querySelector('.question-type').value;
-        const questionData = {
-            type: type,
-            question: item.querySelector('.question-text').value
+        let questionObj = {
+            question: item.querySelector('.question-text').value.trim(),
+            questionType: type === 'multiple' ? 'MCQ' : 'FillBlank'
         };
 
         if (type === 'multiple') {
-            const options = Array.from(item.querySelectorAll('.option-input')).map(opt => opt.value);
+            const options = Array.from(item.querySelectorAll('.option-input')).map(opt => opt.value.trim());
             const correctIndex = parseInt(item.querySelector(`input[name^="correct-"]:checked`).value);
-            questionData.options = options;
-            questionData.correctAnswer = correctIndex;
+            questionObj.options = JSON.stringify(options);
+            questionObj.correctAnswer = options[correctIndex];
         } else {
-            questionData.correctAnswer = item.querySelector('.fill-answer').value;
+            questionObj.correctAnswer = item.querySelector('.fill-answer').value.trim();
         }
 
-        courseData.questions.push(questionData);
+        return questionObj;
     });
 
-    console.log('Course Data:', courseData);
-    alert('Course created successfully! Check console for data.');
-    
-    // TODO: Send to Spring Boot backend
-    // fetch('/api/courses', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(courseData)
-    // }).then(response => response.json())
-    //   .then(data => console.log('Success:', data));
+    // Construct payload for backend
+    const courseData = {
+        title,
+        description,
+        isPublic,
+        activities,
+        preAssessments
+    };
+
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating...';
+    creationMessage.style.display = 'none';
+
+    console.log('📤 Sending to backend:', courseData);
+
+    try {
+        const token = localStorage.getItem('token');
+        console.log('Token in localStorage before sending course:', localStorage.getItem('token'));
+        if (!token) throw new Error('You must be logged in to create a course.');
+
+        const response = await fetch('http://localhost:8081/api/courses/full', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+            },
+            body: JSON.stringify(courseData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to create course: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('✅ Backend response:', result);
+
+        // Instead of result.status, just check if an id exists
+        if (result && result.id) {
+            creationMessage.style.color = 'green';
+            creationMessage.textContent = 'Course created successfully!';
+            creationMessage.style.display = 'block';
+
+        setTimeout(() => {
+        creationMessage.style.display = 'none';
+        window.location.href = '/frontend/webpages/professor-homepage.html';
+        }, 2000);
+    } else {
+    throw new Error('Failed to create course.');
+}
+
+    } catch (error) {
+        console.error('❌ Error creating course:', error);
+        creationMessage.style.color = 'red';
+        creationMessage.textContent = error.message || 'Error creating course. Please try again.';
+        creationMessage.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Course';
+    }
 });
 
-// Initialize
+// Initialize form validation
 validateStep1();

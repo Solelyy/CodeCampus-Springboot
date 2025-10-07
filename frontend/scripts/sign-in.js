@@ -34,7 +34,7 @@ signInForm.addEventListener('submit', async (event) => {
     try {
         signInBtn.disabled = true; // Disable button to prevent multiple submissions
         signInBtn.textContent = 'Signing In...';
-        const response = await fetch("http://localhost:8080/api/users/login", {
+        const response = await fetch("http://localhost:8081/api/users/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,36 +42,41 @@ signInForm.addEventListener('submit', async (event) => {
             body: JSON.stringify(data),
         });
 
-        const result = await response.json();
-
-        if (result.status === "success") {
-            errorMessage.style.color = 'rgb(119, 211, 119)';
-            errorMessage.textContent = 'Sign in successful! Redirecting...';
-
-            /* Save user info to localStorage (optional)
-            localStorage.setItem("user", JSON.stringify(result)); */
-
-            // Redirect based on role
-            setTimeout(() => {
-                if (result.role === "professor") {
-                    window.location.href = "/frontend/webpages/professor-homepage.html";
-                } else if (result.role === "student") {
-                    window.location.href = "/frontend/webpages/student-homepage.html";
-                } else {
-                    window.location.href = "/frontend/webpages/index.html";
-                }
-            }, 1000);
-        } else {
-            errorMessage.style.color = 'rgb(255, 148, 148)';
-            errorMessage.textContent = result.message || 'Incorrect username or password.';
-            signInBtn.disabled = false; // Re-enable button
-            signInBtn.textContent = 'Sign In';
+        if (!response.ok) {
+            const errorBody = await response.json().catch(() => ({ error: 'Incorrect username or password.' }));
+            throw new Error(errorBody.error || 'Incorrect username or password.');
         }
+
+        const result = await response.json();
+        if (!result.token) {
+            throw new Error('Login succeeded but no token was returned.');
+        }
+
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('username', result.username);
+        localStorage.setItem('role', result.role);
+
+        errorMessage.style.color = 'rgb(119, 211, 119)';
+        errorMessage.textContent = 'Sign in successful! Redirecting...';
+        
+        // Redirect based on role
+        setTimeout(() => {
+            if (result.role === "professor") {
+                window.location.href = "/frontend/webpages/professor-homepage.html";
+            } else if (result.role === "student") {
+                window.location.href = "/frontend/webpages/student-homepage.html";
+            } else {
+                window.location.href = "/frontend/webpages/index.html";
+            }
+        }, 500);
     } catch (error) {
         console.error('Error during sign-in:', error);
         errorMessage.style.color = 'rgb(255, 148, 148)';
-        errorMessage.textContent = 'Something went wrong. Please try again.';
-
+        errorMessage.textContent = error.message || 'Something went wrong. Please try again.';
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+    }finally {
         signInBtn.disabled = false;
         signInBtn.textContent = 'Sign In';
     }
