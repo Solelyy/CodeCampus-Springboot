@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--Favicon-->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/frontend/assets/fav-icon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/frontend/assets/fav-icon/favicon.svg" />
     <link rel="shortcut icon" href="/frontend/assets/fav-icon/favicon.ico" />
@@ -12,46 +12,75 @@
     <meta name="apple-mobile-web-app-title" content="CodeCampus" />
     <link rel="manifest" href="/frontend/assets/fav-icon/site.webmanifest" />
 
-    <!--Google Fonts-->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <!--Styles-->
+    <!-- Styles -->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
+    <link rel="stylesheet" href="/frontend/styles/student-course-preassessment.css">
 
-    <title>CodeCampus</title>
+    <title>Course Pre-Assessment | CodeCampus</title>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
             </div>
-
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
-                    <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
-                    
-                    <li>
-                        <a href="/frontend/webpages/student-profile.html">
-                            <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
-                        </a>
-                    </li>
-
-                    <li><a href=""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    <li><a href="#"><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
+                    <li><a href="/frontend/webpages/student-profile.html"><img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon"></a></li>
+                    <li><a href="#"><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-<main>
-</main>
+    <main>
+        <!-- Score Popup -->
+        <div id="score-popup" class="score-popup">
+            <div class="popup-content">
+                <p id="score-text"></p>
+                <p id="feedback-text"></p>
+                <button id="continue-btn">Start Activities</button>
+            </div>
+        </div>
 
+        <div class="assessment-container">
+            <div class="assessment-header">
+                <h1 id="course-title">Course Pre-Assessment</h1>
+                <div class="progress-indicator">
+                    <span id="current-question">1</span> of <span id="total-questions">0</span>
+                </div>
+            </div>
+
+            <div id="message-container"></div>
+
+            <div id="loading" class="loading">Loading questions...</div>
+
+            <div id="assessment-content" style="display: none;">
+                <div class="question-container">
+                    <div class="question-text" id="question-text"></div>
+                    <div class="answer-options" id="answer-options"></div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>Previous</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next</button>
+                    <button class="btn btn-primary" id="submit-btn" onclick="submitAssessment()" style="display: none;">Submit Assessment</button>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
+
+    <script src="/frontend/scripts/student-course-preassessment.js"></script>
 </body>
 </html>

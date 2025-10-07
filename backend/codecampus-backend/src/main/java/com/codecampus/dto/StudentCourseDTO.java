@@ -8,6 +8,7 @@ public class StudentCourseDTO {
     private String description;
     private int studentsCount;
     private boolean isEnrolled;
+    private boolean preAssessmentCompleted;
 
     public StudentCourseDTO() {}
 
@@ -19,6 +20,18 @@ public class StudentCourseDTO {
         this.description = description;
         this.studentsCount = studentsCount;
         this.isEnrolled = isEnrolled;
+        this.preAssessmentCompleted = false;
+    }
+
+    public StudentCourseDTO(Long id, String title, String professorName, String description,
+                            int studentsCount, boolean isEnrolled, boolean preAssessmentCompleted) {
+        this.id = id;
+        this.title = title;
+        this.professorName = professorName;
+        this.description = description;
+        this.studentsCount = studentsCount;
+        this.isEnrolled = isEnrolled;
+        this.preAssessmentCompleted = preAssessmentCompleted;
     }
 
     // Getters and Setters
@@ -39,4 +52,7 @@ public class StudentCourseDTO {
 
     public boolean isEnrolled() { return isEnrolled; }
     public void setEnrolled(boolean enrolled) { isEnrolled = enrolled; }
+
+    public boolean isPreAssessmentCompleted() { return preAssessmentCompleted; }
+    public void setPreAssessmentCompleted(boolean preAssessmentCompleted) { this.preAssessmentCompleted = preAssessmentCompleted; }
 }

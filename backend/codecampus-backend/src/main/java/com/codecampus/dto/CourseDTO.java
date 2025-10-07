@@ -10,6 +10,7 @@ public class CourseDTO {
     private String code;
     private boolean isPublic;
     private String professorName;
+    private boolean preAssessmentCompleted;
 
     private List<ActivityDTO> activities;
     private List<PreAssessmentQuestionDTO> preAssessments;
@@ -24,6 +25,7 @@ public class CourseDTO {
         this.code = code;
         this.isPublic = isPublic;
         this.professorName = professorName;
+        this.preAssessmentCompleted = false;
     }
 
     // --- Getters & Setters ---
@@ -44,6 +46,9 @@ public class CourseDTO {
 
     public String getProfessorName() { return professorName; }
     public void setProfessorName(String professorName) { this.professorName = professorName; }
+
+    public boolean isPreAssessmentCompleted() { return preAssessmentCompleted; }
+    public void setPreAssessmentCompleted(boolean preAssessmentCompleted) { this.preAssessmentCompleted = preAssessmentCompleted; }
 
     public List<ActivityDTO> getActivities() { return activities; }
     public void setActivities(List<ActivityDTO> activities) { this.activities = activities; }

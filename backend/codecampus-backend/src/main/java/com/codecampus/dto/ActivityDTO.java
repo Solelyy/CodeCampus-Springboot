@@ -7,6 +7,15 @@ public class ActivityDTO {
     private String difficulty;
     private Integer points;
     private String testCases; // JSON array as String
+    private boolean completed;
+    private boolean unlocked;
+
+    public boolean isCompleted() { return completed; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
+
+    public boolean isUnlocked() { return unlocked; }
+    public void setUnlocked(boolean unlocked) { this.unlocked = unlocked; }
+
 
     public ActivityDTO() {}
 
