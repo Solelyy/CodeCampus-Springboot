@@ -7,8 +7,10 @@ function checkFormValues() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
     const confirmPassword = document.getElementById('confirmPassword').value.trim();
+    const firstName = document.getElementById('firstName').value.replace(/\s+/g, ' ').trim();
+    const lastName = document.getElementById('lastName').value.replace(/\s+/g, ' ').trim();
 
-    createAccountBtn.disabled = !(username && password && confirmPassword);
+    createAccountBtn.disabled = !(username && password && confirmPassword && lastName && firstName);
 }
 
 signupForm.addEventListener('input', checkFormValues);
@@ -17,6 +19,8 @@ signupForm.addEventListener('input', checkFormValues);
 signupForm.addEventListener('submit', async (event) => {
     event.preventDefault(); //Prevent default form submission
 
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
     const confirmPassword = document.getElementById('confirmPassword').value.trim();
@@ -27,7 +31,7 @@ signupForm.addEventListener('submit', async (event) => {
     errorMessage.style.color = 'red';
 
     //Check for empty fields
-    if (!username || !password || !confirmPassword) {
+    if (!username || !password || !confirmPassword || !lastName || !firstName) {
         errorMessage.textContent = 'All fields are required!';
         return;
     }
@@ -57,53 +61,64 @@ signupForm.addEventListener('submit', async (event) => {
         return;
     }
 
-    const data = {username, password, role};
+    const data = {username, password, role, firstName, lastName};
 
-    try {
-        createAccountBtn.disabled = true; //Disable button while processing
-        createAccountBtn.textContent = "Creating...";
-
-        const response = await fetch('http://localhost:8080/api/users/signup', {
+    createAccountBtn.disabled = true;
+    createAccountBtn.textContent = "Creating...";
+    
+try {
+        // 1️⃣ Sign up
+        const signupResponse = await fetch('http://localhost:8081/api/users/signup', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, role, firstName, lastName })
         });
 
-        const result= await response.json();
+        const signupResult = await signupResponse.json();
+        if (signupResult.status !== "success") {
+            throw new Error(signupResult.message || "Signup failed. Please try again.");
+        }
 
-        if (result.status === "success") {
+        // 2️⃣ Auto-login after signup
+        const loginResponse = await fetch('http://localhost:8081/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (!loginResponse.ok) {
+            throw new Error('Signup succeeded but auto-login failed.');
+        }
+
+        const loginResult = await loginResponse.json();
+        if (!loginResult.token) {
+            throw new Error('Login succeeded but no token was returned.');
+        }
+
+        // 3️⃣ Store token and user info in localStorage
+        localStorage.setItem('token', loginResult.token);
+        localStorage.setItem('username', loginResult.username);
+        localStorage.setItem('role', loginResult.role);
+
         // Show success message
         errorMessage.style.color = 'green';
-        errorMessage.textContent = 'Account created successfully! Redirecting to login...';
+        errorMessage.textContent = 'Account created successfully! Redirecting...';
 
-        //Redirect based on role after 1 second
+        // Redirect based on role
         setTimeout(() => {
-            if (role === 'professor') {
+            if (loginResult.role === 'professor') {
                 window.location.href = '/frontend/webpages/professor-homepage.html';
-                return;
-            }
-            if (role === 'student') {
+            } else if (loginResult.role === 'student') {
                 window.location.href = '/frontend/webpages/student-homepage.html';
-                return;
             }
-        }, 1000);
-        } else {
-            //Show backend error message
-            errorMessage.style.color = 'red';
-            errorMessage.textContent = result.message;
+        }, 500);
 
-            createAccountBtn.disabled = false; //Re-enable button
-            createAccountBtn.textContent = "Create Account";
-        }
     } catch (error) {
-        console.error('Signup error:', error);
+        console.error('Signup/Login error:', error);
         errorMessage.style.color = 'red';
         errorMessage.textContent = `Something went wrong: ${error.message}`;
-
+    } finally {
         createAccountBtn.disabled = false;
         createAccountBtn.textContent = "Create Account";
-
     }
 });

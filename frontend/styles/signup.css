@@ -138,3 +138,8 @@
     margin-top: -10px;
     text-align: center;
 }
+
+#name-fields {
+    display: flex;
+    gap: 10px;
+}
