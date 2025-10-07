@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
+    const searchInput = document.getElementById('search-courses');
 
-    async function fetchProfessorCourses() {
+    // Hide template card
+    templateCard.style.display = 'none';
+
+    async function fetchPublicCourses() {
         try {
             const token = localStorage.getItem('token');
             if (!token) throw new Error('You must be logged in.');
 
-            const response = await fetch('http://localhost:8081/api/courses/my-courses', {
+            const response = await fetch('http://localhost:8081/api/courses/public', {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
@@ -40,15 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
             card.querySelector('.course-progress').textContent = course.public ? 'Public' : 'Private';
             card.querySelector('.course-author').textContent = `By ${course.professorName}`;
 
-            const manageBtn = card.querySelector('.manage-button');
-            manageBtn.textContent = 'Manage';
-            manageBtn.onclick = () => {
-                window.location.href = `/frontend/webpages/professor-manage-course.html?courseId=${course.id}`;
+            const viewBtn = card.querySelector('.view-button');
+            viewBtn.onclick = () => {
+                window.location.href = `/frontend/webpages/student-view-course.html?courseId=${course.id}`;
             };
 
             container.appendChild(card);
         });
     }
 
-    fetchProfessorCourses();
+    // --- Search functionality ---
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        container.querySelectorAll('.course-card:not(.course-card-template)').forEach(card => {
+            const title = card.querySelector('.course-title').textContent.toLowerCase();
+            const author = card.querySelector('.course-author').textContent.toLowerCase();
+            card.style.display = title.includes(query) || author.includes(query) ? 'block' : 'none';
+        });
+    });
+
+    fetchPublicCourses();
 });

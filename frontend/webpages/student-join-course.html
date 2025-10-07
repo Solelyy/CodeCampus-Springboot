@@ -49,32 +49,31 @@
             </div>
             
             <div class="courses-header">
-    <h2>Public Courses</h2>
-    <div class="search-container">
-        <input type="text" id="search-courses" placeholder="Search...">
-    </div>
-</div>
+                <h2>Public Courses</h2>
+                    <div class="search-container">
+                        <input type="text" id="search-courses" placeholder="Search...">
+                    </div>
+            </div>
 
-    <div id="overlay" class="overlay"></div>
+        <div id="overlay" class="overlay"></div>
 
-    <div id="join-modal" class="join-modal">
+        <div id="join-modal" class="join-modal">
         <input type="text" id="course-code" placeholder="Enter Code">
         <button id="join-course-submit">Join Private Course</button>
-    </div>
-
+         </div>
 
             <div class="joined-courses-container">
                 <div class="course-card-template course-card">
                     <div class="course-image-container">
-                        <img src="/frontend/assets/images/java.png" alt="course-image">
+                        <img src="" alt="course-image">
                     </div>
                     <div class="course-info-container">
                         <div class="course-info">
                             <div class="course-title-progress">
-                               <h3 class="course-title">Intro to Java</h3>
+                               <h3 class="course-title"></h3>
                                 <p class="course-progress"></p>
                             </div>
-                            <p class="course-author">By codemaster</p>
+                            <p class="course-author"></p>
                         </div>
                         <button class="view-button" onclick=location.href='/frontend/webpages/student-view-course.html'>View</button>
                     </div>
@@ -88,7 +87,6 @@
     </footer>
 
     <script src="/frontend/scripts/student-join-course.js"></script>
-    <script src="/frontend/scripts/modal.js"></script>
-
+    <script src="/frontend/scripts/student-fetch-courses.js"></script>
 </body>
 </html>
