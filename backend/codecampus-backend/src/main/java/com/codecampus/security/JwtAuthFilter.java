@@ -1,19 +1,23 @@
 package com.codecampus.security;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import org.springframework.web.filter.OncePerRequestFilter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 import com.codecampus.service.UserService;
 
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -33,43 +37,60 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        try {
-            String token = resolveToken(request);
+        String requestURI = request.getRequestURI();
+        String method = request.getMethod();
+        logger.info("Incoming request: {} {}", method, requestURI);
 
-            // Only authenticate if token exists, valid, and context is not already authenticated
+        // Skip OPTIONS requests
+        if ("OPTIONS".equalsIgnoreCase(method)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // ✅ Skip JWT auth only for GET /api/activities/**
+        if ("GET".equalsIgnoreCase(method) && requestURI.startsWith("/api/activities")) {
+            logger.info("Skipping JWT auth for GET /api/activities/**");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        try {
+            // Inline token resolution
+            String bearer = request.getHeader("Authorization");
+            String token = (StringUtils.hasText(bearer) && bearer.startsWith("Bearer "))
+                    ? bearer.substring(7)
+                    : null;
+
+            logger.info("Resolved token: {}", token);
+
             if (token != null && jwtUtil.isTokenValid(token)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
 
                 String username = jwtUtil.extractUsername(token);
                 UserDetails userDetails = userService.loadUserByUsername(username);
 
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                var authorities = userDetails.getAuthorities().stream()
+                        .map(auth -> auth.getAuthority().startsWith("ROLE_")
+                                ? auth
+                                : new SimpleGrantedAuthority("ROLE_" + auth.getAuthority()))
+                        .collect(Collectors.toList());
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+                logger.info("Authentication set for user: {} with authorities: {}", username, authorities);
             }
+
         } catch (Exception ex) {
-            logger.warn("JWT authentication failed: " + ex.getMessage());
-            // optionally: you can set response status here if you want to block the request
-            // response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            logger.warn("JWT authentication failed: {}", ex.getMessage());
+        }
+
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            logger.info("No authentication present in context");
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    /**
-     * Extracts the token from the Authorization header
-     */
-    private String resolveToken(HttpServletRequest request) {
-        String bearer = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer ")) {
-            return bearer.substring(7);
-        }
-        return null;
     }
 }

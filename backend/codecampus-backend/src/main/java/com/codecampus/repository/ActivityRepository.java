@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
     List<Activity> findByCourseOrderByDifficultyAsc(Course course);
+    List<Activity> findByCourseId(Long courseId);
 }
