@@ -21,7 +21,7 @@ public class UserService implements UserDetailsService {
 
    // private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    // ✅ Create user
+    // Create user
     public void createUser(String username, String password, String role, String firstName, String lastName) throws Exception {
         if (username.length() < 4) {
             throw new Exception("Username must be at least 4 characters long.");
@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    // ✅ Manual login (used only if we bypass Spring Security)
+    // Manual login (used only if we bypass Spring Security)
     public User loginUser(String username, String password) throws Exception {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new Exception("User not found."));
@@ -58,13 +58,13 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    // ✅ Find user by username
+    // Find user by username
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found."));
     }
 
-    // ✅ Required by Spring Security — this is how it loads users for authentication
+    // Required by Spring Security — this is how it loads users for authentication
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
