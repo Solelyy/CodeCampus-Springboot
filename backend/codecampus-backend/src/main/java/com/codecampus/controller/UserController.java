@@ -52,6 +52,22 @@ public class UserController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> request) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.get("username"), request.get("password")));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String username = request.get("username");
+            User user = userService.findByUsername(username);
+            String token = jwtUtil.generateToken(username);
+            return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getRoleForSecurity()));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(Map.of("error", "Incorrect username or password"));
+        }
+    }
+
     //LOGIN
     /*
     @PostMapping("/login")
@@ -85,19 +101,4 @@ public class UserController {
             ));
         }
     } */
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.get("username"), request.get("password")));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            String username = request.get("username");
-            User user = userService.findByUsername(username);
-            String token = jwtUtil.generateToken(username);
-            return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getRole()));
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
-        }
-    }
 }

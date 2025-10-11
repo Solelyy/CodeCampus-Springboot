@@ -67,7 +67,7 @@ signupForm.addEventListener('submit', async (event) => {
     createAccountBtn.textContent = "Creating...";
     
 try {
-        // 1️⃣ Sign up
+        // Sign up
         const signupResponse = await fetch('http://localhost:8081/api/users/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -79,7 +79,7 @@ try {
             throw new Error(signupResult.message || "Signup failed. Please try again.");
         }
 
-        // 2️⃣ Auto-login after signup
+        // Auto-login after signup
         const loginResponse = await fetch('http://localhost:8081/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -95,7 +95,7 @@ try {
             throw new Error('Login succeeded but no token was returned.');
         }
 
-        // 3️⃣ Store token and user info in localStorage
+        // Store token and user info in localStorage
         localStorage.setItem('token', loginResult.token);
         localStorage.setItem('username', loginResult.username);
         localStorage.setItem('role', loginResult.role);
@@ -105,10 +105,11 @@ try {
         errorMessage.textContent = 'Account created successfully! Redirecting...';
 
         // Redirect based on role
+        const normalizedRole = loginResult.role.replace("ROLE_", "").toLowerCase();
         setTimeout(() => {
-            if (loginResult.role === 'professor') {
+            if (normalizedRole === 'professor') {
                 window.location.href = '/frontend/webpages/professor-homepage.html';
-            } else if (loginResult.role === 'student') {
+            } else if (normalizedRole === 'student') {
                 window.location.href = '/frontend/webpages/student-homepage.html';
             }
         }, 500);
