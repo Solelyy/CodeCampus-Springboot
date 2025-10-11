@@ -61,12 +61,12 @@ signInForm.addEventListener('submit', async (event) => {
         
         // Redirect based on role
         setTimeout(() => {
-            if (result.role === "professor") {
+            if (result.role === "ROLE_PROFESSOR") {
                 window.location.href = "/frontend/webpages/professor-homepage.html";
-            } else if (result.role === "student") {
+            } else if (result.role === "ROLE_STUDENT") {
                 window.location.href = "/frontend/webpages/student-homepage.html";
             } else {
-                window.location.href = "/frontend/webpages/index.html";
+                window.location.href = "/index.html";
             }
         }, 500);
     } catch (error) {
