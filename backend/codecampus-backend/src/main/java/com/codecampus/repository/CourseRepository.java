@@ -14,4 +14,5 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     List <Course> findByIsPublicTrue();
     List <Course> findByProfessorAndIsPublicFalse(User professor);
     Course findByCode(String code);
+    boolean existsByCode (String code);
 }
