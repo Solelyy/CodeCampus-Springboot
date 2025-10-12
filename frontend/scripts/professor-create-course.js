@@ -93,9 +93,13 @@ function createActivity() {
             </div>
 
             <div class="form-group">
-                <label>Test Cases <span class="required">*</span></label>
-                <textarea class="activity-tests" required placeholder="Enter test cases (one per line)"></textarea>
-            </div>
+    <label>Test Cases <span class="required">*</span></label>
+    <textarea class="activity-tests" required
+        placeholder="Enter test cases, one per line. 
+Example:
+Hello, CodeCampus!
+Welcome to Java!"></textarea>
+</div>
         </div>
     `;
 
