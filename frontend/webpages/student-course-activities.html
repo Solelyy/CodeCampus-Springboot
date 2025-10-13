@@ -34,9 +34,41 @@
 
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
-                    <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
-                    <li><a href="/frontend/webpages/student-profile.html"><img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon"></a></li>
-                    <li><a href="/frontend/webpages/student-menu.html"><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    <li class="notification-wrapper">
+                        <a href="#" id="notif-icon">
+                            <img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon">
+                        </a>
+                        <!-- Notification Overlay -->
+                        <div id="notif-overlay" class="notif-overlay">
+                            <h3>Notifications</h3>
+                             <ul class="notif-container">
+                                <div class="notif-item">
+                                    <li>🎉 Achievement Unlocked!</li>
+                                    <span id="notif-date">October 13</span>
+                                </div>
+
+                                <div class="notif-item">
+                                    <li>📌 New Activity: Sum It Up</li>
+                                    <span id="notif-date">October 12</span>
+                                </div>
+
+                                <div class="notif-item">
+                                    <li>🏆 Congratulations!</li>
+                                    <span id="notif-date">October 11</span>
+                                </div>
+                            </ul>
+
+                            <a href="#" id="view-all-notif">View All</a>
+                        </div>
+                    </li>
+                        
+                    <li>
+                        <a href="/frontend/webpages/student-profile.html">
+                            <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
+                        </a>
+                    </li>
+
+                    <li><a href=""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
                 </ul>
             </div>
         </nav>
@@ -84,4 +116,5 @@
 </body>
 <script src="/frontend/scripts/student-course-activities.js"></script>
 <script src="/frontend/scripts/student-course-tabs.js"></script>
+<script src="/frontend/scripts/general.js"></script>
 </html>
