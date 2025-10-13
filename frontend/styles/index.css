@@ -80,7 +80,7 @@ main {
 .intro-text {
   color: white;
   flex: 1;
-  padding: clamp(20px, 2vw, 30px);
+  padding: clamp(25px, 2vw, 30px);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -94,7 +94,7 @@ main {
 }
 
 .intro-text p {
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: clamp(18px, 2vw, 25px);
   color: #fafafa;
   max-width: 480px;
   line-height: 1.6;
@@ -104,7 +104,7 @@ main {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: clamp(16px, 2.5vw, 20px);
+  font-size: clamp(18px, 2vw, 25px);
   color: #fffdfd;
 }
 
@@ -127,8 +127,8 @@ main {
     justify-content: center;
     gap: clamp(40px, 5vw, 30px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    width: clamp(250px, 80vw, 450px);
-    height: clamp(450px, 80vh, 800px);
+    width: clamp(350px, 90vw, 500px);
+    height: clamp(450px, 85vh, 800px);
 }
 
 /*FOOTER*/
@@ -143,7 +143,7 @@ footer {
 }
 
 /*Small screens*/
-@media (max-width: 900px) {
+@media (max-width: 940px) {
     .intro {
         flex-direction: column;
         align-items: center;
@@ -153,8 +153,8 @@ footer {
     }
 
     .sign-in-container {
-        width: clamp(300px, 30vw, 500px);
-        height: auto;
+        width: clamp(280px, 80vw, 400px);
+        height: clamp(450px, 60vh, 800px);
     }
 
     .intro-illustration img {
@@ -201,7 +201,6 @@ body {
 
 /* Greeting with typing animation */
 .intro-text h1 {
-  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid #ffffff;
@@ -209,7 +208,7 @@ body {
 
   /* typing: slower, smoother; blink stops after */
   animation: typing 2s steps(22, end) forwards,
-             blink 0.75s step-end infinite;
+             blink 0.75s step-end;
 }
 
 /* Stop cursor blink after typing finishes */
@@ -219,7 +218,6 @@ body {
 
 /* --- Paragraph and Features --- */
 .intro-text p {
-  font-size: clamp(16px, 2vw, 20px);
   color: #fafafa;
   max-width: 480px;
   line-height: 1.6;
