@@ -108,3 +108,123 @@ footer {
     );
     font-size: 14px;
 }
+
+/* Notification overlay dropdown */
+.notification-wrapper {
+  position: relative;
+}
+
+#notif-icon img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.notif-overlay {
+  position: absolute;
+  top: 50px; /* distance below the icon */
+  right: 0;
+  width: clamp(250px, 100%, 300px);
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 10px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  text-align: left;
+}
+
+.notif-overlay.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.notif-overlay h3 {
+  font-size: 16px;
+  color: #321875;
+  margin: 0 0 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 5px;
+}
+
+.notif-overlay ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notif-overlay li {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.notif-overlay li {
+  font-size: 14px;
+  color: #333;
+}
+
+.notif-container {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+.notif-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-bottom: 1px solid rgba(124, 124, 124, 0.2);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
+}
+
+.notif-item:hover {
+  background-color: rgba(188, 188, 188, 0.1);
+}
+
+.notif-item p {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+#notif-date {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#view-all-notif {
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #7554b6;
+  text-decoration: none;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+#view-all-notif:hover {
+  color: #7554b6;
+}
+
+.notif-item p.unread::before {
+  content: "•";
+  color: #321875;
+  margin-right: 6px;
+}

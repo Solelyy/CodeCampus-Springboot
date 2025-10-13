@@ -62,8 +62,9 @@ header {
 /*MAIN*/
 main {
     min-height: 100dvh;
-    padding-top: 90px;
+    padding-top: 100px;
     flex: 1;
+    margin-bottom: 300px;
 }
 
 .intro {
@@ -87,7 +88,7 @@ main {
 }
 
 .intro-text h1 {
-  font-size: clamp(32px, 6vw, 48px);
+  font-size: clamp(30px, 6vw, 44px);
   color: #ffffff;
   line-height: 1.2;
 }
@@ -166,4 +167,83 @@ footer {
         flex-wrap: wrap;
         gap: 15px;
     }
+}
+
+/* --- Animations --- */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInBody {
+  from { opacity: .7; }
+  to { opacity: 1; }
+}
+
+body {
+  animation: fadeInBody 1s ease forwards;
+}
+
+/* --- Typing effect --- */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Greeting with typing animation */
+.intro-text h1 {
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #ffffff;
+  width: 0;
+
+  /* typing: slower, smoother; blink stops after */
+  animation: typing 2s steps(22, end) forwards,
+             blink 0.75s step-end infinite;
+}
+
+/* Stop cursor blink after typing finishes */
+.intro-text h1.done {
+  border-right: none;
+}
+
+/* --- Paragraph and Features --- */
+.intro-text p {
+  font-size: clamp(16px, 2vw, 20px);
+  color: #fafafa;
+  max-width: 480px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 2s; /* wait until typing ends */
+}
+
+.features li {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Staggered entry after paragraph */
+.features li:nth-child(1) { animation-delay: 3s; }
+.features li:nth-child(2) { animation-delay: 3.2s; }
+.features li:nth-child(3) { animation-delay: 3.4s; }
+
+/* Sign-in container pop-in */
+.sign-in-container {
+  opacity: 0;
+  animation: popIn 0.8s ease forwards;
 }
