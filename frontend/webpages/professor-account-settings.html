@@ -1,71 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Professor Account Settings</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      width: 400px;
-      margin: 50px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #512BB2;
-      margin-bottom: 20px;
-    }
-    form label {
-      display: block;
-      margin-top: 10px;
-      color: #333;
-    }
-    form input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      background: #512BB2;
-      color: white;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #3f1f91;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="/frontend/assets/fav-icon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/frontend/assets/fav-icon/favicon.svg" />
+    <link rel="shortcut icon" href="/frontend/assets/fav-icon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/frontend/assets/fav-icon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CodeCampus" />
+    <link rel="manifest" href="/frontend/assets/fav-icon/site.webmanifest" />
+
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <!--Styles-->
+    <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
+    <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
+    <link rel="stylesheet" href="/frontend/styles/account-settings.css">
+
+    <title>CodeCampus</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Professor Account Settings</h1>
-    <form>
-      <label>Full Name</label>
-      <input type="text" placeholder="Enter your name">
+    <header>
+        <nav class="navbar">
+            <div class="left">
+                <a href="/frontend/webpages/professor-homepage.html">
+                    <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
+                </a>
+            </div>
 
-      <label>Email</label>
-      <input type="email" placeholder="Enter your email">
+            <div class="right">
+                <ul class="nav-links" id="nav-links"> 
+                    <li class="notification-wrapper">
+                        <a href="#" id="notif-icon">
+                            <img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon">
+                        </a>
+                        <!-- Notification Overlay -->
+                        <div id="notif-overlay" class="notif-overlay">
+                            <h3>Notifications</h3>
+                             <ul class="notif-container">
+                                <div class="notif-item">
+                                    <li>🎉 Achievement Unlocked!</li>
+                                    <span id="notif-date">October 13</span>
+                                </div>
 
-      <label>Password</label>
-      <input type="password" placeholder="Enter new password">
+                                <div class="notif-item">
+                                    <li>🏆 Congratulations!</li>
+                                    <span id="notif-date">October 11</span>
+                                </div>
+                            </ul>
 
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
+                            <a href="#" id="view-all-notif">View All</a>
+                        </div>
+                    </li>
+                        
+                    <li>
+                        <a href="/frontend/webpages/professor-profile.html">
+                            <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
+                        </a>
+                    </li>
+
+                    <li class="menu-wrapper">
+                        <a href="#" id="menu-icon">
+                            <img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon">
+                        </a>
+
+                        <!-- Menu Overlay -->
+                        <div id="menu-overlay" class="menu-overlay">
+                            <ul>
+                                <li><a href="/frontend/webpages/professor-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/professor-help-faqs.html">Help & FAQs</a></li>
+                                <li id="logout-btn">Log Out</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="account-settings-container">
+            <h2>Account Settings</h2>
+            <form id="account-settings-form" class="account-settings-form">
+                <div class="form-group">
+                    <h3>Change Password</h3>
+                    <div>
+                        <label for="current-password">Current Password:</label>
+                        <input type="password" id="current-password" name="current-password" placeholder="Enter your current password" required>
+                    </div>
+
+                    <div>
+                        <label for="new-password">New Password:</label>
+                        <input type="password" id="new-password" name="new-password" placeholder="Enter your new password" required>
+                    </div>
+
+                    <div>
+                        <label for="confirm-password">Confirm New Password:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your new password" required>
+                    </div>
+                </div>
+
+                <div class="update-password-container">
+                    <button type="submit" id="update-password-btn">Update Password</button>
+                </div>
+                
+            </form>
+
+            <div class="manage-account-container">
+                <h3>Manage Account</h3>
+                <p>Warning: This action is irreversible. Deleting your account will remove all your data permanently.</p>
+                <button id="delete-account-btn">Delete Account</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025. All rights reserved.</p>
+    </footer>
 </body>
+<script src="/frontend/scripts/general.js"></script>
 </html>

@@ -78,7 +78,7 @@
                             <ul>
                                 <li><a href="/frontend/webpages/student-account-settings.html">Account Settings</a></li>
                                 <li><a href="/frontend/webpages/student-help-faqs.html">Help & FAQs</a></li>
-                                <li><a href="#" id="logout-btn">Log Out</a></li>
+                                <li id="logout-btn">Log Out</li>
                             </ul>
                         </div>
                     </li>
@@ -103,9 +103,13 @@
         <div id="overlay" class="overlay"></div>
 
         <div id="join-modal" class="join-modal">
-        <input type="text" id="course-code" placeholder="Enter Code">
-        <button id="join-course-submit">Join Private Course</button>
-         </div>
+            <input type="text" id="course-code" placeholder="Enter Code">
+            <button id="join-course-submit">Join Private Course</button>
+        </div>
+
+        <div class="greet-container">
+            <p id="greet"> 📚 Welcome to CodeCampus! There's no available public courses yet.</p>
+        </div>
 
             <div class="joined-courses-container">
                 <div class="course-card-template course-card">

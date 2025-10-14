@@ -20,7 +20,8 @@
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/professor-student-contact-support.css">
+    <link rel="stylesheet" href="/frontend/styles/contact-support.css">
+
 
     <title>CodeCampus</title>
 </head>
@@ -28,53 +29,85 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/frontend/webpages/professor-homepage.html">
+                    <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
+                </a>
             </div>
 
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
-                    <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
-                    <li><a href=""><img src="/frontend/assets/icons/icon-profile.png" alt="menu-icon"></a></li>
-                    <li><a href= ""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    <li class="notification-wrapper">
+                        <a href="#" id="notif-icon">
+                            <img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon">
+                        </a>
+                        <!-- Notification Overlay -->
+                        <div id="notif-overlay" class="notif-overlay">
+                            <h3>Notifications</h3>
+                             <ul class="notif-container">
+                                <div class="notif-item">
+                                    <li>🎉 Achievement Unlocked!</li>
+                                    <span id="notif-date">October 13</span>
+                                </div>
+
+                                <div class="notif-item">
+                                    <li>🏆 Congratulations!</li>
+                                    <span id="notif-date">October 11</span>
+                                </div>
+                            </ul>
+
+                            <a href="#" id="view-all-notif">View All</a>
+                        </div>
+                    </li>
+                        
+                    <li>
+                        <a href="/frontend/webpages/professor-profile.html">
+                            <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
+                        </a>
+                    </li>
+
+                    <li class="menu-wrapper">
+                        <a href="#" id="menu-icon">
+                            <img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon">
+                        </a>
+
+                        <!-- Menu Overlay -->
+                        <div id="menu-overlay" class="menu-overlay">
+                            <ul>
+                                <li><a href="/frontend/webpages/professor-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/professor-help-faqs.html">Help & FAQs</a></li>
+                                <li id="logout-btn">Log Out</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
     </header>
 
-<div class="student-contact">
-  <div class="text-wrapper">Contact Support</div>
-  <div class="group">
-    <form class="group">
+    <main>
+        <section class="contact-support-container">
+            <h2>Contact Support</h2>
+            <form action="#" method="post" class="contact-form">
+                <label for="name">Email:</label>
+                <input type="text" id="email" name="email" required>
 
-        <div class="rectangle"></div>
-        <div class="div">Subject:</div>
-        <div class="text-wrapper-2">Message:</div>
-        <div class="text-wrapper-3">Email:</div>
-        <input type="email" class="email-input" id="email" value="tswift@gmail.com" required />
-        <input type="text" class="subject-input" id="subject" required />
-        <textarea class="message-input" id="message" placeholder="Describe the issue here." required></textarea>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
 
-        <div class="group-wrapper">
-          <button type="submit" class="group-2 submit-btn">
-            <div class="rectangle-3"></div>
-            <div class="text-wrapper-6">Submit</div>
-          </button>
-        </div>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Describe the issue here."></textarea>
 
-        <div class="div-wrapper">
-          <button type="button" class="group-2 cancel-btn">
-            <div class="rectangle-3"></div>
-            <div class="text-wrapper-6">Cancel</div>
-          </button>
-        </div>
-
-    </form>
-  </div>
-</div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" onclick="location.href='/frontend/webpages/professor-help-faqs.html'">Cancel</button>
+                    <button type="submit" id="submit-btn">Submit</button>
+                </div>
+            </form>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
+<script src="/frontend/scripts/general.js"></script>
 </html>
-

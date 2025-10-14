@@ -29,14 +29,55 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/index.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/frontend/webpages/professor-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
             </div>
 
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
-                    <li><a href=""><img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon"></a></li>
-                    <li><a href=""><img src="/frontend/assets/icons/icon-profile.png" alt="menu-icon"></a></li>
-                    <li><a href= ""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    <li class="notification-wrapper">
+                        <a href="#" id="notif-icon">
+                            <img src="/frontend/assets/icons/icon-notification.png" alt="notification-icon">
+                        </a>
+                        <!-- Notification Overlay -->
+                        <div id="notif-overlay" class="notif-overlay">
+                            <h3>Notifications</h3>
+                             <ul class="notif-container">
+                                <div class="notif-item">
+                                    <li>🎉 Achievement Unlocked!</li>
+                                    <span id="notif-date">October 13</span>
+                                </div>
+
+                                <div class="notif-item">
+                                    <li>🏆 Congratulations!</li>
+                                    <span id="notif-date">October 11</span>
+                                </div>
+                            </ul>
+
+                            <a href="#" id="view-all-notif">View All</a>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a href="/frontend/webpages/professor-profile.html" id="profile-icon">
+                            <img src="/frontend/assets/icons/icon-profile.png" alt="menu-icon">
+                        </a>
+                    </li>
+
+                    <li class="menu-wrapper">
+                        <a href="#" id="menu-icon">
+                            <img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon">
+                        </a>
+
+                        <!-- Menu Overlay -->
+                        <div id="menu-overlay" class="menu-overlay">
+                            <ul>
+                                <li><a href="/frontend/webpages/professor-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/professor-help-faqs.html">Help & FAQs</a></li>
+                                <li id="logout-btn">Log Out</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -77,4 +118,5 @@
     </footer>
 </body>
 <script src="/frontend/scripts/professor-homepage.js"></script>
+<script src="/frontend/scripts/general.js"></script>
 </html>

@@ -20,7 +20,7 @@
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/common-styles/course-card.css">
+    <link rel="stylesheet" href="/frontend/styles/help-faqs.css">
 
     <title>CodeCampus</title>
 </head>
@@ -28,7 +28,7 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/index.html">
+                <a href="/frontend/webpages/professor-homepage.html">
                     <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
                 </a>
             </div>
@@ -49,11 +49,6 @@
                                 </div>
 
                                 <div class="notif-item">
-                                    <li>📌 New Activity: Sum It Up</li>
-                                    <span id="notif-date">October 12</span>
-                                </div>
-
-                                <div class="notif-item">
                                     <li>🏆 Congratulations!</li>
                                     <span id="notif-date">October 11</span>
                                 </div>
@@ -64,7 +59,7 @@
                     </li>
                         
                     <li>
-                        <a href="/frontend/webpages/student-profile.html">
+                        <a href="/frontend/webpages/professor-profile.html">
                             <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
                         </a>
                     </li>
@@ -77,8 +72,8 @@
                         <!-- Menu Overlay -->
                         <div id="menu-overlay" class="menu-overlay">
                             <ul>
-                                <li><a href="/frontend/webpages/student-account-settings.html">Account Settings</a></li>
-                                <li><a href="/frontend/webpages/student-help-faqs.html">Help & FAQs</a></li>
+                                <li><a href="/frontend/webpages/professor-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/professor-help-faqs.html">Help & FAQs</a></li>
                                 <li id="logout-btn">Log Out</li>
                             </ul>
                         </div>
@@ -89,8 +84,48 @@
     </header>
 
     <main>
-        <!-- Main content goes here -->
-        <section>
+        <section class="help-faqs-container">
+            <h2>Help & FAQs</h2>
+            <div class="faq-item">
+                <h3>❓Course Creation</h3>
+                <p>Q: How do I create a course?</p>
+                <p>A: To create a course, click the "Create Course" button on your homepage. Fill in the course details and click "Submit" to publish your course.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Adding Activities</h3>
+                <p>Q: Can I add activities to my course?</p>
+                <p>A: Yes, you can still add activities to your course after creating it. Go to the course dashboard and click "Add Activity".</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Students</h3>
+                <p>Q: How can I track students in a course?</p>
+                <p>A: Go to "View Students" in the private course overview page.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Profile and Progress</h3>
+                <p>Q: Can I track my progress?</p>
+                <p>A: Your completed activities and achievements are shown in your profile.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Resetting Password</h3>
+                <p>Q: How do I reset my password?</p>
+                <p>A: To reset your password, go to the Account Settings page.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Technical Issues</h3>
+                <p>If you encounter any technical issues, please contact our support team. Click "Contact Support" for assistance.</p>
+            </div>
+
+            <div class="contact-support-container">
+                <p id="contact-support"> <a href="/frontend/webpages/professor-contact-support.html">Contact Support</a></p>
+            </div>
+
         </section>
     </main>
 
