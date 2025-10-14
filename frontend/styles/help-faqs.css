@@ -1,45 +1,167 @@
 /* Styles for the Help & FAQs page */
 .help-faqs-container {
     text-align: left;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto 60px auto;
+    padding: 30px;
 }
 
 .help-faqs-container h2 {
-    color: #321875;
+    color: #47156c;
+    font-size: 2.25rem;
+    font-weight: 700;
     text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(71, 21, 108, 0.1);
+}
+
+.faq-item {
+    background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
+    padding: 25px 30px;
     margin-bottom: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(93, 58, 198, 0.1), 
+                0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(93, 58, 198, 0.08);
+    transition: all 0.3s ease;
 }
 
-.help-faqs-container h3 {
-    color: #321875;
-    margin-bottom: 15px;
-    padding-bottom: 5px;
+.faq-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(93, 58, 198, 0.14), 
+                0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-.help-faqs-container p {
-    color: #555;
-    line-height: 1.6;
+.faq-item h3 {
+    color: #47156c;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #e8e0f9;
+    letter-spacing: 0.3px;
+}
+
+.faq-item p {
+    color: #764797;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.faq-item p:first-of-type {
+    color: #47156c;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.faq-item p:last-child {
+    margin-bottom: 0;
+    padding: 15px 18px;
+    background: linear-gradient(135deg, #f8f5ff 0%, #f0ebf8 100%);
+    border-radius: 10px;
+    border-left: 4px solid #5d3ac6;
 }
 
 .contact-support-container {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(93, 58, 198, 0.1), 
+                0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(93, 58, 198, 0.08);
 }
 
 #contact-support {
     cursor: pointer;
-    font-size: 16px;
-    text-decoration: underline;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
 }
 
 #contact-support a {
-    color: #321875;
+    color: #5d3ac6;
     text-decoration: none;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #f8f5ff 0%, #e8e0f9 100%);
+    border-radius: 10px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(93, 58, 198, 0.15);
+    letter-spacing: 0.3px;
 }
 
 #contact-support a:hover {
-    color: #7554b6;
+    background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(93, 58, 198, 0.3);
+}
+
+#contact-support a:active {
+    transform: translateY(0);
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+@media (max-width: 768px) {
+    .help-faqs-container {
+        margin: 20px auto 40px auto;
+        padding: 20px 15px;
+    }
+
+    .help-faqs-container h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .faq-item {
+        padding: 20px 22px;
+        margin-bottom: 16px;
+    }
+
+    .faq-item h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .faq-item p {
+        font-size: 1rem;
+    }
+
+    .contact-support-container {
+        padding: 25px 20px;
+        margin-top: 30px;
+    }
+
+    #contact-support a {
+        font-size: 1rem;
+        padding: 10px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .help-faqs-container {
+        margin: 90px auto 40px auto;
+    }
+
+    .help-faqs-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .faq-item {
+        padding: 18px 20px;
+    }
+
+    .faq-item h3 {
+        font-size: 1.1rem;
+    }
+
+    .faq-item p:last-child {
+        padding: 12px 15px;
+    }
 }

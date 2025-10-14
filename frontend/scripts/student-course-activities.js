@@ -2,13 +2,13 @@ const API_BASE_URL = 'http://localhost:8081';
 let courseId = null;
 let activities = [];
 
-// ✅ Always get courseId from URL
+// Always get courseId from URL
 function getCourseIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('courseId');
 }
 
-// ✅ Always link course tabs dynamically
+// Always link course tabs dynamically
 function setupCourseTabs(courseId) {
     const tabs = {
         'tab-overview': '/frontend/webpages/student-course-overview.html',
@@ -31,12 +31,12 @@ function setupCourseTabs(courseId) {
     });
 }
 
-// ✅ Get JWT token
+// Get JWT token
 function getAuthToken() {
     return localStorage.getItem('token');
 }
 
-// ✅ Fetch activities
+// Fetch activities
 async function fetchCourseActivities() {
     courseId = getCourseIdFromURL();
     setupCourseTabs(courseId); // run this immediately regardless
@@ -67,7 +67,7 @@ async function fetchCourseActivities() {
     }
 }
 
-// ✅ Render activity cards
+// Render activity cards
 function renderActivities() {
     const container = document.querySelector('.activities');
     if (!container) return;
@@ -108,7 +108,7 @@ function renderActivities() {
     });
 }
 
-// ✅ Locked modal
+// Locked modal
 function showLockedModal() {
     let modal = document.querySelector('#locked-modal');
     if (!modal) {
@@ -128,5 +128,5 @@ function showLockedModal() {
     modal.style.display = 'flex';
 }
 
-// ✅ Initialize
+// Initialize
 window.addEventListener('DOMContentLoaded', fetchCourseActivities);

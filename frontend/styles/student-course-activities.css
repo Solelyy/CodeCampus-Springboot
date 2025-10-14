@@ -68,6 +68,11 @@
     max-width: 400px;
 }
 
+.modal-content p {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
 #close-modal-btn {
     margin-top: 1rem;
     padding: 0.5rem 1rem;

@@ -52,12 +52,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const btn = card.querySelector('button');
             btn.textContent = 'Continue';
-            btn.onclick = () => {
-                const baseUrl = course.preAssessmentCompleted
-                    ? '/frontend/webpages/student-course-overview.html'
-                    : '/frontend/webpages/student-course-preassessment.html';
-                window.location.href = `${baseUrl}?courseId=${course.id}`;
+
+            // ✅ Decide destination based on pre-assessment status
+            if (course.preAssessmentCompleted) {
+                btn.onclick = () => {
+                window.location.href = `/frontend/webpages/student-course-overview.html?courseId=${course.id}`;
             };
+        } else {
+            btn.onclick = () => {
+                window.location.href = `/frontend/webpages/student-course-preassessment.html?courseId=${course.id}`;
+            };
+        }
 
             container.appendChild(card);
         });

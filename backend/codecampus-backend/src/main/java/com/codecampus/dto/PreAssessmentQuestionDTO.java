@@ -1,4 +1,5 @@
 package com.codecampus.dto;
+import com.codecampus.model.PreAssessmentQuestion;
 
 public class PreAssessmentQuestionDTO {
     private Long courseId; // optional but useful for updates
@@ -6,9 +7,13 @@ public class PreAssessmentQuestionDTO {
     private String questionType; // 'MCQ' or 'FillBlank'
     private String options; // JSON string for MCQ options
     private String correctAnswer;
+    private Long id;
+
 
     public PreAssessmentQuestionDTO() {}
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Long getCourseId() { return courseId; }
     public void setCourseId(Long courseId) { this.courseId = courseId; }
 

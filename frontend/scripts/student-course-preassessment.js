@@ -184,9 +184,12 @@ async function submitAssessment() {
     if (!courseId) return showError('Course ID missing');
 
     const submissionData = {
-        courseId: parseInt(courseId),
-        answers: questions.map((q, i) => ({ question: q.question, answer: answers[i] }))
-    };
+    courseId: parseInt(courseId),
+    answers: questions.map((q, i) => ({
+        questionId: q.id, 
+        answer: answers[i]
+    }))
+};
 
     console.log('Submitting assessment:', submissionData);
 
