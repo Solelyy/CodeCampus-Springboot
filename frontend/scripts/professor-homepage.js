@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const manageBtn = card.querySelector('.manage-button');
             manageBtn.textContent = 'Manage';
             manageBtn.onclick = () => {
-                window.location.href = `/frontend/webpages/professor-manage-course.html?courseId=${course.id}`;
+                window.location.href = `/frontend/webpages/professor-course-overview.html?courseId=${course.id}`;
             };
 
             container.appendChild(card);
