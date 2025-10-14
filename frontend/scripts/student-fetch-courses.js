@@ -2,6 +2,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
     const searchInput = document.getElementById('search-courses');
+    const noCoursesMessage = document.getElementById('greet');
+
+    function updateGreet() {
+        const courses = container.querySelectorAll('.course-card');
+        const template = container.querySelector('.course-card-template');
+        const actualCourses = Array.from(courses).filter(card => card !== template);
+
+        if (actualCourses.length > 0) {
+            noCoursesMessage.style.display = 'none'; // hide message
+        } else {
+            noCoursesMessage.style.display = 'block'; // show message
+        }
+    }
+
+
 
     // Hide template card
     templateCard.style.display = 'none';
@@ -51,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             container.appendChild(card);
         });
+        updateGreet();
     }
 
     // --- Search functionality ---

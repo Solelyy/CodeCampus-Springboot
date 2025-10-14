@@ -1,5 +1,3 @@
-//PS. chatgpt generated 
-// js to nung searchbar
 document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("search-courses");
     const courses = document.querySelectorAll(".course-card-template");

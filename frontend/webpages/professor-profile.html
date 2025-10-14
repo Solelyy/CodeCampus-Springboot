@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CodeCampus</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!--Favicon-->
   <link rel="icon" type="image/png" href="/frontend/assets/fav-icon/favicon-96x96.png" sizes="96x96" />
@@ -17,10 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    
-  <!--Styles-->
-  <link rel="stylesheet" href="../styles/edit-profile.css">
-  <link rel="stylesheet" href="../styles/common-styles/general.css">
+  
+  <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
+  <link rel="stylesheet" href="/frontend/styles/student-profile.css">
   <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
 </head>
 <body>
@@ -28,7 +29,7 @@
   <header>
     <nav class="navbar">
       <div class="left">
-        <a href="/frontend/webpages/student-homepage.html">
+        <a href="/frontend/webpages/professor-homepage.html">
           <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
         </a>
       </div>
@@ -48,11 +49,6 @@
                                 </div>
 
                                 <div class="notif-item">
-                                    <li>📌 New Activity: Sum It Up</li>
-                                    <span id="notif-date">October 12</span>
-                                </div>
-
-                                <div class="notif-item">
                                     <li>🏆 Congratulations!</li>
                                     <span id="notif-date">October 11</span>
                                 </div>
@@ -63,7 +59,7 @@
                     </li>
                         
                     <li>
-                        <a href="/frontend/webpages/student-profile.html">
+                        <a href="/frontend/webpages/professor-profile.html">
                             <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
                         </a>
                     </li>
@@ -76,8 +72,8 @@
                         <!-- Menu Overlay -->
                         <div id="menu-overlay" class="menu-overlay">
                             <ul>
-                                <li><a href="/frontend/webpages/student-account-settings.html">Account Settings</a></li>
-                                <li><a href="/frontend/webpages/student-help-faqs.html">Help & FAQs</a></li>
+                                <li><a href="/frontend/webpages/professor-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/professor-help-faqs.html">Help & FAQs</a></li>
                                 <li id="logout-btn">Log Out</li>
                             </ul>
                         </div>
@@ -87,40 +83,46 @@
     </nav>
   </header>
 
-  <!-- Edit Profile Content -->
-  <main class="edit-profile-page">
-   <h2 class="title">Edit Profile</h2>
-
-    <div class="edit-card">
-      <!-- Left: Profile Image -->
+  <!-- Profile Content -->
+  <main class="profile-page">
+    <!-- Left: Profile Info -->
+    <section class="profile-left">
       <div class="profile-image">
-        <img src="/frontend/assets/images/pusa.jpg" alt="Profile Image">
-        <br>
-        <button class="upload-btn">Upload New Profile</button>
+        <img src="/frontend/assets/images/mosh.png" alt="Profile Image">
+      </div>
+      <h2>Juan Cruz</h2>
+      <p class="username">@codemaster</p>
+      <p class="student-meta">🧑‍🏫 Professor | Joined: October 01, 2025</p>
+      <p class="bio">
+        Hi, I'm Juan Cruz, a passionate educator in the field of computer science. Happy coding!
+      </p>
+      <button class="btn" onclick="location.href='/frontend/webpages/professor-edit-profile.html'">Edit Profile</button>
+    </section>
+
+    <!-- Right: Achievements, Courses, Activities -->
+    <section class="profile-right">
+      <div class="card achievements">
+        <h3>🏆 Achievements</h3>
+        <ul>
+          <li>⭐ Created first course</li>
+          <li>💪 Taught 10 students</li>
+        </ul>
       </div>
 
-      <!-- Right: Profile Form -->
-      <div class="form-fields">
-        <div class="form-group">
-          <h4>Full Name:</h4>
-          <p>Taylor Swift</p>
-        </div>
-        <div class="form-group">
-          <h4>Username:</h4>
-          <p>@TSCoder</p>
-        </div>
-        <div class="form-group">
-          <h4>Bio:</h4>
-          <textarea id="bio" placeholder="Write something about yourself..."></textarea>
+      <div class="card courses">
+        <h3>📚 Courses Created</h3>
+        <div class="course-list">
+          <div class="course-card">Intro to Java</div>
         </div>
       </div>
-    </div>
 
-    <!-- Buttons -->
-    <div class="form-actions">
-      <button class="btn cancel" onclick="location.href='student-profile.html'">Cancel</button>
-      <button class="btn save">Save</button>
-    </div>
+      <div class="card activities">
+        <h3>📊 Activities</h3>
+        <p>Total Courses Created: 1</p>
+        <p>Total Students Taught: 10</p>
+        <p>Total Activities Designed: 10</p>
+      </div>
+    </section>
   </main>
 
   <!-- Footer -->

@@ -52,10 +52,47 @@ document.querySelectorAll("a").forEach(link => {
 
       setTimeout(() => {
         window.location.href = url;
-      }, 180); // match CSS duration
+      }, 180);
     });
   }
 });
 
+/* 
+   AUTH GUARD SCRIPT
+   Purpose: Protect student/professor pages from unauthorized access
+   and prevent back navigation after logout.
+ */
 
+/* ==========================================================
+   AUTH GUARD SCRIPT
+   Purpose: Protect student/professor pages from unauthorized access
+   and prevent back navigation after logout.
+   ========================================================== */
+
+// Detect current page path
+const currentPath = window.location.pathname;
+
+// Pages that should NOT trigger auth guard
+const publicPages = [
+  "/",
+  "/index.html",
+  "/frontend/webpages/sign-up.html",
+  "/frontend/webpages/sign-in.html"
+];
+
+// Logout functionality
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Clear stored session data
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.clear();
+
+    // Redirect to landing and prevent back
+    window.location.replace("/index.html");
+  });
+}
 
