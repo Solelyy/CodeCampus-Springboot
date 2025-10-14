@@ -30,6 +30,19 @@ public class User {
     @ManyToMany(mappedBy= "students")
     private Set<Course> joinedCourses = new HashSet<>();
 
+    // --- IMPORTANT: Equals and HashCode ---
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        return id != null && id.equals(((User) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
     //Getters and Setters
     public Long getId(){ return id;}
     public void setUsername(String username) { this.username= username;}

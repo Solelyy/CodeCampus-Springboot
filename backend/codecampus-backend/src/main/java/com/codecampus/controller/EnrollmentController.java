@@ -4,6 +4,7 @@ import com.codecampus.dto.StudentCourseDTO;
 import com.codecampus.model.Course;
 import com.codecampus.model.User;
 import com.codecampus.service.EnrollmentService;
+import com.codecampus.service.PreAssessmentService;
 import com.codecampus.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +20,18 @@ public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
     private final UserService userService;
+    private final PreAssessmentService preAssessmentService;
 
-    public EnrollmentController(EnrollmentService enrollmentService, UserService userService) {
+
+    public EnrollmentController(
+            EnrollmentService enrollmentService,
+            UserService userService,
+            PreAssessmentService preAssessmentService) {
         this.enrollmentService = enrollmentService;
         this.userService = userService;
+        this.preAssessmentService = preAssessmentService;
     }
+
 
     // Enroll student in a course
     @PostMapping("/courses/{id}/join")
@@ -44,6 +52,10 @@ public class EnrollmentController {
                     true // now enrolled
             );
 
+            // also check pre-assessment
+            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
+            dto.setPreAssessmentCompleted(completed);
+
             return ResponseEntity.ok(dto);
 
         } catch (Exception e) {
@@ -59,16 +71,20 @@ public class EnrollmentController {
         User student = userService.findByUsername(userDetails.getUsername());
         List<Course> enrolledCourses = enrollmentService.getStudentCourses(student);
 
-        List<StudentCourseDTO> dtoList = enrolledCourses.stream().map(course ->
-                new StudentCourseDTO(
-                        course.getId(),
-                        course.getTitle(),
-                        course.getProfessor().getFullName(),
-                        course.getDescription(),
-                        enrollmentService.getStudentsCount(course),
-                        true
-                )
-        ).collect(Collectors.toList());
+        List<StudentCourseDTO> dtoList = enrolledCourses.stream().map(course -> {
+            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId()); // ✅ check
+
+            StudentCourseDTO dto = new StudentCourseDTO(
+                    course.getId(),
+                    course.getTitle(),
+                    course.getProfessor().getFullName(),
+                    course.getDescription(),
+                    enrollmentService.getStudentsCount(course),
+                    true
+            );
+            dto.setPreAssessmentCompleted(completed); // ✅ add field
+            return dto;
+        }).collect(Collectors.toList());
 
         return ResponseEntity.ok(dtoList);
     }
@@ -91,6 +107,10 @@ public class EnrollmentController {
                     enrollmentService.getStudentsCount(course),
                     enrollmentService.isStudentEnrolled(course, student)
             );
+
+            // ✅ add completion flag here too (optional)
+            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
+            dto.setPreAssessmentCompleted(completed);
 
             return ResponseEntity.ok(dto);
 

@@ -1,83 +1,209 @@
 .account-settings-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto 60px auto;
+    padding: 30px;
 }
 
-.account-settings-form, .manage-account-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #fdfdfd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.account-settings-form, 
+.manage-account-container {
+    max-width: 100%;
+    margin: 0 0 30px 0;
+    padding: 35px;
+    background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(93, 58, 198, 0.12), 
+                0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(93, 58, 198, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.account-settings-form:hover,
+.manage-account-container:hover {
+    box-shadow: 0 12px 32px rgba(93, 58, 198, 0.16), 
+                0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 h2 {
-    color: #321875;
+    color: #47156c;
+    font-size: 2.25rem;
+    font-weight: 700;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(71, 21, 108, 0.1);
 }
 
 h3 {
-    color: #321875;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #321875;
-    padding-bottom: 5px;
+    color: #47156c;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #e8e0f9;
+    letter-spacing: 0.3px;
 }
 
 .manage-account-container p {
-    color: #555;
-    line-height: 1.6;
+    color: #764797;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+    border-left: 4px solid #e75343;
+    border-radius: 10px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
+.form-group > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #321875;
+    font-weight: 600;
+    color: #47156c;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    padding: 14px 16px;
+    border: 2px solid #d6c3f5;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-family: "Inter", sans-serif;
+    color: #47156c;
+    background-color: #fefefe;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.04);
 }
 
-#update-password-btn, #delete-account-btn {
-    background-color: #321875;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+.form-group input:focus {
+    outline: none;
+    border-color: #5d3ac6;
+    box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.08),
+                0 0 0 3px rgba(93, 58, 198, 0.1);
 }
 
+.form-group input::placeholder {
+    color: #b8a5d6;
+}
+
+#update-password-btn, 
 #delete-account-btn {
-    background-color: #e75343;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
 }
 
-#delete-account-btn:hover {
-    background-color: #ce3d2d;
+#update-password-btn {
+    background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(93, 58, 198, 0.25);
 }
 
 #update-password-btn:hover {
-    background-color: #290f5c;
+    background: linear-gradient(135deg, #7c57e3 0%, #9370db 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(93, 58, 198, 0.35);
+}
+
+#update-password-btn:active {
+    transform: translateY(0);
+}
+
+#delete-account-btn {
+    background: linear-gradient(135deg, #e75343 0%, #d43f30 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(231, 83, 67, 0.25);
+}
+
+#delete-account-btn:hover {
+    background: linear-gradient(135deg, #d43f30 0%, #c92a1a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(231, 83, 67, 0.35);
+}
+
+#delete-account-btn:active {
+    transform: translateY(0);
 }
 
 .update-password-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #e8e0f9;
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+@media (max-width: 768px) {
+    .account-settings-container {
+        margin: 20px auto 40px auto;
+        padding: 20px 15px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    .account-settings-form,
+    .manage-account-container {
+        padding: 25px 20px;
+    }
+
+    .form-group {
+        gap: 18px;
+    }
+
+    #update-password-btn,
+    #delete-account-btn {
+        width: 100%;
+        padding: 12px 30px;
+    }
+
+    .update-password-container {
+        justify-content: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    .account-settings-container {
+        margin: 90px auto 40px auto;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input {
+        font-size: 1rem;
+        padding: 12px 14px;
+    }
+
+    .manage-account-container p {
+        font-size: 1rem;
+        padding: 12px 15px;
+    }
 }

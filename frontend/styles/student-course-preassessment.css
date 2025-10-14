@@ -15,7 +15,7 @@
 }
 
 .assessment-header h1 {
-    color: #333;
+    color: #4a2d96;
     font-size: 28px;
     margin-bottom: 10px;
 }
@@ -55,7 +55,7 @@
 }
 
 .option-item:hover {
-    border-color: #4CAF50;
+    border-color: #6d4caf;
     background-color: #f9f9f9;
 }
 
@@ -82,7 +82,7 @@
 
 .fill-blank-input:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: #4a2d96;
 }
 
 .navigation-buttons {
@@ -103,12 +103,12 @@
 }
 
 .btn-primary {
-    background-color: #4CAF50;
+    background-color: #4a2d96;
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #45a049;
+    background-color: #5d3ac6;
 }
 
 .btn-secondary {
@@ -149,6 +149,12 @@
     border-radius: 6px;
     margin-bottom: 20px;
     text-align: center;
+}
+
+#score-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
 }
 
 @media (max-width: 768px) {
@@ -195,8 +201,9 @@
 
 #score-text {
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: 10px;
+    color: #2c9845;
 }
 
 #feedback-text {
@@ -210,12 +217,12 @@
     font-size: 16px;
     border: none;
     border-radius: 6px;
-    background-color: #4CAF50;
+    background-color: #4a2d96;
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 #continue-btn:hover {
-    background-color: #45a049;
+    background-color: #5d3ac6;
 }
