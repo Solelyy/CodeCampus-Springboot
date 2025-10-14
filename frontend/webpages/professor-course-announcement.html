@@ -15,21 +15,21 @@
     <!--Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
-    <link rel="stylesheet" href="/frontend/styles/student-course-overview.css">
-    <link rel="stylesheet" href="/frontend/styles/professor-course-leaderboard.css">
+    <link rel="stylesheet" href="/frontend/styles/professor-course-navigations.css">
+    <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
+    <link rel="stylesheet" href="/frontend/styles/professor-course-announcement.css">
 
     <title>CodeCampus</title>
 </head>
-
-<body class="leaderboard-page">
+<body>
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/frontend/webpages/professor-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
             </div>
 
             <div class="right">
@@ -48,11 +48,6 @@
                                 </div>
 
                                 <div class="notif-item">
-                                    <li>📌 New Activity: Sum It Up</li>
-                                    <span id="notif-date">October 12</span>
-                                </div>
-
-                                <div class="notif-item">
                                     <li>🏆 Congratulations!</li>
                                     <span id="notif-date">October 11</span>
                                 </div>
@@ -63,7 +58,7 @@
                     </li>
                         
                     <li>
-                        <a href="/frontend/webpages/student-profile.html">
+                        <a href="/frontend/webpages/professor-profile.html">
                             <img src="/frontend/assets/icons/icon-profile.png" alt="profile-icon">
                         </a>
                     </li>
@@ -76,8 +71,8 @@
                         <!-- Menu Overlay -->
                         <div id="menu-overlay" class="menu-overlay">
                             <ul>
-                                <li><a href="/frontend/webpages/student-account-settings.html">Account Settings</a></li>
-                                <li><a href="/frontend/webpages/student-help-faqs.html">Help & FAQs</a></li>
+                                <li><a href="/frontend/webpages/professor-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/professor-help-faqs.html">Help & FAQs</a></li>
                                 <li id="logout-btn">Log Out</li>
                             </ul>
                         </div>
@@ -90,6 +85,7 @@
     <main>
         <section class="course-overview">
             <div class="course-navs">
+                <div class="course-navs">
                 <div class="course-tab" id="tab-overview">
                     <h3>Overview</h3>
                 </div>
@@ -103,25 +99,25 @@
                     <h3>Announcement</h3>
                 </div>
             </div>
-
-            <div class="leaderboard-container">
-                <h2 class="leaderboard-desc">🏆 Top performers in this course</h2>
-
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Student Name</th>
-                            <th>Points</th>
-                            <th>Activities Done</th>
-                            <th>Last Completed</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboard-body">
-                        <!-- Dynamically filled by JS -->
-                        </tbody>
-                </table>
             </div>
+
+            <div class="course-announcement">
+                <div class="btn-add-announcement-container">
+                    <button id="btn-add-announcement">Create Announcement</button>
+                </div>
+
+                <div class="announcement-list">
+                    <div class="announcement-item">
+                        <h4 id="announcement-title">📣 Welcome to Intro to Java!</h4>
+                        <div class="announcement-actions">
+                            <button class="btn-view" id="btn-view">View</button>
+                            <button class="btn-edit" id="btn-edit">Edit</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </section>
     </main>
 
@@ -129,8 +125,6 @@
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
-<script src="/frontend/scripts/student-course-tabs.js"></script>
+<script src="/frontend/scripts/professor-course-tab.js"></script>
 <script src="/frontend/scripts/general.js"></script>
-<script src="/frontend/scripts/professor-course-leaderboard.js"></script>
-
 </html>

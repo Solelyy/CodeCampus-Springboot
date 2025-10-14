@@ -1,0 +1,122 @@
+/* Course Content */
+.course-content {
+    text-align: justify;
+    margin: 20px 50px 20px 50px;
+}
+
+.course-content p {
+    color: #47156c;
+    font-family: "Inter", sans-serif;
+}
+
+#course-gains p {
+    margin-left: 1.5rem;
+    white-space: pre-line;
+    text-indent: -1.5rem;
+}
+
+#course-gains p::before {
+    content: "•";
+    margin-right: 0.5rem;
+    color: #4a2d96;
+}
+
+/* Course Actions */
+.course-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 20px 50px 20px 50px;
+}
+
+.btn-container {
+    width: 400px;
+}
+
+#btn-post-announcement {
+    width: 100%;
+    background-color: white;
+    color: #47156c;
+    border: 1px solid #47156c;
+    cursor: pointer;
+    transition: 
+    box-shadow 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border 0.3s ease;
+}
+
+#btn-post-announcement:hover {
+    color: white;
+    border: none;
+    background-color: #5d3ac6;
+    transform: translateY(-1px) scale(1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+#btn-course-analytics {
+    width: 100%;
+}
+
+.btn-container button:hover {
+    color: white;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#course-description-text {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #350d51;
+    margin-top: 20px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+#course-title {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    color: #350d51;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.course-description {
+    min-height: 450px;
+    margin: 30px 50px 30px 50px;
+}
+
+.course-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px dashed #350d516d;
+    padding: 15px 20px;
+    margin-top: 50px;
+}
+
+.course-meta p {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #571c81;
+    margin: 0;
+    font-weight: 500;
+}
+
+.course-meta span {
+    font-weight: 600;
+    color: #8c3bd7;
+}
+
+.course-code {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#copy-icon {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}

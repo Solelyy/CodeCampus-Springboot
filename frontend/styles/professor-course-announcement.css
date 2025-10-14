@@ -1,0 +1,90 @@
+.course-announcement {
+    padding: 50px;
+}
+
+.course-announcement h4{
+    color: #47156c;
+    font-family: "Inter", sans-serif;
+}
+
+.btn-add-announcement-container {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.activity-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+#btn-add-announcement {
+    background-color: rgb(40, 146, 111);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#btn-add-announcement:hover {
+    background-color: rgb(32, 117, 89);
+    transition: background-color 0.2s ease;
+}
+
+.announcement-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.announcement-item {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    border: 1px solid rgba(71, 21, 108, 0.12);
+    box-shadow: 0 0 4px rgba(71, 21, 108, 0.08);
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+    border-radius: 5px;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.announcement-item:hover {
+    border: 1px solid rgba(71, 21, 108, 0.25);
+    box-shadow: 0 0 6px rgba(83, 27, 186, 0.2);
+    transition: box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+#btn-view {
+  background-color: white;
+  color: #47156c;
+  border: 1px solid #47156c;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 
+    box-shadow 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border 0.3s ease;
+}
+
+#btn-view:hover {
+    border: none;
+    color: white;
+    background-color: #5d3ac6;
+    transform: translateY(-1px) scale(1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+#btn-edit {
+    padding: 8px 16px;
+    border-radius: 4px;
+}   
