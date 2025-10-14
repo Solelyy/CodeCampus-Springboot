@@ -5,42 +5,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const editor = ace.edit("editor");
     editor.setTheme("ace/theme/dracula");
     editor.session.setMode("ace/mode/java");
-    editor.session.getUndoManager().markClean(); // mark clean to prevent Brave popup
+    editor.session.getUndoManager().markClean();
     console.log("ACE editor initialized");
 
     // --- DOM Elements ---
     const runBtn = document.getElementById("runBtn");
-    const saveBtn = document.getElementById("saveBtn");
+    const submitBtn = document.getElementById("saveBtn"); // Your Submit button
     const outputBox = document.getElementById("output");
     const feedback = document.getElementById("feedback");
 
-    // --- Prevent default form submit ---
-    document.querySelectorAll("form").forEach(f => {
-        f.addEventListener("submit", e => e.preventDefault());
-    });
+    let lastCode = "";      // Keep track of last code to prevent duplicate runs
+    let isRunning = false;  // Prevent multiple concurrent runs
 
     // --- Run Code ---
     runBtn.addEventListener("click", async (event) => {
         event.preventDefault();
-        console.log("Run button clicked");
+        event.stopPropagation();
 
         const code = editor.getValue().trim();
-        console.log("Code:", code);
 
         if (!code) {
             outputBox.innerText = "Error: No code provided.";
             feedback.innerText = "Feedback: Failed.";
-            saveBtn.disabled = true;
+            submitBtn.disabled = true;
             return;
         }
 
-        const hasPrint = /System\.out\.println\s*\(.*\)/.test(code);
-        if (!hasPrint) {
+        if (!/System\.out\.println\s*\(.*\)/.test(code)) {
             outputBox.innerText = "Error: Missing System.out.println() statement.";
             feedback.innerText = "Feedback: Failed.";
-            saveBtn.disabled = true;
+            submitBtn.disabled = true;
             return;
         }
+
+        // Prevent duplicate runs
+        if (isRunning || code === lastCode) {
+            console.log("Duplicate or running code prevented.");
+            return;
+        }
+
+        isRunning = true;
+        lastCode = code;
 
         try {
             const res = await fetch("http://localhost:8081/api/run", {
@@ -49,12 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: "code=" + encodeURIComponent(code)
             });
 
-            console.log("Fetch returned:", res);
-
             if (!res.ok) {
                 outputBox.innerText = `Error: Server responded with ${res.status}`;
                 feedback.innerText = "Feedback: Failed.";
-                saveBtn.disabled = true;
+                submitBtn.disabled = true;
+                isRunning = false;
                 return;
             }
 
@@ -63,48 +67,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
             outputBox.innerText = output || "No output.";
             feedback.innerText = output.includes("Error") ? "Feedback: Failed." : "Feedback: Passed!";
-            saveBtn.disabled = feedback.innerText.includes("Failed");
+            submitBtn.disabled = feedback.innerText.includes("Failed");
 
-            // Mark editor clean after successful run
+            // Mark editor clean
             editor.session.getUndoManager().markClean();
 
         } catch (err) {
             console.error("Fetch error:", err);
             outputBox.innerText = "Error connecting to server:\n" + err.message;
             feedback.innerText = "Feedback: Failed.";
-            saveBtn.disabled = true;
+            submitBtn.disabled = true;
+        } finally {
+            isRunning = false;
         }
     });
 
-    // --- Save Code ---
-    saveBtn.addEventListener("click", async (event) => {
+    // --- Submit Button (optional) ---
+    submitBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        console.log("Save button clicked");
+        event.stopPropagation();
 
         const code = editor.getValue().trim();
         if (!code) return;
 
-        try {
-            const res = await fetch("http://localhost:8081/api/save", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "code=" + encodeURIComponent(code)
-            });
-
-            const result = await res.text();
-            console.log("Save response:", result);
-
-            outputBox.innerText = result; // show save result in output
-            saveBtn.disabled = true;
-
-            editor.session.getUndoManager().markClean(); // prevent Brave popup
-
-        } catch (err) {
-            console.error("Error saving code:", err);
-            outputBox.innerText = "Error saving code:\n" + err.message;
-        }
+        console.log("Submit clicked. Code ready to send to backend or save.");
+        outputBox.innerText = "Code submitted successfully!";
+        submitBtn.disabled = true;
     });
 
-    // --- Remove beforeunload popup completely ---
+    // --- Prevent any unwanted reloads ---
     window.onbeforeunload = null;
 });
