@@ -19,9 +19,8 @@
 
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
-    <link rel="stylesheet" href="/frontend/styles/student-course-overview.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/student-course-activities.css">
+    <link rel="stylesheet" href="/frontend/styles/help-faqs.css">
 
     <title>CodeCampus</title>
 </head>
@@ -29,7 +28,9 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/index.html">
+                    <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
+                </a>
             </div>
 
             <div class="right">
@@ -88,38 +89,49 @@
     </header>
 
     <main>
-        <section class="course-overview">
-            <div class="course-navs">
-                <div class="course-tab" id="tab-overview">
-                    <h3>Overview</h3>
-                </div>
-                <div class="course-tab" id="tab-activities">
-                    <h3>Activities</h3>
-                </div>
-                <div class="course-tab" id="tab-leaderboard">
-                    <h3>Leaderboard</h3>
-                </div>
-                <div class="course-tab" id="tab-announcement">
-                    <h3>Announcement</h3>
-                </div>
+        <section class="help-faqs-container">
+            <h2>Help & FAQs</h2>
+            <div class="faq-item">
+                <h3>❓Joining Courses</h3>
+                <p>Q: How do I join a course?</p>
+                <p>A: To join a course, click the "Join Course" button on your homepage. You can join Public
+                    courses directly, or enter a code to join Private Courses.
+                </p>
             </div>
 
-            <div class="course-activities">
-                <div class="activity-difficulty">
-                    <div> 
-                        <h3 id="label">Finish each activity to earn points! 🚀</h3>
-                    </div>
-                </div>
-
-                <div class="activities">
-                    <div class="activity-card" onclick="location.href='/frontend/webpages/student-course-challenge.html'">
-                        <p class="activity-title" id="activity-title"></p>
-                        <p class="activity-points" id="activity-points"></p>
-                        <p class="activity-status" id="activity-status"></p>
-                    </div>
-
-                </div>
+            <div class="faq-item">
+                <h3>❓Activities</h3>
+                <p>Q: Can I retry an activity if I fail?</p>
+                <p>A: No worries, you can only submit an activity once you get the correct answer.</p>
             </div>
+
+            <div class="faq-item">
+                <h3>❓Leaderboard</h3>
+                <p>Q: How are rankings decided?</p>
+                <p>A: Rankings are based on total points earned and fastest completion times.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Profile and Progress</h3>
+                <p>Q: Can I track my progress?</p>
+                <p>A: Your completed activities and achievements are shown in your profile.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Resetting Password</h3>
+                <p>Q: How do I reset my password?</p>
+                <p>A: To reset your password, go to the Account Settings page.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>❓Technical Issues</h3>
+                <p>If you encounter any technical issues, please contact our support team. Click "Contact Support" for assistance.</p>
+            </div>
+
+            <div class="contact-support-container">
+                <p id="contact-support"> <a href="/frontend/webpages/student-contact-support.html">Contact Support</a></p>
+            </div>
+
         </section>
     </main>
 
@@ -127,7 +139,5 @@
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
-<script src="/frontend/scripts/student-course-activities.js"></script>
-<script src="/frontend/scripts/student-course-tabs.js"></script>
 <script src="/frontend/scripts/general.js"></script>
 </html>
