@@ -19,9 +19,8 @@
 
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
-    <link rel="stylesheet" href="/frontend/styles/student-course-overview.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/student-course-activities.css">
+    <link rel="stylesheet" href="/frontend/styles/account-settings.css">
 
     <title>CodeCampus</title>
 </head>
@@ -29,7 +28,9 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/index.html">
+                    <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
+                </a>
             </div>
 
             <div class="right">
@@ -88,37 +89,37 @@
     </header>
 
     <main>
-        <section class="course-overview">
-            <div class="course-navs">
-                <div class="course-tab" id="tab-overview">
-                    <h3>Overview</h3>
-                </div>
-                <div class="course-tab" id="tab-activities">
-                    <h3>Activities</h3>
-                </div>
-                <div class="course-tab" id="tab-leaderboard">
-                    <h3>Leaderboard</h3>
-                </div>
-                <div class="course-tab" id="tab-announcement">
-                    <h3>Announcement</h3>
-                </div>
-            </div>
+        <section class="account-settings-container">
+            <h2>Account Settings</h2>
+            <form id="account-settings-form" class="account-settings-form">
+                <div class="form-group">
+                    <h3>Change Password</h3>
+                    <div>
+                        <label for="current-password">Current Password:</label>
+                        <input type="password" id="current-password" name="current-password" placeholder="Enter your current password" required>
+                    </div>
 
-            <div class="course-activities">
-                <div class="activity-difficulty">
-                    <div> 
-                        <h3 id="label">Finish each activity to earn points! 🚀</h3>
+                    <div>
+                        <label for="new-password">New Password:</label>
+                        <input type="password" id="new-password" name="new-password" placeholder="Enter your new password" required>
+                    </div>
+
+                    <div>
+                        <label for="confirm-password">Confirm New Password:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your new password" required>
                     </div>
                 </div>
 
-                <div class="activities">
-                    <div class="activity-card" onclick="location.href='/frontend/webpages/student-course-challenge.html'">
-                        <p class="activity-title" id="activity-title"></p>
-                        <p class="activity-points" id="activity-points"></p>
-                        <p class="activity-status" id="activity-status"></p>
-                    </div>
-
+                <div class="update-password-container">
+                    <button type="submit" id="update-password-btn">Update Password</button>
                 </div>
+                
+            </form>
+
+            <div class="manage-account-container">
+                <h3>Manage Account</h3>
+                <p>Warning: This action is irreversible. Deleting your account will remove all your data permanently.</p>
+                <button id="delete-account-btn">Delete Account</button>
             </div>
         </section>
     </main>
@@ -127,7 +128,5 @@
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
 </body>
-<script src="/frontend/scripts/student-course-activities.js"></script>
-<script src="/frontend/scripts/student-course-tabs.js"></script>
 <script src="/frontend/scripts/general.js"></script>
 </html>

@@ -66,7 +66,20 @@
                         </a>
                     </li>
 
-                    <li><a href=""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    <li class="menu-wrapper">
+                        <a href="#" id="menu-icon">
+                            <img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon">
+                        </a>
+
+                        <!-- Menu Overlay -->
+                        <div id="menu-overlay" class="menu-overlay">
+                            <ul>
+                                <li><a href="/frontend/webpages/student-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/student-help-faqs.html">Help & FAQs</a></li>
+                                <li><a href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>

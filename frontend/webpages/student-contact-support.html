@@ -20,7 +20,8 @@
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/student-contact-support.css">
+    <link rel="stylesheet" href="/frontend/styles/contact-support.css">
+
 
     <title>CodeCampus</title>
 </head>
@@ -28,10 +29,11 @@
     <header>
         <nav class="navbar">
             <div class="left">
-                <a href="/frontend/webpages/student-homepage.html"><img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo"></a>
+                <a href="/index.html">
+                    <img src="/frontend/assets/images/site-logo.png" alt="logo" id="site-logo">
+                </a>
             </div>
 
-            <div class="right">
             <div class="right">
                 <ul class="nav-links" id="nav-links"> 
                     <li class="notification-wrapper">
@@ -68,42 +70,45 @@
                         </a>
                     </li>
 
-                    <li><a href=""><img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon"></a></li>
+                    <li class="menu-wrapper">
+                        <a href="#" id="menu-icon">
+                            <img src="/frontend/assets/icons/icon-menu.png" alt="menu-icon">
+                        </a>
+
+                        <!-- Menu Overlay -->
+                        <div id="menu-overlay" class="menu-overlay">
+                            <ul>
+                                <li><a href="/frontend/webpages/student-account-settings.html">Account Settings</a></li>
+                                <li><a href="/frontend/webpages/student-help-faqs.html">Help & FAQs</a></li>
+                                <li><a href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
     </header>
 
-<div class="student-contact">
-  <div class="text-wrapper">Contact Support</div>
-  <div class="group">
-    <form class="group">
+    <main>
+        <section class="contact-support-container">
+            <h2>Contact Support</h2>
+            <form action="#" method="post" class="contact-form">
+                <label for="name">Email:</label>
+                <input type="text" id="email" name="email" required>
 
-        <div class="rectangle"></div>
-        <div class="div">Subject:</div>
-        <div class="text-wrapper-2">Message:</div>
-        <div class="text-wrapper-3">Email:</div>
-        <input type="email" class="email-input" id="email" value="tswift@gmail.com" required />
-        <input type="text" class="subject-input" id="subject" required />
-        <textarea class="message-input" id="message" placeholder="Describe the issue here." required></textarea>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
 
-        <div class="group-wrapper">
-          <button type="submit" class="group-2 submit-btn">
-            <div class="rectangle-3"></div>
-            <div class="text-wrapper-6">Submit</div>
-          </button>
-        </div>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Describe the issue here."></textarea>
 
-        <div class="div-wrapper">
-          <button type="button" class="group-2 cancel-btn">
-            <div class="rectangle-3"></div>
-            <div class="text-wrapper-6">Cancel</div>
-          </button>
-        </div>
-
-    </form>
-  </div>
-</div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" onclick="location.href='/frontend/webpages/student-homepage.html'">Cancel</button>
+                    <button type="submit" id="submit-btn">Submit</button>
+                </div>
+            </form>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
@@ -111,4 +116,3 @@
 </body>
 <script src="/frontend/scripts/general.js"></script>
 </html>
-

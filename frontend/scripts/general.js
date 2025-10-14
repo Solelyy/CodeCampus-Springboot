@@ -13,3 +13,49 @@ document.addEventListener('click', (e) => {
     notifOverlay.classList.remove('show');
   }
 });
+
+// Menu Overlay Toggle
+const menuIcon = document.getElementById('menu-icon');
+const menuOverlay = document.getElementById('menu-overlay');
+
+menuIcon.addEventListener('click', (e) => {
+  e.preventDefault();
+  menuOverlay.classList.toggle('show');
+});
+
+// Hide when clicking outside
+document.addEventListener('click', (e) => {
+  if (!menuIcon.contains(e.target) && !menuOverlay.contains(e.target)) {
+    menuOverlay.classList.remove('show');
+  }
+});
+
+// Smooth page transitions
+window.addEventListener("load", () => {
+  const main = document.querySelector("main");
+  if (main) main.classList.add("fade-in");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname && link.getAttribute("href")) {
+    link.addEventListener("click", e => {
+      const url = link.getAttribute("href");
+      if (url.startsWith("#") || url.startsWith("javascript:")) return;
+
+      e.preventDefault();
+
+      const main = document.querySelector("main");
+      if (main) {
+        main.classList.remove("fade-in");
+        main.classList.add("fade-out");
+      }
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 180); // match CSS duration
+    });
+  }
+});
+
+
+
