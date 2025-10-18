@@ -34,11 +34,24 @@
         <section class="intro">
             <div class="intro-text">
                 <h1>Welcome to CodeCampus!</h1>
-                <p>Build your skills, challenge yourself, and earn your spot at the top of the leaderboard.</p>
-                <ul class="features">
-                    <li>📘 Join Courses</li>
-                    <li>💻 Practice coding challenges</li>
-                    <li>🏆 Compete on the leaderboard</li>
+                <p class="tagline">Where Learning Meets Practice — One Challenge at a Time.</p>
+                <p class="description">Build your skills, challenge yourself, and earn your spot at the top of the leaderboard.</p>
+                
+                <div class="role-toggle">
+                    <button type="button" class="role-btn active" data-role="student">For Students</button>
+                    <button type="button" class="role-btn" data-role="professor">For Professors</button>
+                </div>
+
+                <ul class="features" data-role="student">
+                    <li><span class="feature-icon book">📘</span><span>Join and explore courses</span></li>
+                    <li><span class="feature-icon code">💻</span><span>Practice coding challenges</span></li>
+                    <li><span class="feature-icon trophy">🏆</span><span>Compete on the leaderboard</span></li>
+                </ul>
+
+                <ul class="features hidden" data-role="professor">
+                    <li><span class="feature-icon create">📝</span><span>Create and manage courses</span></li>
+                    <li><span class="feature-icon students">👥</span><span>Track student progress</span></li>
+                    <li><span class="feature-icon activity">⚡</span><span>Design custom activities</span></li>
                 </ul>
             </div>
             <div class="sign-in-container">

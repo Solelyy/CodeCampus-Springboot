@@ -1,24 +1,35 @@
 button {
-    padding: clamp(7px, 2vw, 13px) clamp(20px, 4vw, 30px);
-    font-size: clamp(14px, 1.5rem, 18px);
-    border-radius: 10px;
-    font-weight: regular;
+    padding: clamp(10px, 2vw, 14px) clamp(24px, 4vw, 32px);
+    font-size: clamp(15px, 1.5rem, 17px);
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    border-radius: 8px;
     min-width: 120px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     transition: all 0.3s ease;
-    background-color: #4a2d96;
+    background-color: var(--primary-green, #66C355);
     color: white;
     border: none;
+    letter-spacing: 0.3px;
+}
+
+button:focus {
+    outline: 3px solid rgba(102, 195, 85, 0.5);
+    outline-offset: 2px;
 }
 
 button:hover {
-    background-color: #5d3ac6;
-    transform: translateY(-1px) scale(1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: var(--dark-green, #35954D);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(53, 149, 77, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(53, 149, 77, 0.2);
 }
 
 h2 {
-    color: rgb(165, 162, 162);
-    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
 }
