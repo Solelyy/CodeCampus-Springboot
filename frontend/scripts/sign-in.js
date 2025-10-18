@@ -1,3 +1,37 @@
+// Role toggle functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const roleButtons = document.querySelectorAll('.role-btn');
+    const featureLists = document.querySelectorAll('.features');
+
+    roleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetRole = button.getAttribute('data-role');
+            
+            // Update active button
+            roleButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Toggle feature lists with animation
+            featureLists.forEach(list => {
+                if (list.getAttribute('data-role') === targetRole) {
+                    list.classList.remove('hidden');
+                    // Reset animations for immediate effect
+                    const items = list.querySelectorAll('li');
+                    items.forEach((item, index) => {
+                        item.style.animation = 'none';
+                        setTimeout(() => {
+                            item.style.animation = `fadeUp 0.4s ease forwards`;
+                            item.style.animationDelay = `${index * 0.1}s`;
+                        }, 10);
+                    });
+                } else {
+                    list.classList.add('hidden');
+                }
+            });
+        });
+    });
+});
+
 const signInForm = document.getElementById('sign-in-form');
 const errorMessage = document.getElementById('error-message');
 const signInBtn = document.getElementById('sign-in-btn');
@@ -58,7 +92,7 @@ signInForm.addEventListener('submit', async (event) => {
 
         errorMessage.style.color = 'rgb(119, 211, 119)';
         errorMessage.textContent = 'Sign in successful! Redirecting...';
-        
+
         // Redirect based on role
         setTimeout(() => {
             if (result.role === "ROLE_PROFESSOR") {
