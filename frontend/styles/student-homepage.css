@@ -9,6 +9,10 @@
     }
 }
 
+body {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e0e7ef 100%);
+}
+
 .student-homepage {
     display: flex;
     flex-direction: column;
@@ -19,6 +23,11 @@
     margin-bottom: 100px;
 }
 
+.student-homepage h2 {
+    color: #0E276A;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 20px;
+}
 .join-course-btn-container {
     width: 100%;
     display: flex;
@@ -36,10 +45,6 @@
     justify-items: start;
     align-items: center;
     max-width: 1200px;     
-}
-
-footer {
-    color: white !important;
 }
 
 #greet {
