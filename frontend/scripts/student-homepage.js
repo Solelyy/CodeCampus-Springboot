@@ -41,8 +41,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         courses.forEach(course => {
             const card = templateCard.cloneNode(true);
             card.style.display = 'block'; // make it visible
+const titleEl = card.querySelector('.course-title');
+titleEl.textContent = course.title;
+titleEl.setAttribute('data-fulltitle', course.title);
+titleEl.setAttribute('data-tooltip', course.title); // <-- ADD THIS
+console.log('Tooltip added for:', titleEl.textContent);
 
-            card.querySelector('.course-title').textContent = course.title;
+
             card.querySelector('.course-author').textContent = `By ${course.professorName}`;
             card.querySelector('.course-progress').textContent = `Progress: 0%`;
 
@@ -68,6 +73,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         updateGreet();
+        document.dispatchEvent(new Event('coursesRendered'));
+
     }
 
     fetchStudentCourses();

@@ -1,6 +1,19 @@
+:root {
+  --primary-green: #66C355;
+  --secondary-green: #6CD151;
+  --dark-green: #35954D;
+  --primary-blue: #0868A4;
+  --dark-blue: #0E276A;
+  --text-dark: #333333;
+  --bg-light: #FFFFFF;
+  --gray-border: #E5E7EB;
+  --gray-card: #D1D5DB;
+}
+
+
 @keyframes transitionIn {
     from {
-        opactity:0;
+        opacity:0;
         transform: rotate(0deg);
     }
     to {
@@ -97,17 +110,28 @@ main {
 /*FOOTER*/
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 25px 20px;
     bottom: 0;
     width: 100%;
-    color: white;
-    background: linear-gradient(135deg, 
-    #7554b6 0%, 
-    #6240ad 35%, 
-    #4a30a0 70%, 
-    #4a30a0 100%
-    );
-    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    background: linear-gradient(180deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+    font-size: 13px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+}
+
+footer p {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
 }
 
 /* Notification overlay dropdown */

@@ -7,6 +7,8 @@
     width: 300px;
     box-shadow: 0 3px 8px rgba(34, 4, 90, 0.122);
     background-color: #f8f4ff; 
+    transition: all 0.3s ease;
+    overflow: visible;
 }
 
 .course-card-template:hover {
@@ -14,12 +16,13 @@
   transition: all 0.3s ease;
 }
 
+/* Image container styles */
 .course-image-container {
     border: 1px solid #dbd2f0;
     border-radius: 10px;
     overflow: hidden;
-    margin: 15px;
-    height: 270px;
+    margin: 15px 15px 10px 15px;
+    height: 250px;
     width: 270px;
     padding: 5px;
     background-color: rgb(255, 255, 255);
@@ -32,9 +35,10 @@
     overflow: hidden;
 }
 
+/* Course info styles */
 .joined-courses-container h3, 
 .joined-courses-container p {
-    color: #47156c;
+    color: #0E276A;
     font-family: "Inter", sans-serif;
 }
 
@@ -46,6 +50,7 @@
     display: flex;
     flex-direction: column;
     margin: 0px 15px 15px 15px;
+    flex: 1;
 }
 
 .course-title-progress {
@@ -53,6 +58,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 12px;
 }
 
 .course-title-progress h3,
@@ -60,10 +66,19 @@
     margin: 0;
 }
 
-.course-title-progress h3 {
+.course-title {
+  position: relative;
+  display: inline-block;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  vertical-align: middle;
 }
+
 .course-title-progress p {
   font-size: 0.9rem;
   color: #7733a5ba;
@@ -72,11 +87,38 @@
 .course-info {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    line-height: 8px;
-    margin: 1.5rem 0px 1.5rem 0px;
+    gap: 10px;
+    margin-top: 12px;
+    flex-grow: 1;
 }
 
 .course-card-template {
     display: none;
+    margin: 0;
+    line-height: 1.4;
 }
+
+.course-progress {
+    white-space: nowrap;
+}
+
+.course-info-container,
+.course-title-progress,
+.course-card-template {
+  overflow: visible;
+  position: relative;
+}
+
+.dynamic-tooltip {
+  position: absolute;
+  display: none;
+  background-color: rgba(53, 13, 81, 0.9);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 999999;
+  pointer-events: none;
+}
+
