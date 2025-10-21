@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
     const searchInput = document.getElementById('search-courses');
-    const noCoursesMessage = document.getElementById('greet');
+    const noCoursesMessage = document.getElementById('empty-state-public-courses'); //greet message
 
     function updateGreet() {
         const courses = container.querySelectorAll('.course-card');
@@ -55,7 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = '/frontend/assets/images/java.png';
             img.alt = course.title;
 
-            card.querySelector('.course-title').textContent = course.title;
+            const titleEl = card.querySelector('.course-title');
+            titleEl.textContent = course.title;
+
+            //Tooltip addition
+            titleEl.setAttribute('data-fulltitle', course.title);
+            titleEl.setAttribute('data-tooltip', course.title);
+            console.log('Tooltip added for:', titleEl.textContent);
+            
             card.querySelector('.course-progress').textContent = course.public ? 'Public' : 'Private';
             card.querySelector('.course-author').textContent = `By ${course.professorName}`;
 
@@ -67,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(card);
         });
         updateGreet();
+        document.dispatchEvent(new Event('coursesRendered'));
     }
 
     // --- Search functionality ---

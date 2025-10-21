@@ -53,6 +53,9 @@ header {
     left: 0;
     right: 0;
     z-index: 9999; 
+    background-color: var(--bg-light);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-bottom: 1px solid var(--gray-border);
 }
 
 .navbar{
@@ -83,10 +86,10 @@ header {
 }
 
 .nav-links img {
-    height: 30px;
+    height: 40px;
     width: auto;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; 
 }
 
 .nav-links img:hover {
@@ -94,17 +97,31 @@ header {
     transform: scale(1.1);
 }
 
+#notif-icon img {
+    height: 50px;
+    width: auto;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
 #site-logo {
     height: 70px;
     width: auto;
     cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#site-logo:hover {
+    transform: scale(1.05);
 }
 
 /*MAIN*/
+/*MAIN*/
 main {
     min-height: 100dvh;
-    padding-top: 90px;
+    padding-top: 100px;
     flex: 1;
+    margin-bottom: 300px;
 }
 
 /*FOOTER*/
@@ -319,7 +336,7 @@ footer::before {
 main {
   opacity: 0;
   transform: scale(0.995);
-  transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
 
 /* Fade-in */

@@ -1,3 +1,18 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e0e7ef 100%);
+}
+
 .student-homepage {
     display: flex;
     flex-direction: column;
@@ -6,16 +21,89 @@
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 100px;
+    animation: fadeIn 0.6s ease-out;
 }
 
+/* Page Header Section */
+.page-header {
+    background: linear-gradient(135deg, #0E276A 0%, #1a3a8a 100%);
+    border-radius: 16px;
+    padding: 40px 50px;
+    margin-bottom: 40px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(14, 39, 106, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+}
+
+.page-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header p {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Join Course Button */
 .join-course-btn-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 30px;
+}
+
+#join-course-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#join-course-btn::before {
+    font-size: 18px;
+}
+
+#join-course-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+#join-course-btn:active {
+    transform: translateY(-1px);
 }
 
 .joined-courses-container {
-    margin-top: 10px;
+    margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, max-content));
     width: 100%;
@@ -36,79 +124,246 @@ footer {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    margin: 20px 0;
+    margin: 30px 0 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e7ef;
+}
+
+.courses-header h2 {
+    color: #0E276A;
+    font-family: "Inter", sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
 }
 
 .search-container {
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.search-container::before {
+    content: "🔍";
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 1;
 }
 
 #search-courses {
-    padding: 8px 12px;
-    border: 1px solid #4a2d96;
-    border-radius: 6px;
+    padding: 10px 16px 10px 40px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
     font-size: 14px;
-    width: 217.08px;
+    width: 280px;
+    transition: all 0.3s ease;
+    outline: none;
+    background-color: #fff;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 8px rgba(14, 39, 106, 0.05);
 }
-/*saerchbar end*/
+
+#search-courses:hover {
+    border-color: #0E276A;
+}
+
+#search-courses:focus {
+    border-color: #0E276A;
+    box-shadow: 0 0 0 3px rgba(14, 39, 106, 0.1);
+}
+
+#search-courses::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+/*searchbar end*/
 
 /* modal overlaying (for join private course)*/
 .overlay {
     position: fixed;
     inset: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5);
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
     display: none;
+    z-index: 999;
 }
 
 .join-modal {
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    width: 500px;
-    height: 350px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     display: none;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 50px 40px;
+    width: 450px;
+    height: auto;
+    gap: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     text-align: center;
 }
 
+.join-modal h3 {
+    color: #0E276A;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.join-modal p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
 .join-modal input {
-    margin-top: 50px;
-    width: 250px;
-    height: 100px;
-    border: 2px solid #321875;
-    border-radius: 6px;
-    font-size:20px;
+    width: 100%;
+    max-width: 300px;
+    padding: 16px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 18px;
     text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.join-modal input:focus {
+    border-color: #0E276A;
+    box-shadow: 0 0 0 3px rgba(14, 39, 106, 0.1);
+}
+
+.join-modal input::placeholder {
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 400;
 }
 
 .join-modal button {
-    margin-top: 40px;
-    width: 250px;
-    height: 60px;
+    width: 100%;
+    max-width: 300px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #0E276A 0%, #1a3a8a 100%);
+    color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(14, 39, 106, 0.3);
+}
+
+.join-modal button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 39, 106, 0.4);
+}
+
+.join-modal button:active {
+    transform: translateY(0);
+}
+
+/* Close button for modal */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #64748b;
+    cursor: pointer;
+    width: auto;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #0E276A;
+    transform: none;
+    box-shadow: none;
 }
 
 /* modal overlaying end*/
 
+/* Empty State */
+.greet-container {
+    background: white;
+    border-radius: 12px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-top: 30px;
+}
+
 #greet {
-    color: rgb(80, 80, 99);
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.dynamic-tooltip {
+    position: absolute;
+    display: none;
+    background-color: rgba(14, 39, 106, 0.95);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    z-index: 999999;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student-homepage {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .page-header {
+        padding: 24px;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .courses-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    #search-courses {
+        width: 100%;
+    }
+
+    .join-modal {
+        width: 90%;
+        padding: 40px 30px;
+    }
 }

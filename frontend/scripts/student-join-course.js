@@ -48,15 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const courseCodeInput = document.getElementById("course-code");
 
 //button ng overlay (Join Private Course)
-    joinBtn.addEventListener("click", () => {
-        overlay.style.display = "block";
-        modal.style.display = "block";
-    });
+joinBtn.addEventListener("click", () => {
+    overlay.style.display = "block";
+    modal.style.display = "flex"; // <--- use flex so gap works
+    document.body.style.overflow = "hidden";
+
+});
 
 //click outside overlay para magclose
     overlay.addEventListener("click", () => {
         overlay.style.display = "none";
         modal.style.display = "none";
+        document.body.style.overflow = "auto";
     });
 
 //reserved para sa code input

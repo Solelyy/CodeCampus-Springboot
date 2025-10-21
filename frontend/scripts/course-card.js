@@ -1,6 +1,6 @@
 document.addEventListener('coursesRendered', () => {
   const courseTitles = document.querySelectorAll('.course-title');
-  console.log('coursesRendered fired — titles found:', courseTitles.length);
+  console.log('coursesRendered fired — titles found:', courseTitles.length-1);
 
   // Create tooltip once
   let tooltip = document.querySelector('.dynamic-tooltip');

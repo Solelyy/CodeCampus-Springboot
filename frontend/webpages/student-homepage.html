@@ -89,16 +89,49 @@
 
     <main>
         <section class="student-homepage">
-            <div class="join-course-btn-container">
-                <button id="join-course-btn" onclick=location.href='/frontend/webpages/student-join-course.html'>Join Course</button>
-            </div>
-            <h2>Joined Courses</h2>
-
-            <div class="greet-container">
-                <p id="greet"> 👋 Welcome to CodeCampus! You haven't joined any courses yet. Click "Join Course" to explore available courses!</p>
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <h1 id="welcome-text"><span class="student-name" id="student-name"></span><span id="wave-emoji">👋</span></h1>
+                <p>Ready to continue your coding journey? Let's make today count!</p>
             </div>
 
-            <div class="joined-courses-container">
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value" id="total-courses">0</div>
+                    <div class="stat-label">Enrolled Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="completed-activities">0</div>
+                    <div class="stat-label">Activities Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="total-achievements">0</div>
+                    <div class="stat-label">Achievements</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="streak-days">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+
+            <!-- Courses Section -->
+            <div class="courses-section-header">
+                <h2>My Courses</h2>
+                <div class="join-course-btn-container">
+                    <button id="join-course-btn" onclick=location.href='/frontend/webpages/student-join-course.html'>+ Join Course</button>
+                </div>
+            </div>
+
+            <div class="greet-container" id="empty-state">
+                <p id="greet">You haven't joined any courses yet. Click "Join Course" to explore available courses!</p>
+            </div>
+
+            <div class="joined-courses-container" id="courses-container">
                 <div class="course-card-template course-card">
                     <div class="course-image-container">
                         <img src="/frontend/assets/images/java.png" alt="course-image">
