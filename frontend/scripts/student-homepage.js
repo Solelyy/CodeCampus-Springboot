@@ -4,7 +4,51 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
-    const noCoursesMessage = document.getElementById('greet');
+    const noCoursesMessage = document.getElementById('empty-state'); //greet message
+
+    // Typing Animation for Welcome Banner
+    async function typeWelcomeMessage() {
+        const welcomeTextEl = document.getElementById('welcome-text');
+        const studentNameEl = document.getElementById('student-name');
+        const waveEmoji = document.getElementById('wave-emoji');
+        
+        const welcomeMessage = " Welcome back, Student!";
+        const studentName = localStorage.getItem('studentName') || "Student";
+        
+        let i = 0;
+        
+        // Type welcome message
+        const typeInterval = setInterval(() => {
+            if (i < welcomeMessage.length) {
+                welcomeTextEl.textContent += welcomeMessage.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+                welcomeTextEl.classList.add('typing-complete');
+                
+                // Show student name with slight delay
+                setTimeout(() => {
+                    studentNameEl.textContent = studentName;
+                    studentNameEl.style.opacity = '0';
+                    studentNameEl.style.display = 'inline-block';
+                    
+                    // Fade in student name
+                    setTimeout(() => {
+                        studentNameEl.style.transition = 'opacity 0.5s ease-out';
+                        studentNameEl.style.opacity = '1';
+                        
+                        // Show wave emoji
+                        setTimeout(() => {
+                            waveEmoji.style.display = 'inline';
+                        }, 300);
+                    }, 50);
+                }, 200);
+            }
+        }, 50);
+    }
+
+    // Start typing animation
+    typeWelcomeMessage();
 
     function updateGreet() {
         const courses = container.querySelectorAll('.course-card');
@@ -40,13 +84,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         courses.forEach(course => {
             const card = templateCard.cloneNode(true);
-            card.style.display = 'block'; // make it visible
-const titleEl = card.querySelector('.course-title');
-titleEl.textContent = course.title;
-titleEl.setAttribute('data-fulltitle', course.title);
-titleEl.setAttribute('data-tooltip', course.title); // <-- ADD THIS
-console.log('Tooltip added for:', titleEl.textContent);
+            card.style.display = 'block'; 
+            
+            const titleEl = card.querySelector('.course-title');
+            titleEl.textContent = course.title;
 
+            //Tooltip addition
+            titleEl.setAttribute('data-fulltitle', course.title);
+            titleEl.setAttribute('data-tooltip', course.title); 
+            console.log('Tooltip added for:', titleEl.textContent);
 
             card.querySelector('.course-author').textContent = `By ${course.professorName}`;
             card.querySelector('.course-progress').textContent = `Progress: 0%`;
@@ -58,7 +104,7 @@ console.log('Tooltip added for:', titleEl.textContent);
             const btn = card.querySelector('button');
             btn.textContent = 'Continue';
 
-            // ✅ Decide destination based on pre-assessment status
+            // Decide destination based on pre-assessment status
             if (course.preAssessmentCompleted) {
                 btn.onclick = () => {
                 window.location.href = `/frontend/webpages/student-course-overview.html?courseId=${course.id}`;

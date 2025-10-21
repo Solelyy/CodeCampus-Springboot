@@ -1,12 +1,41 @@
 @keyframes transitionIn {
     from {
-        opactity:0;
-        transform: rotate(0deg);
+        opacity:0;
+        transform: translateY(-10px);
     }
     to {
         opacity: 1;
-        transform: rotate(0deg);
+        transform: translateY(0);
     }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Typing Animation */
+.typing-text {
+    display: inline-block;
+    border-right: 2px solid rgba(255, 255, 255, 0.7);
+    padding-right: 4px;
+    animation: blink 0.7s step-end infinite;
+}
+
+.typing-text.typing-complete {
+    border-right: none;
+    animation: none;
+}
+
+@keyframes blink {
+    from, to { border-color: transparent; }
+    50% { border-color: rgba(255, 255, 255, 0.7); }
 }
 
 body {
@@ -21,17 +50,179 @@ body {
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 100px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(135deg, #0E276A 0%, #1a3a8a 100%);
+    border-radius: 16px;
+    padding: 40px 50px;
+    margin-bottom: 40px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(14, 39, 106, 0.15);
+    animation: transitionIn 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+}
+
+.welcome-banner::after {
+    content: '💻';
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    font-size: 100px;
+    opacity: 0.15;
+}
+
+.welcome-banner h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-banner p {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-banner .student-name {
+    font-weight: 700;
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    position: relative;
+}
+
+/* Stats Overview */
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+    animation: fadeIn 0.7s ease-out;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #0E276A;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(14, 39, 106, 0.12);
+}
+
+.stat-card .stat-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.stat-card .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0E276A;
+    margin-bottom: 4px;
+}
+
+.stat-card .stat-label {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Courses Section Header */
+.courses-section-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin: 30px 0 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e7ef;
 }
 
 .student-homepage h2 {
     color: #0E276A;
     font-family: "Inter", sans-serif;
-    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
 }
+
+/* Join Course Button */
 .join-course-btn-container {
-    width: 100%;
+    width: auto;
     display: flex;
     justify-content: flex-end;
+}
+
+#join-course-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#join-course-btn::before {
+    font-size: 18px;
+}
+
+#join-course-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+#join-course-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Empty State */
+.greet-container {
+    background: white;
+    border-radius: 12px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    animation: fadeIn 0.8s ease-out;
+}
+
+#greet {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 .joined-courses-container {
@@ -44,9 +235,45 @@ body {
     justify-content: space-around;
     justify-items: start;
     align-items: center;
-    max-width: 1200px;     
+    max-width: 1200px;
+    animation: fadeIn 0.9s ease-out;
 }
 
-#greet {
-    color: rgb(80, 80, 99);
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student-homepage {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .welcome-banner {
+        padding: 24px;
+    }
+
+    .welcome-banner h1 {
+        font-size: 24px;
+    }
+
+    .stats-overview {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .courses-section-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .join-course-btn-container {
+        width: 100%;
+    }
+
+    #join-course-btn {
+        width: 100%;
+    }
 }

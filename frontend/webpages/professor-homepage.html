@@ -85,12 +85,46 @@
 
     <main>
         <section class="student-homepage">
-            <div class="join-course-btn-container">
-                <button id="join-course-btn" onclick="location.href='/frontend/webpages/professor-create-course.html'">Create Course</button>
+             <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <h1 id="welcome-text"><span class="student-name" id="student-name"></span><span id="wave-emoji">👋</span></h1>
+                <p>Ready to make coding education even better? Create, share, and inspire!</p>
             </div>
-            <h2>Your Courses</h2>
-            <div class="greet-container">
-                <p id="greet"> 👋 Welcome to CodeCampus! You haven't created any courses yet. Click "Create Course" to get started!</p>
+            
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">📘</div>
+                    <div class="stat-value" id="total-courses-created">0</div>
+                    <div class="stat-label">Courses Created</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🎓</div>
+                    <div class="stat-value" id="total-students">0</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-value" id="total-activities">0</div>
+                    <div class="stat-label">Activities Posted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" id="active-courses">0</div>
+                    <div class="stat-label">Active Courses</div>
+                </div>
+            </div>
+
+            <!-- Courses Section -->
+            <div class="courses-section-header">
+                <h2>My Courses</h2>
+                <div class="join-course-btn-container">
+                    <button id="join-course-btn" onclick=location.href='/frontend/webpages/professor-create-course.html'>+ Create Course</button>
+                </div>
+            </div>
+        
+            <div class="greet-container" id="empty-state">
+                <p id="greet">You haven't created any courses yet. Click "Create Course" to get started!</p>
             </div>
 
             <div class="joined-courses-container">
@@ -119,4 +153,5 @@
 </body>
 <script src="/frontend/scripts/professor-homepage.js"></script>
 <script src="/frontend/scripts/general.js"></script>
+<script src="/frontend/scripts/course-card.js"></script>
 </html>

@@ -1,9 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
-    const noCoursesMessage = document.getElementById('greet');
-
+    const noCoursesMessage = document.getElementById('empty-state'); //greet message
     const coursesContainer = document.querySelector('.joined-courses-container');
+
+    // Typing Animation for Welcome Banner
+    async function typeWelcomeMessage() {
+        const welcomeTextEl = document.getElementById('welcome-text');
+        const studentNameEl = document.getElementById('student-name'); //professor name
+        const waveEmoji = document.getElementById('wave-emoji');
+        
+        const welcomeMessage = " Welcome back, Professor!";
+        const studentName = localStorage.getItem('studentName') || "Professor";
+        
+        let i = 0;
+        
+        // Type welcome message
+        const typeInterval = setInterval(() => {
+            if (i < welcomeMessage.length) {
+                welcomeTextEl.textContent += welcomeMessage.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+                welcomeTextEl.classList.add('typing-complete');
+                
+                // Show student name with slight delay
+                setTimeout(() => {
+                    studentNameEl.textContent = studentName;
+                    studentNameEl.style.opacity = '0';
+                    studentNameEl.style.display = 'inline-block';
+                    
+                    // Fade in student name
+                    setTimeout(() => {
+                        studentNameEl.style.transition = 'opacity 0.5s ease-out';
+                        studentNameEl.style.opacity = '1';
+                        
+                        // Show wave emoji
+                        setTimeout(() => {
+                            waveEmoji.style.display = 'inline';
+                        }, 300);
+                    }, 50);
+                }, 200);
+            }
+        }, 50);
+    }
+
+    // Start typing animation
+    typeWelcomeMessage();
 
     // Function to update visibility
     function updateNoCoursesMessage() {
@@ -53,7 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = '/frontend/assets/images/java.png';
             img.alt = course.title;
 
-            card.querySelector('.course-title').textContent = course.title;
+            const titleEl = card.querySelector('.course-title');
+            titleEl.textContent = course.title;
+
+            //Tooltip addition
+            titleEl.setAttribute('data-fulltitle', course.title);
+            titleEl.setAttribute('data-tooltip', course.title);
+            console.log('Tooltip added for:', titleEl.textContent);
+
+
             card.querySelector('.course-progress').textContent = course.public ? 'Public' : 'Private';
             card.querySelector('.course-author').textContent = `By ${course.professorName}`;
 
@@ -66,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(card);
         }); 
         updateNoCoursesMessage();
+        document.dispatchEvent(new Event('coursesRendered'));
     }
     fetchProfessorCourses();
 });

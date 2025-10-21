@@ -90,7 +90,7 @@
     <main>
         <section class="student-homepage">
             <div class="join-course-btn-container">
-                <button id="join-course-btn">Join Private Course</button>
+                <button id="join-course-btn">Enter Course Code</button>
             </div>
             
             <div class="courses-header">
@@ -104,11 +104,11 @@
 
         <div id="join-modal" class="join-modal">
             <input type="text" id="course-code" placeholder="Enter Code">
-            <button id="join-course-submit">Join Private Course</button>
+            <button id="join-course-submit">Find Course</button>
         </div>
 
-        <div class="greet-container">
-            <p id="greet"> 📚 Welcome to CodeCampus! There's no available public courses yet.</p>
+        <div class="greet-container" id="empty-state-public-courses">
+            <p id="greet"> 📚 There's no available public courses yet.</p>
         </div>
 
             <div class="joined-courses-container">
@@ -140,4 +140,5 @@
 <script src="/frontend/scripts/student-join-course.js"></script>
 <script src="/frontend/scripts/student-fetch-courses.js"></script>
 <script src="/frontend/scripts/general.js"></script>
+<script src="/frontend/scripts/course-card.js"></script>
 </html>

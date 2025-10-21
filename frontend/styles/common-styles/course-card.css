@@ -1,38 +1,56 @@
 .course-card-template {
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    height: 470px;
+    height: 420px;
     width: 300px;
-    box-shadow: 0 3px 8px rgba(34, 4, 90, 0.122);
-    background-color: #f8f4ff; 
-    transition: all 0.3s ease;
-    overflow: visible;
+    box-shadow: 0 2px 12px rgba(14, 39, 106, 0.08);
+    background: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
 }
 
 .course-card-template:hover {
-  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(14, 39, 106, 0.15);
+    transform: translateY(-6px);
 }
 
 /* Image container styles */
 .course-image-container {
-    border: 1px solid #dbd2f0;
-    border-radius: 10px;
+    border: none;
+    border-radius: 0;
     overflow: hidden;
-    margin: 15px 15px 10px 15px;
-    height: 250px;
-    width: 270px;
-    padding: 5px;
-    background-color: rgb(255, 255, 255);
+    margin: 0;
+    height: 200px;
+    width: 100%;
+    padding: 0;
+    background: linear-gradient(135deg, #e8eeff 0%, #f0f4ff 100%);
+    position: relative;
 }
+
+.course-image-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top, rgba(14, 39, 106, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
 .course-image-container img {
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: contain;
-    overflow: hidden;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.course-card-template:hover .course-image-container img {
+    transform: scale(1.08);
 }
 
 /* Course info styles */
@@ -43,22 +61,22 @@
 }
 
 .joined-courses-container p {
-    color: #350d51ca;
+    color: #64748b;
 }
 
 .course-info-container {
     display: flex;
     flex-direction: column;
-    margin: 0px 15px 15px 15px;
+    padding: 20px;
     flex: 1;
+    gap: 12px;
 }
 
 .course-title-progress {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 4px;
 }
 
 .course-title-progress h3,
@@ -67,29 +85,104 @@
 }
 
 .course-title {
-  position: relative;
-  display: inline-block;
-  font-weight: 600;
-  font-size: 1rem;
-  text-overflow: ellipsis;
-  max-width: 180px;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: pointer;
-  vertical-align: middle;
+    position: relative;
+    display: block;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #0E276A;
+    transition: color 0.3s ease;
+}
+
+.course-card-template:hover .course-title {
+    color: #1a3a8a;
 }
 
 .course-title-progress p {
-  font-size: 0.9rem;
-  color: #7733a5ba;
+    font-size: 0.85rem;
+    color: #10b981;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.course-title-progress p::before {
+    content: '📊';
+    font-size: 0.9rem;
 }
 
 .course-info {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 12px;
+    gap: 8px;
     flex-grow: 1;
+}
+
+.course-author {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.course-author::before {
+    content: '👤';
+    font-size: 0.85rem;
+}
+
+/* Button styles */
+.course-info-container button {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #0E276A 0%, #1a3a8a 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(14, 39, 106, 0.2);
+    margin-top: auto;
+    font-family: "Inter", sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-info-container button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.course-info-container button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.course-info-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(14, 39, 106, 0.3);
+}
+
+.course-info-container button:active {
+    transform: translateY(0);
 }
 
 .course-card-template {
@@ -105,20 +198,61 @@
 .course-info-container,
 .course-title-progress,
 .course-card-template {
-  overflow: visible;
-  position: relative;
+    overflow: visible;
+    position: relative;
 }
 
 .dynamic-tooltip {
-  position: absolute;
-  display: none;
-  background-color: rgba(53, 13, 81, 0.9);
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 4px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-  z-index: 999999;
-  pointer-events: none;
+    position: absolute;
+    display: none;
+    background-color: rgba(14, 39, 106, 0.95);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    z-index: 999999;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+}
+
+/* Card status badge (optional, for future use) */
+.course-card-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(16, 185, 129, 0.95);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.course-card-loading {
+    background: linear-gradient(to right, #f0f0f0 8%, #f8f8f8 18%, #f0f0f0 33%);
+    background-size: 800px 104px;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .course-card-template {
+        width: 100%;
+        max-width: 350px;
+    }
 }
 
