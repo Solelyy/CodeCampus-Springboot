@@ -12,6 +12,18 @@
     position: relative;
 }
 
+.course-card {
+    display: flex; /* Ensure visible */
+    flex-direction: column;
+    height: 420px;
+    width: 300px;
+    border-radius: 12px;
+    background: white; /* Important: card background */
+    box-shadow: 0 2px 12px rgba(14, 39, 106, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
 .course-card-template:hover {
     box-shadow: 0 8px 24px rgba(14, 39, 106, 0.15);
     transform: translateY(-6px);
@@ -51,6 +63,15 @@
 
 .course-card-template:hover .course-image-container img {
     transform: scale(1.08);
+}
+
+.course-card:hover .course-image-container img {    
+    transform: scale(1.08);
+}
+
+.course-card:hover {
+    box-shadow: 0 8px 24px rgba(14, 39, 106, 0.15);
+    transform: translateY(-6px);
 }
 
 /* Course info styles */
