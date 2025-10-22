@@ -91,8 +91,14 @@ function renderActivities() {
         card.innerHTML = `
             <p class="activity-title">${activity.title}</p>
             <p class="activity-points">Points: ${points}</p>
-            <p class="activity-status">
-                ${activity.completed ? '✅ Completed' : activity.unlocked ? '🔓 Unlocked' : '🔒 Locked'}
+            <p class="activity-status ${
+                activity.completed
+                ? 'completed'
+                    : activity.unlocked
+                        ? 'unlocked'
+                        : 'locked'
+            }">
+                ${activity.completed ? '✅ Completed' : activity.unlocked ? 'Unlocked' : 'Locked'}
             </p>
         `;
 

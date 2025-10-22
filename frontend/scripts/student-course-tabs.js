@@ -17,8 +17,16 @@ function setupCourseTabs() {
         const tab = document.getElementById(id);
         if (tab) {
             tab.onclick = () => {
+                // Add loading state
+                tab.style.opacity = '0.6';
+                tab.style.pointerEvents = 'none';
+                
                 const url = courseId ? `${path}?courseId=${courseId}` : path;
-                window.location.href = url;
+                
+                // Smooth transition
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 200);
             };
         }
     });

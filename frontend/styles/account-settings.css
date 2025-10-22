@@ -9,42 +9,42 @@
     max-width: 100%;
     margin: 0 0 30px 0;
     padding: 35px;
-    background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
     border-radius: 18px;
-    box-shadow: 0 8px 24px rgba(93, 58, 198, 0.12), 
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12), 
                 0 2px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(93, 58, 198, 0.08);
+    border: 1px solid rgba(20, 149, 106, 0.08);
     transition: box-shadow 0.3s ease;
 }
 
 .account-settings-form:hover,
 .manage-account-container:hover {
-    box-shadow: 0 12px 32px rgba(93, 58, 198, 0.16), 
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.16), 
                 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 h2 {
-    color: #47156c;
+    color: #0E276A;
     font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 40px;
     letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(71, 21, 108, 0.1);
+    text-shadow: 0 1px 2px rgba(14, 39, 106, 0.1);
 }
 
 h3 {
-    color: #47156c;
+    color: #0E276A;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 25px;
     padding-bottom: 12px;
-    border-bottom: 3px solid #e8e0f9;
+    border-bottom: 3px solid #a7f3d0;
     letter-spacing: 0.3px;
 }
 
 .manage-account-container p {
-    color: #764797;
+    color: #0E276A;
     line-height: 1.7;
     font-size: 1.05rem;
     font-weight: 500;
@@ -70,7 +70,7 @@ h3 {
 
 .form-group label {
     font-weight: 600;
-    color: #47156c;
+    color: #0E276A;
     font-size: 1.05rem;
     letter-spacing: 0.3px;
 }
@@ -78,25 +78,25 @@ h3 {
 .form-group input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #d6c3f5;
+    border: 2px solid #a7f3d0;
     border-radius: 10px;
     font-size: 1.05rem;
     font-family: "Inter", sans-serif;
-    color: #47156c;
+    color: #0E276A;
     background-color: #fefefe;
     transition: all 0.3s ease;
-    box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.04);
+    box-shadow: inset 0 2px 6px rgba(16, 185, 129, 0.04);
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #5d3ac6;
-    box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.08),
-                0 0 0 3px rgba(93, 58, 198, 0.1);
+    border-color: #10b981;
+    box-shadow: inset 0 2px 6px rgba(16, 185, 129, 0.08),
+                0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
 .form-group input::placeholder {
-    color: #b8a5d6;
+    color: #9ca3af;
 }
 
 #update-password-btn, 
@@ -113,15 +113,15 @@ h3 {
 }
 
 #update-password-btn {
-    background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(93, 58, 198, 0.25);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
 #update-password-btn:hover {
-    background: linear-gradient(135deg, #7c57e3 0%, #9370db 100%);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(93, 58, 198, 0.35);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
 }
 
 #update-password-btn:active {
@@ -149,7 +149,7 @@ h3 {
     justify-content: flex-end;
     margin-top: 25px;
     padding-top: 20px;
-    border-top: 2px solid #e8e0f9;
+    border-top: 2px solid #a7f3d0;
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */

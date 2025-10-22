@@ -7,44 +7,44 @@
 }
 
 .help-faqs-container h2 {
-    color: #47156c;
+    color: #0E276A;
     font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 40px;
     letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(71, 21, 108, 0.1);
+    text-shadow: 0 1px 2px rgba(14, 39, 106, 0.1);
 }
 
 .faq-item {
-    background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
     padding: 25px 30px;
     margin-bottom: 20px;
     border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(93, 58, 198, 0.1), 
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.1), 
                 0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(93, 58, 198, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.08);
     transition: all 0.3s ease;
 }
 
 .faq-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(93, 58, 198, 0.14), 
+    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.14), 
                 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .faq-item h3 {
-    color: #47156c;
+    color: #0E276A;
     font-size: 1.35rem;
     font-weight: 700;
     margin-bottom: 18px;
     padding-bottom: 10px;
-    border-bottom: 3px solid #e8e0f9;
+    border-bottom: 3px solid #a7f3d0;
     letter-spacing: 0.3px;
 }
 
 .faq-item p {
-    color: #764797;
+    color: #047857;
     line-height: 1.7;
     font-size: 1.05rem;
     margin-bottom: 12px;
@@ -52,7 +52,7 @@
 }
 
 .faq-item p:first-of-type {
-    color: #47156c;
+    color: #0E276A;
     font-weight: 600;
     margin-top: 8px;
 }
@@ -60,9 +60,9 @@
 .faq-item p:last-child {
     margin-bottom: 0;
     padding: 15px 18px;
-    background: linear-gradient(135deg, #f8f5ff 0%, #f0ebf8 100%);
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
     border-radius: 10px;
-    border-left: 4px solid #5d3ac6;
+    border-left: 4px solid #10b981;
 }
 
 .contact-support-container {
@@ -70,11 +70,11 @@
     justify-content: center;
     margin-top: 40px;
     padding: 30px;
-    background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
     border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(93, 58, 198, 0.1), 
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.1), 
                 0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(93, 58, 198, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.08);
 }
 
 #contact-support {
@@ -85,22 +85,22 @@
 }
 
 #contact-support a {
-    color: #5d3ac6;
+    color: #10b981;
     text-decoration: none;
     padding: 12px 32px;
-    background: linear-gradient(135deg, #f8f5ff 0%, #e8e0f9 100%);
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
     border-radius: 10px;
     display: inline-block;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(93, 58, 198, 0.15);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
     letter-spacing: 0.3px;
 }
 
 #contact-support a:hover {
-    background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(93, 58, 198, 0.3);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
 }
 
 #contact-support a:active {
