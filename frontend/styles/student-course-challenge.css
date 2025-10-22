@@ -4,7 +4,7 @@
     flex-direction: column;
     margin: 20px 50px 100px 50px;
     font-family: "Inter", sans-serif;
-    color: #47156c;
+    color: #0E276A;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
@@ -14,12 +14,12 @@
 #challenge-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #47156c;
+    color: #0E276A;
     margin-bottom: 25px;
     letter-spacing: 0.3px;
-    border-bottom: 4px solid #5d3ac6;
+    border-bottom: 4px solid #10b981;
     padding-bottom: 12px;
-    text-shadow: 0 1px 2px rgba(71, 21, 108, 0.1);
+    text-shadow: 0 1px 2px rgba(14, 39, 106, 0.1);
     padding-left: 20px;
 }
 
@@ -35,20 +35,20 @@
 /* ---------- LEFT & RIGHT PANELS ---------- */
 .left-side,
 .right-side {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f5ff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
     border-radius: 16px;
     padding: 28px;
-    box-shadow: 0 8px 24px rgba(93, 58, 198, 0.08), 
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.08), 
                 0 2px 8px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(93, 58, 198, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.12);
     transition: box-shadow 0.3s ease;
 }
 
 .left-side:hover,
 .right-side:hover {
-    box-shadow: 0 12px 32px rgba(93, 58, 198, 0.12), 
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.15), 
                 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
@@ -80,14 +80,14 @@
 
 #label {
     font-weight: 600;
-    color: #47156c;
-    background: linear-gradient(135deg, #f0ebf8 0%, #e8e0f9 100%);
+    color: #0E276A;
+    background: linear-gradient(135deg, #e8f9f3 0%, #d1f4e6 100%);
     padding: 8px 16px;
     border-radius: 24px;
     display: inline-flex;
     align-items: center;
     font-size: 0.95rem;
-    box-shadow: 0 2px 8px rgba(93, 58, 198, 0.08);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
     transition: transform 0.2s ease;
 }
 
@@ -97,7 +97,7 @@
 
 #challenge-label {  
     font-weight: 700;
-    color: #47156c;
+    color: #0E276A;
     font-size: 1.15rem;
     margin-bottom: 8px;
     margin-top: 5px;
@@ -106,12 +106,12 @@
 #challenge-difficulty {
     font-weight: 700;
     color: #fff;
-    background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     padding: 4px 12px;
     border-radius: 16px;
     margin-left: 8px;
     font-size: 0.85rem;
-    box-shadow: 0 2px 6px rgba(93, 58, 198, 0.3);
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -119,12 +119,12 @@
 #challenge-points {
     font-weight: 700;
     color: #fff;
-    background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
     padding: 4px 12px;
     border-radius: 16px;
     margin-left: 8px;
     font-size: 0.85rem;
-    box-shadow: 0 2px 6px rgba(230, 126, 34, 0.3);
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -133,13 +133,13 @@
 #challenge-description {
     font-size: 1.02rem;
     line-height: 1.7;
-    color: #47156c;
-    background-color: #fdfcff;
-    border-left: 5px solid #5d3ac6;
+    color: #475569;
+    background-color: #fdfffe;
+    border-left: 5px solid #10b981;
     padding: 18px 20px;
     border-radius: 10px;
     margin-bottom: 18px;
-    box-shadow: 0 3px 12px rgba(93, 58, 198, 0.06);
+    box-shadow: 0 3px 12px rgba(16, 185, 129, 0.08);
     transition: border-left-width 0.3s ease;
 }
 
@@ -151,7 +151,7 @@
 #editor {
     height: 400px;
     width: 100%;
-    border: 2px solid #d6c3f5;
+    border: 2px solid #a7f3d0;
     border-radius: 12px;
     padding: 0;
     font-family: "Fira Code", "Courier New", Courier, monospace;
@@ -161,9 +161,9 @@
 }
 
 #editor:focus-within {
-    border-color: #5d3ac6;
-    box-shadow: inset 0 2px 8px rgba(93, 58, 198, 0.08),
-                0 4px 16px rgba(93, 58, 198, 0.12);
+    border-color: #10b981;
+    box-shadow: inset 0 2px 8px rgba(16, 185, 129, 0.08),
+                0 4px 16px rgba(16, 185, 129, 0.12);
 }
 
 /* ---------- RUN & SUBMIT BUTTONS ---------- */
@@ -176,7 +176,7 @@
 button {
     margin: 5px;
     padding: 12px 28px;
-    background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: #fff;
     font-weight: 600;
     font-size: 0.95rem;
@@ -184,20 +184,20 @@ button {
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(93, 58, 198, 0.25);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     letter-spacing: 0.3px;
     text-transform: uppercase;
 }
 
 button:hover:not(:disabled) {
-    background: linear-gradient(135deg, #7c57e3 0%, #9370db 100%);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(93, 58, 198, 0.35);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
 }
 
 button:active:not(:disabled) {
     transform: translateY(0);
-    box-shadow: 0 3px 10px rgba(93, 58, 198, 0.3);
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
 }
 
 button:disabled {
@@ -214,20 +214,20 @@ button:disabled {
     gap: 15px;
     margin-top: 12px;
     padding-top: 15px;
-    border-top: 2px solid #e8e0f9;
+    border-top: 2px solid #d1f4e6;
 }
 
 /* ---------- FEEDBACK ---------- */
 #feedback {
     font-weight: 600;
-    color: #47156c;
+    color: #0E276A;
     font-size: 1rem;
 }
 
 /* ---------- OUTPUT SECTION ---------- */
 #output {
     background-color: #fefefe;
-    border: 2px solid #d6c3f5;
+    border: 2px solid #a7f3d0;
     border-radius: 12px;
     padding: 18px;
     font-family: "Fira Code", "Courier New", Courier, monospace;
@@ -236,7 +236,7 @@ button:disabled {
     white-space: pre-wrap;
     word-wrap: break-word;
     line-height: 1.6;
-    box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.04);
+    box-shadow: inset 0 2px 6px rgba(16, 185, 129, 0.06);
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */

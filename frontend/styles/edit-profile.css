@@ -1,88 +1,115 @@
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 /* Page layout */
 .edit-profile-page {
-  max-width: 1100px;
-  margin: 110px auto 60px auto;
-  padding: 30px;
+  max-width: 1200px;
+  margin: 110px auto 70px auto;
+  padding: 40px;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .title {
-  color: #47156c;
+  color: #0E276A;
   font-weight: 700;
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 35px;
+  margin-bottom: 45px;
   letter-spacing: 0.3px;
-  text-shadow: 0 1px 2px rgba(71, 21, 108, 0.1);
+  text-shadow: 0 2px 4px rgba(14, 39, 106, 0.1);
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 5px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 3px;
 }
 
 .edit-card {
   display: flex;
-  gap: 50px;
+  gap: 55px;
   align-items: flex-start;
-  background: linear-gradient(135deg, #ffffff 0%, #fdfcff 100%);
-  padding: 45px 40px;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(93, 58, 198, 0.12), 
-              0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(93, 58, 198, 0.08);
-  transition: box-shadow 0.3s ease;
+  background: white;
+  padding: 50px 45px;
+  border-radius: 24px;
+  box-shadow: 0 10px 36px rgba(14, 39, 106, 0.14);
+  border: 2px solid rgba(16, 185, 129, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: scaleIn 0.7s ease-out;
 }
 
 .edit-card:hover {
-  box-shadow: 0 12px 32px rgba(93, 58, 198, 0.16), 
-              0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 52px rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
 }
 
 /* Left: profile image */
 .profile-image {
   text-align: center;
   flex: 1;
-  min-width: 280px;
+  min-width: 300px;
 }
 
 .profile-image img {
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
-  border: 5px solid #5d3ac6;
+  border: 6px solid #10b981;
   object-fit: cover;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 6px 20px rgba(93, 58, 198, 0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
 }
 
 .profile-image img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 28px rgba(93, 58, 198, 0.35);
+  transform: scale(1.08);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4);
 }
 
 .upload-btn {
-  padding: 12px 28px;
-  background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #fff;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 700;
+  font-size: 1rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(93, 58, 198, 0.25);
-  letter-spacing: 0.3px;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .upload-btn:hover {
-  background: linear-gradient(135deg, #7c57e3 0%, #9370db 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(93, 58, 198, 0.35);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(16, 185, 129, 0.5);
 }
 
 .upload-btn:active {
-  transform: translateY(0);
+  transform: translateY(-2px);
 }
 
 /* Right: form fields */
@@ -90,19 +117,19 @@
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 28px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .form-group h4 {
   font-family: "Inter", sans-serif;
-  color: #47156c;
-  font-size: 1.1rem;
+  color: #0E276A;
+  font-size: 1.1875rem;
   font-weight: 700;
   margin: 0;
   letter-spacing: 0.3px;
@@ -110,109 +137,109 @@
 
 .form-group p {
   font-family: "Inter", sans-serif;
-  color: #764797;
-  font-size: 1.05rem;
-  font-weight: 500;
+  color: #475569;
+  font-size: 1.0625rem;
+  font-weight: 600;
   margin: 0;
-  padding: 12px 15px;
-  background: linear-gradient(135deg, #f8f5ff 0%, #f0ebf8 100%);
-  border-radius: 10px;
-  border-left: 4px solid #5d3ac6;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(5, 150, 105, 0.06) 100%);
+  border-radius: 12px;
+  border-left: 5px solid #10b981;
 }
 
 .form-group input,
 .form-group textarea {
-  border: 2px solid #d6c3f5;
-  border-radius: 10px;
-  padding: 14px 16px;
-  font-size: 1.05rem;
+  border: 3px solid #a7f3d0;
+  border-radius: 14px;
+  padding: 16px 20px;
+  font-size: 1.0625rem;
   font-family: "Inter", sans-serif;
-  color: #47156c;
+  color: #0E276A;
   width: 100%;
   box-sizing: border-box;
   background-color: #fefefe;
   transition: all 0.3s ease;
-  box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.04);
+  box-shadow: inset 0 2px 8px rgba(16, 185, 129, 0.06);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #5d3ac6;
-  box-shadow: inset 0 2px 6px rgba(93, 58, 198, 0.08),
-              0 0 0 3px rgba(93, 58, 198, 0.1);
+  border-color: #10b981;
+  box-shadow: inset 0 2px 8px rgba(16, 185, 129, 0.1),
+              0 0 0 4px rgba(16, 185, 129, 0.15);
 }
 
 textarea {
-  min-height: 150px;
+  min-height: 160px;
   resize: vertical;
   font-family: "Inter", sans-serif;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* Bottom buttons */
 .form-actions {
-  margin-top: 35px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .btn {
-  padding: 14px 40px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 16px 48px;
+  font-size: 1.0625rem;
+  font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 .btn.save {
-  background: linear-gradient(135deg, #5d3ac6 0%, #7c57e3 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(93, 58, 198, 0.25);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
 }
 
 .btn.save:hover {
-  background: linear-gradient(135deg, #7c57e3 0%, #9370db 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(93, 58, 198, 0.35);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(16, 185, 129, 0.5);
 }
 
 .btn.cancel {
   background: #ffffff;
-  color: #47156c;
-  border: 2px solid #d6c3f5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  color: #0E276A;
+  border: 3px solid #a7f3d0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .btn.cancel:hover {
-  background: linear-gradient(135deg, #f8f5ff 0%, #f0ebf8 100%);
-  border-color: #5d3ac6;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(93, 58, 198, 0.15);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border-color: #10b981;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
 }
 
 .btn:active {
-  transform: translateY(0);
+  transform: translateY(-2px);
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */
 @media (max-width: 1024px) {
   .edit-profile-page {
-    padding: 25px 20px;
+    padding: 30px 25px;
     margin-top: 100px;
   }
 
   .edit-card {
     flex-direction: column;
     align-items: center;
-    gap: 35px;
-    padding: 35px 30px;
+    gap: 40px;
+    padding: 40px 35px;
   }
 
   .profile-image {
@@ -228,57 +255,57 @@ textarea {
 @media (max-width: 768px) {
   .edit-profile-page {
     margin-top: 90px;
-    padding: 20px 15px;
+    padding: 25px 20px;
   }
 
   .title {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
+    font-size: 2rem;
+    margin-bottom: 32px;
   }
 
   .edit-card {
-    padding: 30px 25px;
+    padding: 35px 30px;
   }
 
   .profile-image img {
-    width: 170px;
-    height: 170px;
+    width: 190px;
+    height: 190px;
   }
 
   .form-group h4 {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
 
   .form-actions {
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
   }
 
   .btn {
     width: 100%;
-    padding: 12px 30px;
+    padding: 14px 36px;
   }
 }
 
 @media (max-width: 480px) {
   .profile-image img {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
   }
 
   .upload-btn {
-    font-size: 0.85rem;
-    padding: 10px 20px;
+    font-size: 0.9375rem;
+    padding: 12px 24px;
   }
 
   .form-group input,
   .form-group textarea {
     font-size: 1rem;
-    padding: 12px 14px;
+    padding: 14px 18px;
   }
 
   textarea {
-    min-height: 120px;
+    min-height: 140px;
   }
 }
 

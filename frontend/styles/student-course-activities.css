@@ -1,87 +1,760 @@
+/* Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.8; transform: scale(1.2) rotate(180deg); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progressFill {
+    from { width: 0%; }
+    to { width: var(--progress-width); }
+}
+
+/* Activities Container */
 .course-activities {
-    margin: 20px 50px 20px 50px;
+    padding: 0;
+    margin: 30px 50px;
+    animation: fadeInUp 0.7s ease-out;
 }
 
-.course-activities p, 
-.course-activities h3 {
-    color: #47156c;
-    font-family: "Inter", sans-serif;
+/* Motivational Banner / XP Tracker */
+.activity-difficulty {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 16px;
+    padding: 40px 50px;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.25);
+    animation: slideDown 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.activity-difficulty::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.activity-difficulty::after {
+    content: '🚀';
+    position: absolute;
+    bottom: -20px;
+    right: 30px;
+    font-size: 120px;
+    opacity: 0.15;
+    animation: float 3s ease-in-out infinite;
+}
+
+#label {
+    color: white;
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    font-weight: 700;
+    margin: 0;
     text-align: center;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.5px;
 }
 
-/* Activities */
-.activities {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-    justify-content: center;
-    justify-items: start;
-    gap: 20px;
+/* XP Progress Bar (Optional Enhancement) */
+.xp-progress-container {
     margin-top: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    height: 16px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.xp-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 20px;
+    animation: progressFill 1.5s ease-out;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+}
+
+.xp-text {
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    opacity: 0.95;
+}
+
+/* Activities Grid - One per line */
+.activities {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Activity Card - Quest/Mission Style */
 .activity-card {
+    background: white;
+    border-radius: 22px;
+    padding: 24px 32px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid transparent;
+    box-shadow: 0 6px 24px rgba(14, 39, 106, 0.12);
+    position: relative;
+    overflow: hidden;
+    animation: scaleIn 0.5s ease-out backwards;
+    animation-delay: calc(var(--card-index, 0) * 0.1s);
     display: flex;
     flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    width: 100%;
-    border: 1px solid rgba(71, 21, 108, 0.12);
-    box-shadow: 0 0 4px rgba(71, 21, 108, 0.08);
-    transition: box-shadow 0.3s ease, border 0.3s ease;
-    border-radius: 5px;
     justify-content: space-between;
-    padding: 10px 20px;
-    cursor: pointer;
+    gap: 16px;
+}
+
+/* Optional: subtle gap between sections */
+.activity-card-header,
+.activity-card-body,
+.activity-card-footer {
+    margin-bottom: 4px; /* Small visual breathing space */
+}
+
+.activity-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.activity-card:hover::before {
+    transform: scaleX(1);
 }
 
 .activity-card:hover {
-    border: 1px solid rgba(71, 21, 108, 0.25);
-    box-shadow: 0 0 6px rgba(83, 27, 186, 0.2);
-    transition: box-shadow 0.2s ease;
-    cursor: pointer;
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 16px 48px rgba(14, 39, 106, 0.2);
+    border-color: #10b981;
 }
 
+/* Activity Info - Title and Points in One Line */
+.activity-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Card Header */
+.activity-card-header {
+    padding: 32px 36px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.activity-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.15) 100%);
+    border-radius: 18px;
+    font-size: 40px;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.activity-card:hover .activity-icon-wrapper {
+    transform: rotate(-5deg) scale(1.15);
+    animation: pulse 0.6s ease;
+}
+
+/* Status Badge */
+.activity-status {
+    padding: 10px 18px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    white-space: nowrap;
+    width: fit-content;
+    align-self: flex-end;
+}
+
+
+.activity-status.unlocked {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.activity-status.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.activity-status.completed::before {
+    content: '✓';
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.activity-status.in-progress {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.activity-status.in-progress::before {
+    content: '⏳';
+    font-size: 14px;
+}
+
+.activity-status.locked {
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+    color: white;
+}
+
+.activity-status.locked::before {
+    content: '🔒';
+    font-size: 14px;
+}
+
+.activity-status.not-started {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    color: white;
+}
+
+.activity-status.not-started::before {
+    content: '●';
+    font-size: 14px;
+}
+
+/* Card Body */
+.activity-card-body {
+    padding: 0 36px 28px;
+}
+
+.activity-title {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 700;
+    color: #0E276A;
+    margin: 0;
+    line-height: 1.3;
+    text-align: left;
+    flex: 1;
+}
+
+.activity-description {
+    font-size: 1rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0 0 24px 0;
+    text-align: left;
+}
+
+/* Card Footer */
+.activity-card-footer {
+    padding: 24px 36px;
+    background: linear-gradient(135deg, rgba(241, 245, 249, 0.8) 0%, rgba(226, 232, 240, 0.8) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid rgba(14, 39, 106, 0.08);
+}
+
+.activity-points {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #10b981;
+    margin: 0;
+    text-align: right;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.activity-points::before {
+    content: '⭐';
+    font-size: 26px;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+.activity-difficulty-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: white;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.difficulty-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.difficulty-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.difficulty-dot.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.activity-card:hover .difficulty-dot.active {
+    animation: pulse 0.6s ease infinite;
+}
+
+/* Locked State */
 .activity-card.locked {
-    opacity: 0.5;
+    opacity: 0.75;
     cursor: not-allowed;
-    pointer-events: auto; /* still allow click for modal */
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
+.activity-card.locked::before {
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+}
+
+.activity-card.locked:hover {
+    transform: translateY(-5px);
+    animation: shake 0.5s ease;
+    border-color: #cbd5e1;
+}
+
+.activity-card.locked .activity-icon-wrapper {
+    background: linear-gradient(135deg, rgba(148, 163, 184, 0.15) 0%, rgba(100, 116, 139, 0.2) 100%);
+    filter: grayscale(0.8);
+}
+
+.activity-card.locked .activity-title {
+    color: #94a3b8;
+}
+
+.activity-card.locked .activity-points {
+    color: #cbd5e1;
+}
+
+/* Completion Overlay */
+.completion-overlay {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+    animation: scaleIn 0.5s ease-out;
+}
+
+/* Modal */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(14, 39, 106, 0.75);
+    backdrop-filter: blur(12px);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.modal.show {
+    display: flex;
 }
 
 .modal-content {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 12px;
+    background: white;
+    padding: 48px 40px;
+    border-radius: 28px;
     text-align: center;
-    max-width: 400px;
+    max-width: 460px;
+    box-shadow: 0 24px 64px rgba(14, 39, 106, 0.35);
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d94206 100%);
+    border-radius: 28px 28px 0 0;
+}
+
+.modal-icon {
+    font-size: 88px;
+    margin-bottom: 24px;
+    animation: shake 0.8s ease;
+    display: block;
+}
+
+.modal-content h3 {
+    font-size: 2rem;
+    color: #0E276A;
+    margin: 0 0 16px 0;
+    font-weight: 700;
+    text-align: center;
 }
 
 .modal-content p {
-    margin-bottom: 1rem;
-    color: #333;
+    font-size: 1.0625rem;
+    color: #64748b;
+    margin: 0 0 32px 0;
+    line-height: 1.7;
+    text-align: center;
 }
 
 #close-modal-btn {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    border: none;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
-    border-radius: 6px;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
 }
+
 #close-modal-btn:hover {
-    background-color: #0056b3;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 32px rgba(16, 185, 129, 0.5);
+    animation: glowPulse 1.5s ease infinite;
+}
+
+#close-modal-btn:active {
+    transform: translateY(-2px);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 100px 40px;
+    animation: fadeInUp 0.7s ease-out;
+}
+
+.empty-state-icon {
+    font-size: 96px;
+    margin-bottom: 28px;
+    opacity: 0.4;
+    animation: float 3s ease-in-out infinite;
+}
+
+.empty-state h3 {
+    font-size: 1.75rem;
+    color: #64748b;
+    margin: 0 0 12px 0;
+    font-weight: 600;
+}
+
+.empty-state p {
+    font-size: 1.0625rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .course-activities {
+        margin: 30px 40px;
+    }
+
+    .activity-difficulty {
+        padding: 36px 44px;
+        margin-bottom: 44px;
+    }
+
+    .activities {
+        gap: 28px;
+    }
+
+    .activity-card {
+        padding: 22px 30px;
+        gap: 14px;
+    }
+
+    .activity-info {
+        gap: 20px;
+    }
+
+    .activity-card-header {
+        padding: 30px 32px 22px;
+    }
+
+    .activity-card-body {
+        padding: 0 32px 26px;
+    }
+
+    .activity-card-footer {
+        padding: 22px 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .course-activities {
+        margin: 24px 30px;
+    }
+
+    .activity-difficulty {
+        padding: 28px 32px;
+        margin-bottom: 36px;
+    }
+
+    #label {
+        font-size: clamp(1.125rem, 4vw, 1.5rem);
+    }
+
+    .activities {
+        gap: 24px;
+    }
+
+    .activity-card {
+        padding: 20px 26px;
+        gap: 12px;
+    }
+
+    .activity-info {
+        gap: 16px;
+    }
+
+    .activity-title {
+        font-size: 1.125rem;
+    }
+
+    .activity-points {
+        font-size: 1.25rem;
+    }
+
+    .activity-card-header {
+        padding: 26px 28px 20px;
+    }
+
+    .activity-icon-wrapper {
+        width: 64px;
+        height: 64px;
+        font-size: 36px;
+        border-radius: 16px;
+    }
+
+    .activity-card-body {
+        padding: 0 28px 24px;
+    }
+
+    .activity-card-footer {
+        padding: 20px 28px;
+    }
+
+    .modal-content {
+        padding: 40px 32px;
+        max-width: 90%;
+        margin: 0 20px;
+    }
+
+    .modal-icon {
+        font-size: 72px;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-activities {
+        margin: 20px 20px;
+    }
+
+    .activity-difficulty {
+        padding: 24px 28px;
+        margin-bottom: 28px;
+        border-radius: 12px;
+    }
+
+    #label {
+        font-size: 1.125rem;
+    }
+
+    .activity-card {
+        border-radius: 16px;
+        padding: 18px 22px;
+        gap: 12px;
+    }
+
+    .activities {
+        gap: 20px;
+    }
+
+    .activity-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .activity-title {
+        font-size: 1.125rem;
+    }
+
+    .activity-points {
+        font-size: 1.125rem;
+        align-self: flex-start;
+    }
+
+    .activity-points::before {
+        font-size: 24px;
+    }
+
+    .activity-status {
+        padding: 8px 14px;
+        font-size: 11px;
+        align-self: flex-end;
+    }
+
+    .activity-card-header {
+        padding: 24px 24px 18px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .activity-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        font-size: 32px;
+        border-radius: 14px;
+    }
+
+    .activity-card-body {
+        padding: 0 24px 20px;
+    }
+
+    .activity-description {
+        font-size: 0.9375rem;
+        margin-bottom: 20px;
+    }
+
+    .activity-card-footer {
+        padding: 18px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .activity-difficulty-badge {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .modal-content {
+        padding: 32px 24px;
+        border-radius: 24px;
+    }
+
+    .modal-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+    }
+
+    .modal-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .modal-content p {
+        font-size: 1rem;
+        margin-bottom: 24px;
+    }
+
+    #close-modal-btn {
+        padding: 14px 36px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
 }
