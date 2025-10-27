@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f0fdf4 0%, #f4f4f9 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@ main {
 .container {
     background: white;
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 20px rgba(187, 181, 181, 0.3);
     max-width: 900px;
     width: 100%;
     padding: 3rem;
@@ -80,7 +80,7 @@ main {
     top: 20px;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
     z-index: 1;
     transition: width 0.4s ease;
 }
@@ -113,13 +113,13 @@ main {
 }
 
 .step-indicator.active .step-number {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
     color: white;
     transform: scale(1.1);
 }
 
 .step-indicator.completed .step-number {
-    background: #4caf50;
+    background: var(--dark-green);
     color: white;
 }
 
@@ -197,8 +197,8 @@ input[type="text"]:focus,
 textarea:focus,
 select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(102, 195, 85, 0.1);
 }
 
 textarea {
@@ -234,9 +234,9 @@ textarea {
 }
 
 .toggle-option input[type="radio"]:checked + label {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
     color: white;
-    border-color: #667eea;
+    border-color: var(--primary-green);
 }
 
 .activity-item,
@@ -281,8 +281,8 @@ textarea {
 
 .btn-add {
     background: white;
-    color: #667eea;
-    border: 2px dashed #667eea;
+    color: var(--primary-green);
+    border: 2px dashed var(--primary-green);
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
     cursor: pointer;
@@ -294,7 +294,7 @@ textarea {
 }
 
 .btn-add:hover {
-    background: #667eea;
+    background: var(--primary-green);
     color: white;
     border-style: solid;
 }
@@ -359,14 +359,14 @@ button {
 
 .btn-next,
 .btn-submit {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
     color: white;
 }
 
 .btn-next:hover,
 .btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 10px 20px rgba(102, 195, 85, 0.3);
 }
 
 .btn-next:disabled,
@@ -419,6 +419,6 @@ button {
 }
 
 #course-creation-message {
-    color: green;
+    color: var(--dark-green);
     text-align: center;
 }

@@ -1,90 +1,461 @@
+/* Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Course Announcement Container */
 .course-announcement {
-    padding: 50px;
+    padding: 40px 50px;
+    width: clamp(100%, 90vw, 1200px);
+    margin: 0 auto;
+    animation: fadeInUp 0.6s ease-out;
 }
 
-.course-announcement h4{
-    color: #47156c;
+.course-announcement h4 {
+    color: var(--dark-green);
     font-family: "Inter", sans-serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
+.course-announcement h4::before {
+    font-size: 28px;
+}
+
+/* Add Announcement Button Container */
 .btn-add-announcement-container {
     display: flex;
     justify-content: flex-end;
-    cursor: pointer;
-}
-
-.activity-actions {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 10px;
+    margin-bottom: 30px;
+    animation: fadeInUp 0.7s ease-out;
 }
 
 #btn-add-announcement {
-    background-color: rgb(40, 146, 111);
-    padding: 10px 20px;
-    border-radius: 5px;
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: white;
+    padding: 14px 28px;
+    border-radius: 12px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(102, 195, 85, 0.3);
+}
+
+#btn-add-announcement::before {
+    font-size: 18px;
 }
 
 #btn-add-announcement:hover {
-    background-color: rgb(32, 117, 89);
-    transition: background-color 0.2s ease;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(102, 195, 85, 0.4);
+    background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
 }
 
+#btn-add-announcement:active {
+    transform: translateY(-1px);
+}
+
+/* Announcement List */
 .announcement-list {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+    animation: fadeInUp 0.8s ease-out;
 }
 
+/* Announcement Item Card */
 .announcement-item {
     display: flex;
     flex-direction: row;
-    gap: 20px;
     align-items: center;
-    width: 100%;
-    border: 1px solid rgba(71, 21, 108, 0.12);
-    box-shadow: 0 0 4px rgba(71, 21, 108, 0.08);
-    transition: box-shadow 0.3s ease, border 0.3s ease;
-    border-radius: 5px;
     justify-content: space-between;
-    padding: 10px 20px;
+    width: 100%;
+    height: auto;
+    background: white;
+    border: 2px solid var(--gray-border);
+    border-radius: 16px;
+    padding: 10px 24px;
+    gap: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.announcement-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
 }
 
 .announcement-item:hover {
-    border: 1px solid rgba(71, 21, 108, 0.25);
-    box-shadow: 0 0 6px rgba(83, 27, 186, 0.2);
-    transition: box-shadow 0.2s ease;
+    border-color: var(--primary-green);
+    box-shadow: 0 8px 24px rgba(102, 195, 85, 0.15);
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, rgba(102, 195, 85, 0.02) 0%, rgba(108, 209, 81, 0.02) 100%);
+}
+
+.announcement-item:hover::before {
+    transform: scaleY(1);
+}
+
+.announcement-item:nth-child(odd) {
+    animation: slideIn 0.5s ease-out;
+}
+
+.announcement-item:nth-child(even) {
+    animation: slideIn 0.6s ease-out;
+}
+
+/* Announcement Info Section */
+.announcement-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.announcement-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark-green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.announcement-title::before {
+    content: '📣';
+    font-size: 22px;
+}
+
+.announcement-preview {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.announcement-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.announcement-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.announcement-meta span::before {
+    font-size: 14px;
+}
+
+.announcement-meta span:nth-child(1)::before {
+    content: '📅';
+}
+
+.announcement-meta span:nth-child(2)::before {
+    content: '👤';
+}
+
+/* Badge for new/important announcements */
+.announcement-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.announcement-badge.new {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.announcement-badge.important {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Activity Actions */
+.activity-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.activity-actions button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid transparent;
 }
 
 #btn-view {
-  background-color: white;
-  color: #47156c;
-  border: 1px solid #47156c;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 
-    box-shadow 0.3s ease,
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border 0.3s ease;
+    background-color: white;
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+#btn-view::before {
+    content: '👁️';
+    font-size: 16px;
 }
 
 #btn-view:hover {
-    border: none;
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
     color: white;
-    background-color: #5d3ac6;
-    transform: translateY(-1px) scale(1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 195, 85, 0.3);
 }
 
-
 #btn-edit {
-    padding: 8px 16px;
-    border-radius: 4px;
-}   
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: white;
+    border: none;
+}
+
+#btn-edit::before {
+    font-size: 16px;
+}
+
+#btn-edit:hover {
+    background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 195, 85, 0.4);
+}
+
+#btn-delete {
+    background: white;
+    color: #ef4444;
+    border: 2px solid #ef4444;
+}
+
+#btn-delete::before {
+    content: '🗑️';
+    font-size: 16px;
+}
+
+#btn-delete:hover {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+}
+
+/* Empty State */
+.announcement-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #94a3b8;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.announcement-empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.announcement-empty-icon::before {
+    content: '📢';
+}
+
+.announcement-empty p {
+    font-size: 16px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .course-announcement {
+        padding: 30px 30px;
+    }
+
+    .announcement-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding-bottom: 50px;
+    }
+
+    .activity-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .announcement-badge {
+        top: auto;
+        bottom: 12px;
+        right: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .course-announcement {
+        padding: 25px 20px;
+    }
+
+    .course-announcement h4 {
+        font-size: 1.25rem;
+    }
+
+    .course-announcement h4::before {
+        font-size: 24px;
+    }
+
+    .btn-add-announcement-container {
+        justify-content: stretch;
+    }
+
+    #btn-add-announcement {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+
+    .announcement-list {
+        gap: 12px;
+    }
+
+    .announcement-item {
+        padding: 16px 18px 50px;
+        border-radius: 12px;
+    }
+
+    .announcement-title {
+        font-size: 16px;
+    }
+
+    .announcement-title::before {
+        font-size: 20px;
+    }
+
+    .announcement-preview {
+        font-size: 13px;
+    }
+
+    .announcement-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .activity-actions {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .activity-actions button {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-announcement {
+        padding: 20px 16px;
+    }
+
+    .course-announcement h4 {
+        font-size: 1.1rem;
+    }
+
+    #btn-add-announcement {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .announcement-item {
+        padding: 14px 16px 48px;
+    }
+
+    .announcement-title {
+        font-size: 15px;
+    }
+
+    .announcement-preview {
+        font-size: 12px;
+    }
+
+    .announcement-meta {
+        font-size: 12px;
+    }
+
+    .activity-actions button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .announcement-badge {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    .announcement-empty {
+        padding: 40px 20px;
+    }
+
+    .announcement-empty-icon {
+        font-size: 48px;
+    }
+
+    .announcement-empty p {
+        font-size: 14px;
+    }
+}
