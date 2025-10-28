@@ -4,11 +4,41 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0fdf4 0%, #f4f4f9 100%);
+  background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    );
+  pointer-events: none;
+  z-index: 1;
 }
 
 main {
   flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 /* Page layout */
@@ -18,7 +48,7 @@ main {
   align-items: flex-start;
   gap: 35px;
   padding: 40px;
-  margin: 100px auto 60px auto;
+  margin: 30px auto 250px auto;
   max-width: 1200px;
 }
 
@@ -28,12 +58,14 @@ main {
   max-width: 380px;
   min-width: 320px;
   text-align: center;
-  background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
   padding: 40px 30px;
   border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12), 
-              0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(16, 185, 129, 0.08);
+  box-shadow: 
+    0 0 30px rgba(102, 195, 85, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    inset 0 0 60px rgba(102, 195, 85, 0.05);
+  border: 2px solid rgba(102, 195, 85, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: sticky;
   top: 120px;
@@ -41,8 +73,10 @@ main {
 
 .profile-left:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.16), 
-              0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 0 40px rgba(102, 195, 85, 0.3),
+    0 12px 32px rgba(0, 0, 0, 0.6),
+    inset 0 0 80px rgba(102, 195, 85, 0.08);
 }
 
 .profile-image {
@@ -55,80 +89,87 @@ main {
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  border: 5px solid #10b981;
+  border: 5px solid var(--primary-green);
   object-fit: cover;
   display: block;
   margin: 0 auto;
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 30px rgba(102, 195, 85, 0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-image img:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 40px rgba(102, 195, 85, 0.7);
 }
 
 .profile-left h2 {
   font-family: "Inter", sans-serif;
-  color: #0E276A;
+  color: #FFFFFF;
   font-size: 1.8rem;
   font-weight: 700;
   margin: 15px 0 8px 0;
   letter-spacing: 0.3px;
+  text-shadow: 0 0 15px rgba(102, 195, 85, 0.5);
 }
 
 .username {
-  color: #059669 !important;
+  color: var(--primary-green) !important;
   font-size: 1.05rem;
   font-weight: 600;
   margin: 5px 0 15px 0;
   letter-spacing: 0.3px;
+  text-shadow: 0 0 10px rgba(102, 195, 85, 0.4);
 }
 
 .student-meta {
-  color: #047857 !important;
+  color: rgba(224, 224, 224, 0.9) !important;
   font-size: 0.95rem;
   line-height: 1.5rem;
   margin: 10px 0 20px 0;
   padding: 8px 15px;
-  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  background: rgba(102, 195, 85, 0.15);
+  border: 1px solid rgba(102, 195, 85, 0.3);
+  box-shadow: 0 0 15px rgba(102, 195, 85, 0.2);
   border-radius: 20px;
   display: inline-block;
 }
 
 .bio {
-  color: #0E276A;
+  color: rgba(224, 224, 224, 0.9);
   font-size: 1rem;
   line-height: 1.7;
   margin: 20px 0 25px 0;
   padding: 15px 20px;
-  background-color: #fefefe;
-  border-left: 4px solid #10b981;
+  background: rgba(26, 31, 53, 0.6);
+  border-left: 4px solid var(--primary-green);
   border-radius: 8px;
   text-align: left;
+  box-shadow: 0 0 15px rgba(102, 195, 85, 0.1);
 }
 
 .profile-left .btn {
   margin-top: 15px;
   padding: 12px 35px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+  color: #0a0e1a;
   font-weight: 600;
   font-size: 1rem;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 25px rgba(102, 195, 85, 0.4),
+              0 4px 12px rgba(102, 195, 85, 0.3);
   letter-spacing: 0.3px;
   text-transform: uppercase;
   width: 100%;
 }
 
 .profile-left .btn:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 35px rgba(102, 195, 85, 0.6),
+              0 6px 18px rgba(102, 195, 85, 0.4);
 }
 
 .profile-left .btn:active {
@@ -144,30 +185,34 @@ main {
 }
 
 .card {
-  background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.9) 0%, rgba(26, 31, 53, 0.9) 100%);
   padding: 30px;
   border-radius: 18px;
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.1), 
-              0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(16, 185, 129, 0.08);
+  box-shadow: 
+    0 0 25px rgba(102, 195, 85, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(102, 195, 85, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(16, 185, 129, 0.14), 
-              0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 
+    0 0 35px rgba(102, 195, 85, 0.25),
+    0 10px 28px rgba(0, 0, 0, 0.5);
+  border-color: rgba(102, 195, 85, 0.4);
 }
 
 .profile-right h3 {
   margin-top: 0;
   margin-bottom: 20px;
-  color: #0E276A;
+  color: #FFFFFF;
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.3px;
   padding-bottom: 12px;
-  border-bottom: 3px solid #a7f3d0;
+  border-bottom: 2px solid rgba(102, 195, 85, 0.3);
+  text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
 }
 
 .achievements ul {
@@ -180,21 +225,22 @@ main {
 }
 
 .achievements li {
-  color: #0E276A !important;
+  color: rgba(224, 224, 224, 0.9) !important;
   font-size: 1.05rem;
   font-weight: 500;
   padding: 12px 18px;
-  background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+  background: rgba(26, 31, 53, 0.6);
   border-radius: 10px;
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--primary-green);
   transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.06);
+  box-shadow: 0 0 15px rgba(102, 195, 85, 0.1);
 }
 
 .achievements li:hover {
   transform: translateX(8px);
   border-left-width: 6px;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+  background: rgba(26, 31, 53, 0.8);
+  box-shadow: 0 0 25px rgba(102, 195, 85, 0.3);
 }
 
 .courses {
@@ -209,44 +255,46 @@ main {
 }
 
 .course-card {
-  border: 2px solid #a7f3d0;
+  border: 2px solid rgba(102, 195, 85, 0.3);
   padding: 20px 15px;
   text-align: center;
   border-radius: 14px;
-  background: linear-gradient(135deg, #fefefe 0%, #f0fdf4 100%);
-  color: #0E276A !important;
+  background: rgba(26, 31, 53, 0.6);
+  color: var(--primary-green) !important;
   font-weight: 600;
   font-size: 1rem;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+  box-shadow: 0 0 15px rgba(102, 195, 85, 0.15);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .course-card:hover {
   transform: translateY(-5px) scale(1.02);
-  border-color: #10b981;
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.16);
-  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  border-color: var(--primary-green);
+  background: rgba(26, 31, 53, 0.8);
+  box-shadow: 0 0 30px rgba(102, 195, 85, 0.4);
+  color: var(--secondary-green) !important;
 }
 
 .activities p {
   margin: 0;
   padding: 12px 18px;
-  color: #0E276A !important;
+  color: rgba(224, 224, 224, 0.9) !important;
   font-size: 1.05rem;
   font-weight: 500;
-  background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+  background: rgba(26, 31, 53, 0.6);
   border-radius: 10px;
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--primary-blue);
   margin-bottom: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(230, 126, 34, 0.06);
+  box-shadow: 0 0 15px rgba(8, 104, 164, 0.1);
 }
 
 .activities p:hover {
   transform: translateX(8px);
   border-left-width: 6px;
-  box-shadow: 0 4px 12px rgba(230, 126, 34, 0.12);
+  background: rgba(26, 31, 53, 0.8);
+  box-shadow: 0 0 25px rgba(8, 104, 164, 0.3);
 }
 
 .activities p:last-child {

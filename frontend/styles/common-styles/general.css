@@ -8,6 +8,13 @@
   --bg-light: #FFFFFF;
   --gray-border: #E5E7EB;
   --gray-card: #D1D5DB;
+  --neon-pink: #FF006E;
+  --neon-purple: #BB00FF;
+  --text-dark: #E0E0E0;
+  --bg-dark: #0a0e1a;
+  --bg-darker: #1a1f35;
+  --card-dark: #141B2D;
+  --gray-border: #1F2937;
 }
 
 
@@ -53,9 +60,24 @@ header {
     left: 0;
     right: 0;
     z-index: 9999; 
-    background-color: var(--bg-light);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    border-bottom: 1px solid var(--gray-border);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.98) 0%, rgba(26, 31, 53, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 0 30px rgba(102, 195, 85, 0.2),
+        0 4px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid rgba(102, 195, 85, 0.3);
+    position: relative;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-green), var(--secondary-green), var(--primary-green), transparent);
+    box-shadow: 0 0 10px var(--primary-green);
 }
 
 .navbar{
@@ -66,8 +88,8 @@ header {
     padding-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    background: transparent;
+    box-shadow: none;
     align-items: center;
 }
 
@@ -86,19 +108,21 @@ header {
 }
 
 .nav-links img {
-    height: 40px;
+    height: 35px;
     width: auto;
     cursor: pointer;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(102, 195, 85, 0.4));
 }
 
 .nav-links img:hover {
-    opacity: 0.8;
-    transform: scale(1.1);
+    opacity: 1;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 15px rgba(102, 195, 85, 0.8));
 }
 
 #notif-icon img {
-    height: 50px;
+    height: 45px;
     width: auto;
     margin: 0;
     padding-bottom: 5px;
@@ -108,32 +132,36 @@ header {
     height: 70px;
     width: auto;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(102, 195, 85, 0.5));
 }
 
 #site-logo:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px rgba(102, 195, 85, 0.8));
 }
 
 /*MAIN*/
 /*MAIN*/
 main {
     min-height: 100dvh;
-    padding-top: 100px;
+    padding-top: 60px;
     flex: 1;
     margin-bottom: 300px;
 }
 
+/*FOOTER*/
 /*FOOTER*/
 footer {
     text-align: center;
     padding: 25px 20px;
     bottom: 0;
     width: 100%;
-    color: rgba(255,255,255,0.9);
-    background: linear-gradient(180deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
-    font-size: 13px;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+    color: rgba(224, 224, 224, 0.9);
+    background: linear-gradient(180deg, rgba(10, 14, 26, 0.95) 0%, rgba(6, 9, 24, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(102, 195, 85, 0.2);
+    box-shadow: 0 -4px 20px rgba(102, 195, 85, 0.1);
 }
 
 footer p {
@@ -149,6 +177,20 @@ footer::before {
     left: 0;
     right: 0;
     height: 2px;
+    background: linear-gradient(90deg, 
+        var(--primary-green) 0%, 
+        var(--primary-blue) 25%,
+        var(--neon-purple) 50%,
+        var(--primary-blue) 75%,
+        var(--primary-green) 100%);
+    box-shadow: 0 0 10px rgba(102, 195, 85, 0.5);
+    animation: neonFlow 3s linear infinite;
+}
+
+@keyframes neonFlow {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
 }
 
 /* Notification overlay dropdown */
@@ -171,25 +213,36 @@ footer::before {
 #notif-icon::after {
   content: '3';
   position: absolute;
-  top: 8px;
+  top: 5px;
   right: 8px;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-green) 0%, #059669 100%);
+  color: rgba(10, 14, 26, 0.95);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
-  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 
+        0 0 15px rgba(102, 195, 85, 0.8),
+        0 2px 8px rgba(102, 195, 85, 0.4);
+  animation: neonPulse 2s ease-in-out infinite;
+  border: 2px solid rgba(10, 14, 26, 0.5);
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+@keyframes neonPulse {
+  0%, 100% {
+        box-shadow: 
+            0 0 15px rgba(102, 195, 85, 0.6),
+            0 2px 8px rgba(102, 195, 85, 0.3);
+    }
+    50% {
+        box-shadow: 
+            0 0 25px rgba(102, 195, 85, 1),
+            0 2px 12px rgba(102, 195, 85, 0.6);
+    }
 }
 
 .notif-overlay {
@@ -197,16 +250,19 @@ footer::before {
   top: 60px;
   right: 0;
   width: clamp(250px, 70vw, 300px);
-  background: white;
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.98) 0%, rgba(26, 31, 53, 0.98) 100%);
+  backdrop-filter: blur(20px);
   border-radius: 16px;
-  box-shadow: 0 12px 48px rgba(14, 39, 106, 0.2);
+  box-shadow: 
+        0 0 40px rgba(102, 195, 85, 0.4),
+        0 12px 48px rgba(0, 0, 0, 0.6);
   padding: 0;
   z-index: 1000;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(-20px) scale(0.95);
   opacity: 0;
   pointer-events: none;
-  border: 1px solid rgba(16, 185, 129, 0.1);
+  border: 2px solid rgba(102, 195, 85, 0.4);
   overflow: hidden;
   max-height: 80vh;
   display: flex;
@@ -220,7 +276,7 @@ footer::before {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
 }
 
 .notif-overlay.show {
@@ -231,12 +287,13 @@ footer::before {
 
 .notif-overlay h3 {
   font-size: 18px;
-  color: #0E276A;
+  color: white;
   margin: 0;
   padding: 20px 24px 16px;
-  border-bottom: 2px solid #e0e7ef;
+  border-bottom: 2px solid rgba(102, 195, 85, 0.3);
   font-weight: 700;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, rgba(5, 150, 105, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.1) 0%, rgba(108, 209, 81, 0.1) 100%);
+  text-shadow: 0 0 10px rgba(102, 195, 85, 0.5);
 }
 
 .notif-overlay ul {
@@ -248,6 +305,7 @@ footer::before {
 .notif-container {
   max-height: 380px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -272,6 +330,8 @@ footer::before {
 
 .notif-item {
   display: flex;
+  box-sizing: border-box;
+  width: 100%;
   flex-direction: column;
   gap: 6px;
   padding: 16px;
@@ -279,7 +339,7 @@ footer::before {
   transition: all 0.3s ease;
   cursor: pointer;
   border: 2px solid transparent;
-  background: white;
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.6) 0%, rgba(26, 31, 53, 0.6) 100%);
   position: relative;
   overflow: hidden;
 }
@@ -291,15 +351,15 @@ footer::before {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--primary-green) 0%, #059669 100%);
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
 
 .notif-item:hover {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
-  border-color: #10b981;
-  transform: translateX(4px);
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.15) 0%, rgba(108, 209, 81, 0.15) 100%);
+  border-color: var(--primary-green);
+  box-shadow: 0 0 20px rgba(102, 195, 85, 0.3);
 }
 
 .notif-item:hover::before {
@@ -308,7 +368,7 @@ footer::before {
 
 .notif-item li {
   font-size: 14px;
-  color: #0E276A;
+  color: white;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -317,7 +377,7 @@ footer::before {
 
 #notif-date {
   font-size: 12px;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -330,17 +390,18 @@ footer::before {
 }
 
 .notif-item.unread {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.2) 0%, rgba(108, 209, 81, 0.2) 100%);
+  border-color: rgba(102, 195, 85, 0.4);
 }
 
 .notif-item.unread li::after {
   content: '';
   width: 8px;
   height: 8px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--primary-green) 0%, #059669 100%);
   border-radius: 50%;
   margin-left: auto;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 10px rgba(102, 195, 85, 0.6);
 }
 
 #view-all-notif {
@@ -348,17 +409,19 @@ footer::before {
   text-align: center;
   padding: 16px 24px;
   font-size: 14px;
-  color: #10b981;
+  color: var(--primary-green);
   text-decoration: none;
   font-weight: 600;
-  border-top: 2px solid #e0e7ef;
+  border-top: 2px solid rgba(102, 195, 85, 0.3);
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(5, 150, 105, 0.02) 100%);
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.08) 0%, rgba(108, 209, 81, 0.08) 100%);
+  text-shadow: 0 0 8px rgba(102, 195, 85, 0.5);
 }
 
 #view-all-notif:hover {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
-  color: #059669;
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.2) 0%, rgba(108, 209, 81, 0.2) 100%);
+  color: var(--secondary-green);
+  text-shadow: 0 0 15px rgba(102, 195, 85, 0.8);
 }
 
 /* Empty Notifications State */
@@ -399,16 +462,19 @@ footer::before {
   top: 60px;
   right: 0;
   width: clamp(200px, 90vw, 260px);
-  background: white;
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.98) 0%, rgba(26, 31, 53, 0.98) 100%);
+  backdrop-filter: blur(20px);
   border-radius: 16px;
-  box-shadow: 0 12px 48px rgba(14, 39, 106, 0.2);
+  box-shadow: 
+        0 0 40px rgba(102, 195, 85, 0.4),
+        0 12px 48px rgba(0, 0, 0, 0.6);
   padding: 8px;
   z-index: 1000;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(-20px) scale(0.95);
   opacity: 0;
   pointer-events: none;
-  border: 1px solid rgba(16, 185, 129, 0.1);
+  border: 2px solid rgba(102, 195, 85, 0.4);
   overflow: hidden;
 }
 
@@ -419,7 +485,7 @@ footer::before {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
 }
 
 .menu-overlay.show {
@@ -439,7 +505,7 @@ footer::before {
 
 .menu-overlay li {
   font-size: 14px;
-  color: #0E276A;
+  color: white;
   padding: 14px 18px;
   border-radius: 10px;
   cursor: pointer;
@@ -471,20 +537,17 @@ footer::before {
 }
 
 .menu-overlay li:hover {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
-  border-color: #10b981;
-  color: #10b981;
-  transform: translateX(4px);
-}
-
-.menu-overlay li:hover::before {
-  transform: scale(1.2) rotate(10deg);
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.2) 0%, rgba(108, 209, 81, 0.2) 100%);
+  border-color: var(--primary-green);
+  color: var(--primary-green);
+  box-shadow: 0 0 15px rgba(102, 195, 85, 0.3);
+  text-shadow: 0 0 10px rgba(102, 195, 85, 0.5);
 }
 
 .menu-overlay li#logout-btn {
-  color: #ef4444;
+  color: #ff6b6b;
   margin-top: 8px;
-  border-top: 2px solid #e0e7ef;
+  border-top: 2px solid rgba(102, 195, 85, 0.3);
   padding-top: 18px;
 }
 
@@ -493,9 +556,10 @@ footer::before {
 }
 
 .menu-overlay li#logout-btn:hover {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.08) 100%);
-  border-color: #ef4444;
-  color: #dc2626;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(220, 38, 38, 0.15) 100%);
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
 }
 
 .menu-overlay a {

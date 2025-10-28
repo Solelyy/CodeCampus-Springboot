@@ -26,8 +26,36 @@
 
 /* Body */
 body {
-    background: linear-gradient(135deg, #f1f5f9 0%, #e0e7ef 100%);
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
     font-family: "Inter", sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        );
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* Course Overview Container */
@@ -38,6 +66,8 @@ body {
     max-width: 1200px;
     padding: 0 50px;
     animation: fadeInUp 0.6s ease-out;
+    position: relative;
+    z-index: 2;
 }
 
 /* Course Navigation Tabs */
@@ -46,13 +76,16 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    background: white;
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
+    backdrop-filter: blur(20px);
     border-radius: 16px 16px 0 0;
-    box-shadow: 0 -2px 20px rgba(14, 39, 106, 0.08);
+    box-shadow: 0 -2px 20px rgba(102, 195, 85, 0.2);
     overflow: hidden;
     margin-bottom: 0;
     animation: slideInFromTop 0.5s ease-out;
     position: relative;
+    border: 2px solid rgba(102, 195, 85, 0.3);
+    border-bottom: none;
 }
 
 .course-navs::before {
@@ -62,7 +95,7 @@ body {
     left: 0;
     right: 0;
     height: 4px;
-    background-size: 200% 100%;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
 }
 
 .course-tab {
@@ -73,7 +106,7 @@ body {
     min-width: 120px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    background: white;
+    background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,13 +117,14 @@ body {
     font-size: 24px;
     transition: transform 0.3s ease;
     display: block;
+    filter: drop-shadow(0 0 8px rgba(102, 195, 85, 0.4));
 }
 
 .course-tab h3 {
     margin: 0;
     font-weight: 600;
     font-size: clamp(0.875rem, 2vw, 1rem);
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.6);
     transition: all 0.3s ease;
 }
 
@@ -102,26 +136,28 @@ body {
     transform: translateX(-50%) scaleX(0);
     width: 100%;
     height: 4px;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
     border-radius: 4px 4px 0 0;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .course-tab:hover:not(.active) {
-    background: linear-gradient(135deg, rgba(14, 39, 106, 0.04) 0%, rgba(16, 185, 129, 0.04) 100%);
+    background: linear-gradient(135deg, rgba(102, 195, 85, 0.1) 0%, rgba(108, 209, 81, 0.1) 100%);
     transform: translateY(-2px);
 }
 
 .course-tab:hover .tab-icon {
     transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 0 15px rgba(102, 195, 85, 0.8));
 }
 
 .course-tab:hover h3 {
-    color: #10b981;
+    color: var(--primary-green);
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.5);
 }
 
 .course-tab.active {
-    background: linear-gradient(135deg, rgba(14, 39, 106, 0.06) 0%, rgba(16, 185, 129, 0.06) 100%);
+    background: linear-gradient(135deg, rgba(102, 195, 85, 0.15) 0%, rgba(108, 209, 81, 0.15) 100%);
 }
 
 .course-tab.active::after {
@@ -133,19 +169,23 @@ body {
 }
 
 .course-tab.active h3 {
-    color: #10b981;
+    color: var(--primary-green);
     font-weight: 700;
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.5);
 }
 
 /* Course Content Card */
 .course-content-card {
-    background: white;
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
+    backdrop-filter: blur(20px);
     border-radius: 0 0 16px 16px;
-    box-shadow: 0 8px 32px rgba(14, 39, 106, 0.12);
+    box-shadow: 0 8px 32px rgba(102, 195, 85, 0.2);
     padding: 50px 40px 40px;
     animation: fadeInUp 0.7s ease-out;
     position: relative;
     overflow: hidden;
+    border: 2px solid rgba(102, 195, 85, 0.3);
+    border-top: none;
 }
 
 .course-content-card::before {
@@ -155,7 +195,7 @@ body {
     right: 0;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(102, 195, 85, 0.08) 0%, transparent 70%);
     border-radius: 50%;
     transform: translate(30%, -30%);
     pointer-events: none;
@@ -185,13 +225,13 @@ body {
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
     color: white;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
     width: fit-content;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(102, 195, 85, 0.4);
     letter-spacing: 0.5px;
 }
 
@@ -203,22 +243,24 @@ body {
 #course-title {
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 700;
-    background: linear-gradient(135deg, #0E276A 0%, #1a3a8a 100%);
+    background: linear-gradient(135deg, white 0%, var(--primary-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1.2;
     margin: 0;
+    text-shadow: 0 0 20px rgba(102, 195, 85, 0.3);
 }
 
 #course-description-text {
     font-size: clamp(1rem, 2vw, 1.125rem);
-    color: #475569;
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.9;
     text-align: justify;
     padding-left: 4px;
-    border-left: 4px solid #10b981;
+    border-left: 4px solid var(--primary-green);
     padding-left: 20px;
+    box-shadow: -4px 0 10px rgba(102, 195, 85, 0.2);
 }
 
 /* Course Actions Section */
@@ -241,12 +283,12 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
+    border: 2px solid var(--primary-green);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 20px rgba(102, 195, 85, 0.3);
     position: relative;
     overflow: hidden;
     font-family: 'Inter', sans-serif;
@@ -282,13 +324,14 @@ body {
 
 /* Start Activity Button */
 #start-activity-btn {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
     color: white;
 }
 
 #start-activity-btn:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 30px rgba(102, 195, 85, 0.6),
+                0 12px 32px rgba(102, 195, 85, 0.4);
 }
 
 #start-activity-btn:active {
@@ -297,18 +340,19 @@ body {
 
 /* View Leaderboard Button */
 #view-leaderboard-btn {
-    background: linear-gradient(135deg, #0E276A 0%, #1a3a8a 100%);
-    color: white;
-    border: 2px solid transparent;
+    background: linear-gradient(135deg, rgba(102, 195, 85, 0.2) 0%, rgba(108, 209, 81, 0.2) 100%);
+    color: var(--primary-green);
+    border: 2px solid var(--primary-green);
+    text-shadow: 0 0 8px rgba(102, 195, 85, 0.5);
 }
 
 #view-leaderboard-btn:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(14, 39, 106, 0.4);
-}
-
-#view-leaderboard-btn:active {
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    color: rgba(10, 14, 26, 0.95);
+    box-shadow: 0 0 30px rgba(102, 195, 85, 0.6),
+                0 12px 32px rgba(102, 195, 85, 0.4);
+    text-shadow: none;
 }
 
 /* Responsive Design */

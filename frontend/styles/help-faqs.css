@@ -1,50 +1,100 @@
 /* Styles for the Help & FAQs page */
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+main {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
 .help-faqs-container {
     text-align: left;
     max-width: 900px;
-    margin: 20px auto 60px auto;
-    padding: 30px;
+    margin: 0px auto 150px auto;
+    padding: 0px 30px 30px 30px;
+    position: relative;
+    z-index: 2;
 }
 
 .help-faqs-container h2 {
-    color: #0E276A;
+    color: #FFFFFF;
     font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 40px;
     letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(14, 39, 106, 0.1);
+    text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
 }
 
 .faq-item {
-    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
     padding: 25px 30px;
     margin-bottom: 20px;
     border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.1), 
-                0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(16, 185, 129, 0.08);
+    box-shadow: 
+        0 0 25px rgba(102, 195, 85, 0.15),
+        0 6px 20px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(102, 195, 85, 0.2);
     transition: all 0.3s ease;
 }
 
 .faq-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.14), 
-                0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 
+        0 0 35px rgba(102, 195, 85, 0.25),
+        0 10px 28px rgba(0, 0, 0, 0.5);
+    border-color: rgba(102, 195, 85, 0.4);
 }
 
 .faq-item h3 {
-    color: #0E276A;
+    color: #FFFFFF;
     font-size: 1.35rem;
     font-weight: 700;
     margin-bottom: 18px;
     padding-bottom: 10px;
-    border-bottom: 3px solid #a7f3d0;
+    border-bottom: 2px solid rgba(102, 195, 85, 0.3);
     letter-spacing: 0.3px;
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
 }
 
 .faq-item p {
-    color: #047857;
+    color: rgba(224, 224, 224, 0.85);
     line-height: 1.7;
     font-size: 1.05rem;
     margin-bottom: 12px;
@@ -52,17 +102,19 @@
 }
 
 .faq-item p:first-of-type {
-    color: #0E276A;
+    color: var(--primary-green);
     font-weight: 600;
     margin-top: 8px;
+    text-shadow: 0 0 8px rgba(102, 195, 85, 0.3);
 }
 
 .faq-item p:last-child {
     margin-bottom: 0;
     padding: 15px 18px;
-    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    background: rgba(26, 31, 53, 0.6);
     border-radius: 10px;
-    border-left: 4px solid #10b981;
+    border-left: 4px solid var(--primary-green);
+    box-shadow: 0 0 15px rgba(102, 195, 85, 0.1);
 }
 
 .contact-support-container {
@@ -70,11 +122,12 @@
     justify-content: center;
     margin-top: 40px;
     padding: 30px;
-    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
     border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.1), 
-                0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(16, 185, 129, 0.08);
+    box-shadow: 
+        0 0 30px rgba(102, 195, 85, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(102, 195, 85, 0.3);
 }
 
 #contact-support {
@@ -85,22 +138,26 @@
 }
 
 #contact-support a {
-    color: #10b981;
+    color: #0a0e1a;
     text-decoration: none;
     padding: 12px 32px;
-    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
     border-radius: 10px;
     display: inline-block;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    box-shadow: 
+        0 0 25px rgba(102, 195, 85, 0.4),
+        0 4px 12px rgba(102, 195, 85, 0.3);
     letter-spacing: 0.3px;
+    font-weight: 700;
 }
 
 #contact-support a:hover {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: #fff;
+    background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
+    box-shadow: 
+        0 0 35px rgba(102, 195, 85, 0.6),
+        0 6px 18px rgba(102, 195, 85, 0.4);
 }
 
 #contact-support a:active {
@@ -110,7 +167,7 @@
 /* ---------- RESPONSIVE DESIGN ---------- */
 @media (max-width: 768px) {
     .help-faqs-container {
-        margin: 20px auto 40px auto;
+        margin: 100px auto 40px auto;
         padding: 20px 15px;
     }
 

@@ -14,16 +14,54 @@
     50% { transform: scale(1.02); }
 }
 
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        );
+    pointer-events: none;
+    z-index: 1;
+}
+
 /* Course Activities Container */
 .course-activities {
     padding: 40px 50px;
-    width: clamp(100%, 90vw, 1200px);
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     animation: fadeInUp 0.6s ease-out;
+    box-sizing: border-box;
 }
 
 .course-activities h4 {
-    color: var(--dark-green);
+    color: #FFFFFF;
     font-family: "Inter", sans-serif;
     font-size: clamp(1.25rem, 2.5vw, 1.5rem);
     font-weight: 700;
@@ -31,11 +69,44 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    text-shadow: 0 0 15px rgba(102, 195, 85, 0.5);
 }
 
 .course-activities h4::before {
     content: '📚';
     font-size: 28px;
+    filter: drop-shadow(0 0 8px rgba(102, 195, 85, 0.5));
+}
+
+/* Course Content Card */
+.course-content-card {
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 32px rgba(102, 195, 85, 0.2);
+    padding: 40px 50px;
+    animation: fadeInUp 0.7s ease-out;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(102, 195, 85, 0.3);
+    border-top: none;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.course-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(102, 195, 85, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    pointer-events: none;
 }
 
 /* Add Activity Button Container */
@@ -48,7 +119,7 @@
 
 #btn-add-activity {
     background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-    color: white;
+    color: #0a0e1a;
     padding: 14px 28px;
     border-radius: 12px;
     font-size: 16px;
@@ -59,7 +130,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    box-shadow: 0 4px 16px rgba(102, 195, 85, 0.3);
+    box-shadow: 
+        0 0 25px rgba(102, 195, 85, 0.4),
+        0 4px 16px rgba(102, 195, 85, 0.3);
 }
 
 #btn-add-activity::before {
@@ -68,7 +141,9 @@
 
 #btn-add-activity:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(102, 195, 85, 0.4);
+    box-shadow: 
+        0 0 35px rgba(102, 195, 85, 0.6),
+        0 8px 24px rgba(102, 195, 85, 0.4);
     background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
 }
 
@@ -93,8 +168,8 @@
     justify-content: space-between;
     width: 100%;
     height: auto;
-    background: white;
-    border: 2px solid var(--gray-border);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.9) 0%, rgba(26, 31, 53, 0.9) 100%);
+    border: 2px solid rgba(102, 195, 85, 0.2);
     border-radius: 16px;
     padding: 10px 24px;
     gap: 20px;
@@ -102,7 +177,8 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .activity-item::before {
@@ -115,13 +191,16 @@
     background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
     transform: scaleY(0);
     transition: transform 0.3s ease;
+    box-shadow: 0 0 10px var(--primary-green);
 }
 
 .activity-item:hover {
     border-color: var(--primary-green);
-    box-shadow: 0 8px 24px rgba(102, 195, 85, 0.15);
+    box-shadow: 
+        0 0 30px rgba(102, 195, 85, 0.3),
+        0 8px 24px rgba(0, 0, 0, 0.5);
     transform: translateY(-4px);
-    background: linear-gradient(135deg, rgba(102, 195, 85, 0.02) 0%, rgba(108, 209, 81, 0.02) 100%);
+    background: linear-gradient(135deg, rgba(26, 31, 53, 0.95) 0%, rgba(10, 14, 26, 0.95) 100%);
 }
 
 .activity-item:hover::before {
@@ -147,20 +226,22 @@
 .activity-title {
     font-size: 18px;
     font-weight: 700;
-    color: var(--dark-green);
+    color: var(--primary-green);
     display: flex;
     align-items: center;
     gap: 10px;
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
 }
 
 .activity-title::before {
     content: '💻';
     font-size: 22px;
+    filter: drop-shadow(0 0 8px rgba(102, 195, 85, 0.5));
 }
 
 .activity-description {
     font-size: 14px;
-    color: #64748b;
+    color: rgba(224, 224, 224, 0.7);
     line-height: 1.6;
 }
 
@@ -168,7 +249,7 @@
     display: flex;
     gap: 16px;
     font-size: 13px;
-    color: #94a3b8;
+    color: rgba(224, 224, 224, 0.5);
     margin-top: 4px;
 }
 
@@ -180,6 +261,7 @@
 
 .activity-meta span::before {
     font-size: 14px;
+    filter: drop-shadow(0 0 6px rgba(102, 195, 85, 0.4));
 }
 
 .activity-meta span:nth-child(1)::before {
@@ -213,9 +295,10 @@
 }
 
 #btn-view {
-    background-color: white;
+    background: rgba(26, 31, 53, 0.8);
     color: var(--primary-green);
     border-color: var(--primary-green);
+    box-shadow: 0 0 15px rgba(102, 195, 85, 0.2);
 }
 
 #btn-view::before {
@@ -225,16 +308,19 @@
 
 #btn-view:hover {
     background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-    color: white;
-    border-color: var(--primary-green);
+    color: #0a0e1a;
+    border-color: transparent;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(102, 195, 85, 0.3);
+    box-shadow: 
+        0 0 25px rgba(102, 195, 85, 0.5),
+        0 6px 16px rgba(102, 195, 85, 0.3);
 }
 
 #btn-edit {
     background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-    color: white;
+    color: #0a0e1a;
     border: none;
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.3);
 }
 
 #btn-edit::before {
@@ -244,14 +330,16 @@
 #btn-edit:hover {
     background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(102, 195, 85, 0.4);
+    box-shadow: 
+        0 0 30px rgba(102, 195, 85, 0.6),
+        0 6px 16px rgba(102, 195, 85, 0.4);
 }
 
 /* Empty State */
 .activities-empty {
     text-align: center;
     padding: 60px 20px;
-    color: #94a3b8;
+    color: rgba(224, 224, 224, 0.5);
     animation: fadeInUp 0.6s ease-out;
 }
 
@@ -259,6 +347,7 @@
     font-size: 64px;
     margin-bottom: 20px;
     opacity: 0.5;
+    filter: drop-shadow(0 0 10px rgba(102, 195, 85, 0.3));
 }
 
 .activities-empty-icon::before {
@@ -267,13 +356,17 @@
 
 .activities-empty p {
     font-size: 16px;
-    color: #64748b;
+    color: rgba(224, 224, 224, 0.6);
     margin: 0;
 }
 
 /* Responsive Design */
 @media (max-width: 968px) {
     .course-activities {
+        padding: 30px 30px;
+    }
+
+    .course-content-card {
         padding: 30px 30px;
     }
 
@@ -291,6 +384,10 @@
 
 @media (max-width: 768px) {
     .course-activities {
+        padding: 25px 20px;
+    }
+
+    .course-content-card {
         padding: 25px 20px;
     }
 
@@ -354,6 +451,10 @@
 
 @media (max-width: 480px) {
     .course-activities {
+        padding: 20px 16px;
+    }
+
+    .course-content-card {
         padding: 20px 16px;
     }
 

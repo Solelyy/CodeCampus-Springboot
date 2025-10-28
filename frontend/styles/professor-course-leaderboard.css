@@ -19,6 +19,73 @@
     50% { transform: translateY(-5px); }
 }
 
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Course Content Card */
+.course-content-card {
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 32px rgba(102, 195, 85, 0.2);
+    padding: 40px 50px;
+    animation: fadeInUp 0.7s ease-out;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(102, 195, 85, 0.3);
+    border-top: none;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.course-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(102, 195, 85, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    pointer-events: none;
+}
+
 /* ---------- Leaderboard Styles ---------- */
 .leaderboard-container {
     animation: fadeUp 0.6s ease-out;
@@ -32,7 +99,7 @@
     text-align: center;
     margin-bottom: 40px;
     padding-bottom: 24px;
-    border-bottom: 2px solid #e0e7ef;
+    border-bottom: 2px solid rgba(102, 195, 85, 0.2);
     position: relative;
 }
 
@@ -46,17 +113,19 @@
     height: 4px;
     background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
     border-radius: 2px;
+    box-shadow: 0 0 15px rgba(102, 195, 85, 0.6);
 }
 
 .leaderboard-container h2 {
-    color: var(--dark-green);
+    color: #FFFFFF;
     margin: 0 0 12px 0;
     font-weight: 700;
     font-size: clamp(1.75rem, 3vw, 2.25rem);
+    text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
 }
 
 .leaderboard-desc {
-    color: #64748b;
+    color: rgba(224, 224, 224, 0.7);
     font-size: clamp(0.9rem, 2vw, 1rem);
     margin: 0;
     font-weight: 500;
@@ -70,22 +139,23 @@
 }
 
 .leaderboard-table thead {
-    background: linear-gradient(135deg, rgba(102, 195, 85, 0.08) 0%, rgba(108, 209, 81, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.8) 0%, rgba(26, 31, 53, 0.8) 100%);
 }
 
 .leaderboard-table thead tr {
-    box-shadow: 0 2px 8px rgba(102, 195, 85, 0.1);
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.2);
 }
 
 .leaderboard-table th {
     text-align: left;
-    color: var(--dark-green);
+    color: var(--primary-green);
     padding: 18px 16px;
     font-weight: 700;
     font-size: clamp(0.875rem, 2vw, 1rem);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border: none;
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
 }
 
 .leaderboard-table th:first-child {
@@ -99,23 +169,27 @@
 }
 
 .leaderboard-table tbody tr {
-    background: white;
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.9) 0%, rgba(26, 31, 53, 0.9) 100%);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 0 15px rgba(102, 195, 85, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.3);
     animation: slideIn 0.5s ease-out backwards;
     animation-delay: calc(var(--row-index, 0) * 0.05s);
+    border: 2px solid rgba(102, 195, 85, 0.15);
 }
 
 .leaderboard-table tbody tr:hover {
     transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 8px 24px rgba(102, 195, 85, 0.15);
-    background: linear-gradient(135deg, rgba(102, 195, 85, 0.02) 0%, rgba(108, 209, 81, 0.02) 100%);
+    box-shadow: 0 0 30px rgba(102, 195, 85, 0.4),
+                0 8px 24px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, rgba(26, 31, 53, 0.95) 0%, rgba(10, 14, 26, 0.95) 100%);
+    border-color: rgba(102, 195, 85, 0.4);
 }
 
 .leaderboard-table td {
     padding: 20px 16px;
     font-size: clamp(0.875rem, 2vw, 0.9375rem);
-    color: #475569;
+    color: rgba(224, 224, 224, 0.8);
     border: none;
     font-weight: 500;
 }
@@ -134,10 +208,11 @@
 
 /* Rank Badges */
 .leaderboard-table tbody tr:nth-child(1) td:first-child {
-    color: #d4af37;
+    color: #FFD700;
     font-weight: 800;
     font-size: clamp(1.125rem, 2vw, 1.25rem);
     position: relative;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
 }
 
 .leaderboard-table tbody tr:nth-child(1) td:first-child::before {
@@ -148,31 +223,40 @@
     transform: translateY(-50%);
     font-size: 20px;
     animation: bounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
 }
 
 .leaderboard-table tbody tr:nth-child(2) td:first-child {
-    color: #c0c0c0;
+    color: #C0C0C0;
     font-weight: 800;
     font-size: clamp(1.125rem, 2vw, 1.25rem);
+    text-shadow: 0 0 15px rgba(192, 192, 192, 0.8);
 }
 
 .leaderboard-table tbody tr:nth-child(3) td:first-child {
-    color: #cd7f32;
+    color: #CD7F32;
     font-weight: 800;
     font-size: clamp(1.125rem, 2vw, 1.25rem);
+    text-shadow: 0 0 15px rgba(205, 127, 50, 0.8);
 }
 
 /* Top 3 Highlight */
 .leaderboard-table tbody tr:nth-child(1) {
-    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.08) 100%);
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
 }
 
 .leaderboard-table tbody tr:nth-child(2) {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.15) 0%, rgba(192, 192, 192, 0.08) 100%);
+    border-color: rgba(192, 192, 192, 0.4);
+    box-shadow: 0 0 25px rgba(192, 192, 192, 0.2);
 }
 
 .leaderboard-table tbody tr:nth-child(3) {
-    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.15) 0%, rgba(205, 127, 50, 0.08) 100%);
+    border-color: rgba(205, 127, 50, 0.4);
+    box-shadow: 0 0 25px rgba(205, 127, 50, 0.2);
 }
 
 /* Points Column Styling */
@@ -180,16 +264,18 @@
     color: var(--primary-green);
     font-weight: 700;
     font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.5);
 }
 
 .leaderboard-table td:nth-child(3)::before {
     content: '⭐ ';
     font-size: 16px;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
 }
 
 /* Student Name Bold */
 .leaderboard-table td:nth-child(2) {
-    color: var(--dark-green);
+    color: #FFFFFF;
     font-weight: 600;
     font-size: clamp(0.9375rem, 2vw, 1rem);
 }
@@ -198,18 +284,19 @@
 .leaderboard-empty {
     text-align: center;
     padding: 80px 40px;
-    color: #94a3b8;
+    color: rgba(224, 224, 224, 0.5);
 }
 
 .leaderboard-empty-icon {
     font-size: 80px;
     margin-bottom: 20px;
     opacity: 0.4;
+    filter: drop-shadow(0 0 10px rgba(102, 195, 85, 0.3));
 }
 
 .leaderboard-empty h3 {
     font-size: 1.5rem;
-    color: #64748b;
+    color: rgba(224, 224, 224, 0.7);
     margin: 0 0 12px 0;
 }
 
@@ -217,6 +304,7 @@
     font-size: 1rem;
     margin: 0;
     line-height: 1.6;
+    color: rgba(224, 224, 224, 0.6);
 }
 
 /* Responsive */
