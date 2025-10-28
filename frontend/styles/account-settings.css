@@ -1,7 +1,52 @@
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+main {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
 .account-settings-container {
     max-width: 900px;
-    margin: 20px auto 60px auto;
-    padding: 30px;
+    margin: 0px auto 150px auto;
+    padding: 0px 30px 30px 30px;
+    position: relative;
+    z-index: 2;
 }
 
 .account-settings-form, 
@@ -9,50 +54,56 @@
     max-width: 100%;
     margin: 0 0 30px 0;
     padding: 35px;
-    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 53, 0.95) 100%);
     border-radius: 18px;
-    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12), 
-                0 2px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(20, 149, 106, 0.08);
+    box-shadow: 
+        0 0 30px rgba(102, 195, 85, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.5),
+        inset 0 0 60px rgba(102, 195, 85, 0.05);
+    border: 2px solid rgba(102, 195, 85, 0.3);
     transition: box-shadow 0.3s ease;
 }
 
 .account-settings-form:hover,
 .manage-account-container:hover {
-    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.16), 
-                0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 
+        0 0 40px rgba(102, 195, 85, 0.3),
+        0 12px 32px rgba(0, 0, 0, 0.6),
+        inset 0 0 80px rgba(102, 195, 85, 0.08);
 }
 
 h2 {
-    color: #0E276A;
+    color: #FFFFFF;
     font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 40px;
     letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(14, 39, 106, 0.1);
+    text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
 }
 
 h3 {
-    color: #0E276A;
+    color: #FFFFFF;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 25px;
     padding-bottom: 12px;
-    border-bottom: 3px solid #a7f3d0;
+    border-bottom: 2px solid rgba(102, 195, 85, 0.3);
     letter-spacing: 0.3px;
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
 }
 
 .manage-account-container p {
-    color: #0E276A;
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.7;
     font-size: 1.05rem;
     font-weight: 500;
     margin-bottom: 20px;
     padding: 15px 20px;
-    background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+    background: rgba(231, 83, 67, 0.15);
     border-left: 4px solid #e75343;
     border-radius: 10px;
+    box-shadow: 0 0 15px rgba(231, 83, 67, 0.2);
 }
 
 .form-group {
@@ -70,33 +121,36 @@ h3 {
 
 .form-group label {
     font-weight: 600;
-    color: #0E276A;
+    color: var(--primary-green);
     font-size: 1.05rem;
     letter-spacing: 0.3px;
+    text-shadow: 0 0 8px rgba(102, 195, 85, 0.3);
 }
 
 .form-group input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #a7f3d0;
+    border: 2px solid rgba(102, 195, 85, 0.3);
     border-radius: 10px;
     font-size: 1.05rem;
     font-family: "Inter", sans-serif;
-    color: #0E276A;
-    background-color: #fefefe;
+    color: var(--text-dark);
+    background: rgba(26, 31, 53, 0.6);
     transition: all 0.3s ease;
-    box-shadow: inset 0 2px 6px rgba(16, 185, 129, 0.04);
+    box-shadow: 0 0 15px rgba(102, 195, 85, 0.1);
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #10b981;
-    box-shadow: inset 0 2px 6px rgba(16, 185, 129, 0.08),
-                0 0 0 3px rgba(16, 185, 129, 0.1);
+    border-color: var(--primary-green);
+    background: rgba(26, 31, 53, 0.8);
+    box-shadow: 
+        0 0 25px rgba(102, 195, 85, 0.4),
+        0 0 40px rgba(102, 195, 85, 0.2);
 }
 
 .form-group input::placeholder {
-    color: #9ca3af;
+    color: rgba(224, 224, 224, 0.4);
 }
 
 #update-password-btn, 
@@ -113,15 +167,19 @@ h3 {
 }
 
 #update-password-btn {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    color: #0a0e1a;
+    box-shadow: 
+        0 0 25px rgba(102, 195, 85, 0.4),
+        0 4px 12px rgba(102, 195, 85, 0.3);
 }
 
 #update-password-btn:hover {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+    box-shadow: 
+        0 0 35px rgba(102, 195, 85, 0.6),
+        0 6px 18px rgba(102, 195, 85, 0.4);
 }
 
 #update-password-btn:active {
@@ -131,13 +189,17 @@ h3 {
 #delete-account-btn {
     background: linear-gradient(135deg, #e75343 0%, #d43f30 100%);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(231, 83, 67, 0.25);
+    box-shadow: 
+        0 0 25px rgba(231, 83, 67, 0.4),
+        0 4px 12px rgba(231, 83, 67, 0.3);
 }
 
 #delete-account-btn:hover {
     background: linear-gradient(135deg, #d43f30 0%, #c92a1a 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(231, 83, 67, 0.35);
+    box-shadow: 
+        0 0 35px rgba(231, 83, 67, 0.6),
+        0 6px 18px rgba(231, 83, 67, 0.4);
 }
 
 #delete-account-btn:active {
@@ -149,13 +211,13 @@ h3 {
     justify-content: flex-end;
     margin-top: 25px;
     padding-top: 20px;
-    border-top: 2px solid #a7f3d0;
+    border-top: 2px solid rgba(102, 195, 85, 0.2);
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */
 @media (max-width: 768px) {
     .account-settings-container {
-        margin: 20px auto 40px auto;
+        margin: 100px auto 40px auto;
         padding: 20px 15px;
     }
 
