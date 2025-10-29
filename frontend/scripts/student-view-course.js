@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Successfully joined
                     joinBtn.textContent = "Already Joined";
                     joinBtn.disabled = true;
-                    window.location.href = `/frontend/webpages/student-course-preassessment.html?courseId=${courseId}`;
+                    window.location.href = `/frontend/webpages/student-course-welcome.html?courseId=${courseId}`;
                 } catch (err) {
                     console.error('Error joining course:', err);
                     alert(err.message || 'Failed to join course. Please try again.');
