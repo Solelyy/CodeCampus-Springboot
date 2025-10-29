@@ -35,7 +35,7 @@ function showScorePopup(score, totalQuestions) {
     const continueBtn = document.getElementById('continue-btn');
 
     scoreText.textContent = `You scored ${score} out of ${totalQuestions}`;
-    feedbackText.textContent = (score / totalQuestions >= 0.7) ? "Good Job!" : "Better Next Time!";
+    feedbackText.textContent = (score / totalQuestions >= 0.7) ? "Great Job! You may now start the activities." : "Keep going, a little more practice is needed. You may now start the activities.";
 
     popup.classList.add('show');
 
