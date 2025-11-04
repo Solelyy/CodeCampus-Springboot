@@ -90,34 +90,40 @@
 <main>
   <section class="course-challenge">
     <h3 id="challenge-title">Challenge Title</h3>
-    <div class="challenge-details-container">
-      <div class="left-side">
-        <div class="challenge-details">
-            <p id="label">Difficulty: <span id="challenge-difficulty">Easy</span></p>
-            <p id="label">Points: <span id="challenge-points">10</span></p>
-        </div>  
-          
-          <p id="challenge-label">Challenge:</p>
-          <p id="challenge-description">Solve the problem here.</p>
-        
 
-        <div id="editor">// Write your code here</div>
-
-        <div class="challenge-run-container">
-          <button type="button" id="runBtn">Run Code</button>
-        </div>
+    <!-- Everything inside one main card -->
+    <div class="challenge-main">
+      <div class="challenge-details">
+        <p id="label">Difficulty: <span id="challenge-difficulty">Easy</span></p>
+        <p id="label">Points: <span id="challenge-points">10</span></p>
       </div>
 
-      <div class="right-side">
-        <pre id="output"></pre>
-        <div class="challenge-action-container">
-          <p id="feedback">Feedback:</p>
-          <button type="button" id="saveBtn" disabled>Submit</button>
+      <p id="challenge-label">Challenge:</p>
+      <p id="challenge-description">Solve the problem here.</p>
+
+      <!-- Split area: code editor and output side by side -->
+      <div class="challenge-workspace">
+        <div class="left-side">
+          <div id="editor">// Write your code here</div>
+          <div class="challenge-run-container">
+            <button type="button" id="runBtn">
+              <img src="/frontend/assets/icons/run-code.svg" alt="Run Code button">
+            </button>
+          </div>
+        </div>
+
+        <div class="right-side">
+          <pre id="output"></pre>
+          <div class="challenge-action-container">
+            <p id="feedback">Feedback:</p>
+            <button type="button" id="saveBtn" disabled>Submit</button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </main>
+
 
 <footer>
   <p>&copy; 2025. All rights reserved.</p>
