@@ -1,370 +1,517 @@
+:root {
+  --primary-green: #66C355;
+  --secondary-green: #6CD151;
+  --dark-green: #35954D;
+  --primary-blue: #0868A4;
+  --dark-blue: #0E276A;
+  --text-dark: #333333;
+  --bg-light: #FFFFFF;
+}
+
+/* ---------- GLOBAL LAYOUT ---------- */
 body {
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow-x: hidden;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
 }
 
 body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            rgba(102, 195, 85, 0.03) 0px,
-            transparent 1px,
-            transparent 2px,
-            rgba(102, 195, 85, 0.03) 3px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            rgba(102, 195, 85, 0.03) 0px,
-            transparent 1px,
-            transparent 2px,
-            rgba(102, 195, 85, 0.03) 3px
-        );
-    pointer-events: none;
-    z-index: 1;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(102, 195, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(102, 195, 85, 0.03) 3px
+    );
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* ---------- GENERAL LAYOUT ---------- */
+/* ---------- MAIN CONTAINER ---------- */
 .course-challenge {
-    display: flex;
-    flex-direction: column;
-    margin: 20px auto 100px auto;
-    font-family: "Inter", sans-serif;
-    color: #FFFFFF;
-    max-width: 1200px;
-    width: 100%;
-    padding: 0 50px;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 2;
+  display: flex;
+  flex-direction: column;
+  margin: 0px auto 100px auto;
+  font-family: "Inter", sans-serif;
+  color: #FFFFFF;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
 }
 
-/* ---------- CHALLENGE TITLE ---------- */
+/* ---------- TITLE ---------- */
 #challenge-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #FFFFFF;
-    margin-bottom: 25px;
-    letter-spacing: 0.3px;
-    border-bottom: 4px solid var(--primary-green);
-    padding-bottom: 12px;
-    padding-left: 20px;
-    text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 25px;
+  letter-spacing: 0.3px;
+  border-bottom: 4px solid var(--primary-green);
+  padding-bottom: 12px;
+  padding-left: 20px;
+  text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
 }
 
-/* ---------- CHALLENGE DETAILS CONTAINER ---------- */
-.challenge-details-container {
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
-    justify-content: space-between;
-    align-items: stretch;
-}
-
-/* ---------- LEFT & RIGHT PANELS ---------- */
-.left-side,
-.right-side {
-    background: linear-gradient(135deg, rgba(10, 14, 26, 0.9) 0%, rgba(26, 31, 53, 0.9) 100%);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 0 25px rgba(102, 195, 85, 0.15),
-                0 8px 24px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    border: 2px solid rgba(102, 195, 85, 0.2);
-    transition: all 0.3s ease;
-}
-
-.left-side:hover,
-.right-side:hover {
-    box-shadow: 0 0 35px rgba(102, 195, 85, 0.3),
-                0 12px 32px rgba(0, 0, 0, 0.6);
-    border-color: rgba(102, 195, 85, 0.4);
-}
-
-.left-side {
-    width: 58%;
-    gap: 20px;
-}
-
-.right-side {
-    width: 42%;
-    gap: 18px;
-}
-
-.right-side #output {
-    flex: 1;
-    overflow-y: auto;
-    min-height: 300px;
+/* ---------- MAIN CARD ---------- */
+.challenge-main {
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.9), rgba(26, 31, 53, 0.9));
+  border-radius: 20px;
+  padding: 30px;
+  border: 2px solid rgba(102, 195, 85, 0.25);
+  box-shadow: 0 0 25px rgba(102, 195, 85, 0.15),
+              0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* ---------- CHALLENGE DETAILS ---------- */
 .challenge-details {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+  align-items: center;
 }
 
 #label {
-    font-weight: 600;
-    color: #0a0e1a;
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-    padding: 8px 16px;
-    border-radius: 24px;
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.95rem;
-    box-shadow: 0 0 20px rgba(102, 195, 85, 0.4);
-    transition: all 0.3s ease;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: rgba(102, 195, 85, 0.15);
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  border: 1px solid rgba(102, 195, 85, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  gap: 8px;
 }
 
 #label:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(102, 195, 85, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 195, 85, 0.3);
+  border-color: rgba(102, 195, 85, 0.5);
+  background: rgba(102, 195, 85, 0.2);
 }
 
-#challenge-label {  
-    font-weight: 700;
-    color: #FFFFFF;
-    font-size: 1.15rem;
-    margin-bottom: 8px;
-    margin-top: 5px;
-    text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
+#label::before {
+  font-size: 1.1rem;
+}
+
+#label:first-child::before {
+  content: '⚡';
+}
+
+#label:last-child::before {
+  content: '⭐️';
 }
 
 #challenge-difficulty {
-    font-weight: 700;
-    color: #0a0e1a;
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-    padding: 4px 12px;
-    border-radius: 16px;
-    margin-left: 8px;
-    font-size: 0.85rem;
-    box-shadow: 0 0 15px rgba(102, 195, 85, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #0a0e1a;
+  background: linear-gradient(135deg, #FFFFFF, #E0E0E0);
+  padding: 4px 12px;
+  border-radius: 8px;
+  margin-left: 6px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#challenge-difficulty.easy {
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  color: #FFFFFF;
+}
+
+#challenge-difficulty.medium {
+  background: linear-gradient(135deg, #FF9800, #FFB74D);
+  color: #FFFFFF;
+}
+
+#challenge-difficulty.hard {
+  background: linear-gradient(135deg, #F44336, #EF5350);
+  color: #FFFFFF;
 }
 
 #challenge-points {
-    font-weight: 700;
-    color: #0a0e1a;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    padding: 4px 12px;
-    border-radius: 16px;
-    margin-left: 8px;
-    font-size: 0.85rem;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #0a0e1a;
+  background: linear-gradient(135deg, #FFD700, #FFC107);
+  padding: 4px 12px;
+  border-radius: 8px;
+  margin-left: 6px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
 }
 
 /* ---------- CHALLENGE DESCRIPTION ---------- */
+#challenge-label {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--primary-green);
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-shadow: 0 0 15px rgba(102, 195, 85, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 #challenge-description {
-    font-size: 1.02rem;
-    line-height: 1.7;
-    color: rgba(224, 224, 224, 0.9);
-    background-color: rgba(26, 31, 53, 0.6);
-    border-left: 5px solid var(--primary-green);
-    padding: 18px 20px;
-    border-radius: 10px;
-    margin-bottom: 18px;
-    box-shadow: 0 0 20px rgba(102, 195, 85, 0.1);
-    transition: all 0.3s ease;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.08), rgba(102, 195, 85, 0.12));
+  padding: 20px 24px;
+  border-radius: 12px;
+  margin-bottom: 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+              inset 0 0 20px rgba(102, 195, 85, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#challenge-description::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-green), var(--secondary-green));
+  box-shadow: 0 0 15px var(--primary-green);
 }
 
 #challenge-description:hover {
-    border-left-width: 7px;
-    box-shadow: 0 0 30px rgba(102, 195, 85, 0.25);
-    background-color: rgba(26, 31, 53, 0.8);
+  border-left-width: 4px;
+  background: linear-gradient(135deg, rgba(102, 195, 85, 0.12), rgba(102, 195, 85, 0.16));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
+              inset 0 0 25px rgba(102, 195, 85, 0.1);
+  transform: translateX(2px);
 }
 
-/* ---------- CODE EDITOR ---------- */
+/* ---------- WORKSPACE (CODE + OUTPUT) ---------- */
+.challenge-workspace {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.left-side,
+.right-side {
+  flex: 1;
+  min-width: 400px;
+  background: rgba(15, 20, 35, 0.95);
+  border-radius: 10px;
+  padding: 0;
+  border: 1px solid rgba(102, 195, 85, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.left-side::before,
+.right-side::before {
+  content: attr(data-title);
+  display: block;
+  background: rgba(102, 195, 85, 0.1);
+  border-bottom: 1px solid rgba(102, 195, 85, 0.2);
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ---------- EDITOR ---------- */
 #editor {
-    height: 400px;
-    width: 100%;
-    border: 2px solid rgba(102, 195, 85, 0.3);
-    border-radius: 12px;
-    padding: 0;
-    font-family: "Fira Code", "Courier New", Courier, monospace;
-    font-size: 1rem;
-    box-shadow: inset 0 0 15px rgba(102, 195, 85, 0.05),
-                0 0 20px rgba(102, 195, 85, 0.1);
-    transition: all 0.3s ease;
-    background: rgba(26, 31, 53, 0.8);
-    color: rgba(224, 224, 224, 0.9);
+  height: 550px;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 20px;
+  background: rgba(13, 17, 28, 0.95);
+  color: #e0e0e0;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-y: auto;
+  transition: none;
 }
 
 #editor:focus-within {
-    border-color: var(--primary-green);
-    box-shadow: inset 0 2px 8px rgba(102, 195, 85, 0.1),
-                0 0 30px rgba(102, 195, 85, 0.3);
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
 
-/* ---------- RUN & SUBMIT BUTTONS ---------- */
+/* Scrollbar styling for editor */
+#editor::-webkit-scrollbar {
+  width: 10px;
+}
+
+#editor::-webkit-scrollbar-track {
+  background: rgba(10, 14, 26, 0.5);
+}
+
+#editor::-webkit-scrollbar-thumb {
+  background: rgba(102, 195, 85, 0.3);
+  border-radius: 5px;
+}
+
+#editor::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 195, 85, 0.5);
+}
+
+/* ---------- BUTTONS ---------- */
 .challenge-run-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  background: rgba(10, 14, 26, 0.8);
+  border-top: 1px solid rgba(102, 195, 85, 0.15);
 }
 
 button {
-    margin: 5px;
-    padding: 12px 28px;
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-    color: #0a0e1a;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 25px rgba(102, 195, 85, 0.4),
-                0 4px 12px rgba(102, 195, 85, 0.3);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
+  margin: 5px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+  color: #0a0e1a;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 25px rgba(102, 195, 85, 0.4),
+              0 4px 12px rgba(102, 195, 85, 0.3);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
 button:hover:not(:disabled) {
-    background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
-    transform: translateY(-2px);
-    box-shadow: 0 0 35px rgba(102, 195, 85, 0.6),
-                0 6px 18px rgba(102, 195, 85, 0.4);
+  background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(102, 195, 85, 0.6),
+              0 6px 18px rgba(102, 195, 85, 0.4);
 }
 
 button:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 0 20px rgba(102, 195, 85, 0.4),
-                0 3px 10px rgba(102, 195, 85, 0.3);
+  transform: translateY(0);
+  box-shadow: 0 0 20px rgba(102, 195, 85, 0.4),
+              0 3px 10px rgba(102, 195, 85, 0.3);
 }
 
 button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-    background: rgba(102, 195, 85, 0.3);
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(102, 195, 85, 0.3);
 }
 
-/* ---------- BUTTON CONTAINERS ---------- */
-.challenge-action-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-top: 12px;
-    padding-top: 15px;
-    border-top: 2px solid rgba(102, 195, 85, 0.2);
+#runBtn img {
+    height: 20px;
+    width: 20px;
 }
 
-/* ---------- FEEDBACK ---------- */
-#feedback {
-    font-weight: 600;
-    color: var(--primary-green);
-    font-size: 1rem;
-    text-shadow: 0 0 10px rgba(102, 195, 85, 0.4);
-}
-
-/* ---------- OUTPUT SECTION ---------- */
+/* ---------- OUTPUT + FEEDBACK ---------- */
 #output {
-    background-color: rgba(26, 31, 53, 0.8);
-    border: 2px solid rgba(102, 195, 85, 0.3);
-    border-radius: 12px;
-    padding: 18px;
-    font-family: "Fira Code", "Courier New", Courier, monospace;
-    font-size: 0.92rem;
-    color: rgba(224, 224, 224, 0.9);
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    line-height: 1.6;
-    box-shadow: inset 0 0 15px rgba(102, 195, 85, 0.05),
-                0 0 20px rgba(102, 195, 85, 0.1);
-    transition: all 0.3s ease;
+  background-color: rgba(13, 17, 28, 0.95);
+  border: none;
+  border-radius: 0;
+  padding: 20px;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 13px;
+  color: #00ff00;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.7;
+  min-height: 550px;
+  max-height: 550px;
+  overflow-y: auto;
+  box-shadow: none;
 }
 
-#output:hover {
-    border-color: rgba(102, 195, 85, 0.4);
-    box-shadow: inset 0 0 20px rgba(102, 195, 85, 0.1),
-                0 0 25px rgba(102, 195, 85, 0.2);
+#output::before {
+  color: var(--primary-green);
+  font-weight: bold;
+}
+
+/* Scrollbar styling for output */
+#output::-webkit-scrollbar {
+  width: 10px;
+}
+
+#output::-webkit-scrollbar-track {
+  background: rgba(10, 14, 26, 0.5);
+}
+
+#output::-webkit-scrollbar-thumb {
+  background: rgba(102, 195, 85, 0.3);
+  border-radius: 5px;
+}
+
+#output::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 195, 85, 0.5);
+}
+
+.challenge-action-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  background: rgba(10, 14, 26, 0.8);
+  border-top: 1px solid rgba(102, 195, 85, 0.15);
+}
+
+#feedback {
+  font-weight: 600;
+  color: var(--primary-green);
+  font-size: 0.9rem;
+  text-shadow: 0 0 10px rgba(102, 195, 85, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#feedback::before {
+  content: '●';
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */
-@media (max-width: 1200px) {
-    .course-challenge {
-        padding: 0 30px;
-    }
-    
-    .challenge-details-container {
-        flex-direction: column;
-    }
-    
-    .left-side,
-    .right-side {
-        width: 100%;
-    }
+@media (max-width: 992px) {
+  .challenge-workspace {
+    flex-direction: column;
+  }
+  .left-side,
+  .right-side {
+    width: 100%;
+    min-width: 300px;
+  }
+  
+  #editor,
+  #output {
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+  }
 }
 
 @media (max-width: 768px) {
-    .course-challenge {
-        padding: 0 20px;
-        margin: 20px auto 80px auto;
-    }
-    
-    #challenge-title {
-        font-size: 1.75rem;
-    }
-    
-    .left-side,
-    .right-side {
-        padding: 20px;
-    }
-    
-    #editor {
-        height: 300px;
-    }
-    
-    button {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
+  .course-challenge {
+    padding: 0 20px;
+  }
+
+  #challenge-title {
+    font-size: 1.8rem;
+  }
+  
+  .challenge-details {
+    gap: 10px;
+  }
+  
+  #label {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+  
+  #challenge-label {
+    font-size: 1.15rem;
+  }
+  
+  #challenge-description {
+    font-size: 0.95rem;
+    padding: 16px 20px;
+  }
+
+  #editor,
+  #output {
+    height: 350px;
+    min-height: 350px;
+    max-height: 350px;
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 480px) {
-    .course-challenge {
-        padding: 0 16px;
-        margin: 20px auto 60px auto;
-    }
-    
-    #challenge-title {
-        font-size: 1.5rem;
-        padding-left: 12px;
-    }
-    
-    .challenge-details-container {
-        gap: 16px;
-    }
-    
-    .left-side,
-    .right-side {
-        padding: 16px;
-    }
-    
-    #editor {
-        height: 250px;
-    }
-    
-    button {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
+  #challenge-title {
+    font-size: 1.5rem;
+    padding-left: 10px;
+  }
+  
+  .challenge-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  #label {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    padding: 8px 14px;
+  }
+  
+  #challenge-label {
+    font-size: 1.05rem;
+  }
+  
+  #challenge-description {
+    font-size: 0.9rem;
+    padding: 14px 16px;
+  }
+
+  button {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+  
+  .left-side,
+  .right-side {
+    min-width: 250px;
+  }
+  
+  #editor,
+  #output {
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    padding: 15px;
+  }
 }
