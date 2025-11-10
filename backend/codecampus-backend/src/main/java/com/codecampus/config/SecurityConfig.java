@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/activities/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/run").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/save").permitAll()
+                        .requestMatchers("/api/users/me").authenticated()
 
                         // Professor-only endpoints
                         .requestMatchers(HttpMethod.GET, "/api/courses/full").hasRole("PROFESSOR")

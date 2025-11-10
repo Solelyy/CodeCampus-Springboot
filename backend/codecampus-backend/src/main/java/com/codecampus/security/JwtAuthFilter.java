@@ -32,6 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         this.userService = userService;
     }
 
+    /*
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -92,5 +93,39 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    } */
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+
+        String authHeader = request.getHeader("Authorization");
+        String token = (authHeader != null && authHeader.startsWith("Bearer "))
+                ? authHeader.substring(7)
+                : null;
+
+        if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            try {
+                String username = jwtUtil.extractUsername(token);
+                UserDetails userDetails = userService.loadUserByUsername(username);
+
+                if (jwtUtil.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                    logger.info("Request URI: {}", request.getRequestURI());
+                    logger.info("Token valid for user: {}", username);
+                }
+            } catch (Exception e) {
+                logger.warn("JWT auth failed: {}", e.getMessage());
+            }
+        }
+
+        filterChain.doFilter(request, response);
     }
+
+
 }

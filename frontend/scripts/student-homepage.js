@@ -6,16 +6,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     const templateCard = document.querySelector('.course-card-template');
     const noCoursesMessage = document.getElementById('empty-state'); //greet message
 
+    async function fetchCurrentUser() {
+    try {
+        const response = await fetch('http://localhost:8081/api/users/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (!response.ok) throw new Error(`Failed to fetch user: ${response.status}`);
+
+        const user = await response.json();
+        console.log('Fetched user:', user);
+
+        // Combine first and last name
+        const fullName = `${user.firstName} ${user.lastName}`;
+        localStorage.setItem('studentName', fullName);
+
+        return user;
+    } catch (err) {
+        console.error('Error fetching user:', err);
+        return { firstName: 'Student', lastName: '' };
+    }
+}
+
+
     // Typing Animation for Welcome Banner
-    async function typeWelcomeMessage() {
+    async function typeWelcomeMessage(studentName) {
         const welcomeTextEl = document.getElementById('welcome-text');
         const studentNameEl = document.getElementById('student-name');
         const waveEmoji = document.getElementById('wave-emoji');
         
-        const welcomeMessage = " Welcome back, Student!";
-        const studentName = localStorage.getItem('studentName') || "Student";
-        
+        studentName = (studentName && studentName.trim())|| "Student";
+        const welcomeMessage = ` Welcome back, `;
+
         let i = 0;
+        welcomeTextEl.textContent = '';
+
         
         // Type welcome message
         const typeInterval = setInterval(() => {
@@ -47,8 +72,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 50);
     }
 
-    // Start typing animation
-    typeWelcomeMessage();
+    const user = await fetchCurrentUser();
+    const fullName = `${user.firstName} ${user.lastName}`;
+    typeWelcomeMessage(fullName);
 
     function updateGreet() {
         const courses = container.querySelectorAll('.course-card');
