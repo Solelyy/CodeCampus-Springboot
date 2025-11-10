@@ -131,3 +131,30 @@
 #forgot-password:hover {
     border-bottom: 1px solid var(--secondary-green, #6CD151);
 }
+
+/*password visibility styles*/
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 50px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  pointer-events: auto;
+}
+
+.toggle-password:hover {
+  opacity: 1;
+}
+

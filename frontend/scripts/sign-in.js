@@ -35,6 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
 const signInForm = document.getElementById('sign-in-form');
 const errorMessage = document.getElementById('error-message');
 const signInBtn = document.getElementById('sign-in-btn');
+const passwordInput = document.getElementById('password');
+const togglePassword = document.getElementById('toggle-password');
+
+//Password hide/unhide
+let isPasswordVisible = false;
+
+togglePassword.addEventListener("click", () => {
+    isPasswordVisible = !isPasswordVisible;
+
+    if (isPasswordVisible) {
+        passwordInput.type = "text";
+        togglePassword.src = "/frontend/assets/icons/icon-show.png";
+    } else {
+        passwordInput.type = "password";
+        togglePassword.src = "/frontend/assets/icons/icon-hide.png";
+    }
+})
 
 function checkFormValues() {
     const username = document.getElementById('username').value.trim();
@@ -67,7 +84,7 @@ signInForm.addEventListener('submit', async (event) => {
 
     try {
         signInBtn.disabled = true; // Disable button to prevent multiple submissions
-        signInBtn.textContent = 'Signing In...';
+        signInBtn.textContent = 'Signing in...';
         const response = await fetch("http://localhost:8081/api/users/login", {
             method: 'POST',
             headers: {
@@ -75,6 +92,7 @@ signInForm.addEventListener('submit', async (event) => {
             },
             body: JSON.stringify(data),
         });
+        console.log(response);
 
         if (!response.ok) {
             const errorBody = await response.json().catch(() => ({ error: 'Incorrect username or password.' }));
@@ -85,6 +103,8 @@ signInForm.addEventListener('submit', async (event) => {
         if (!result.token) {
             throw new Error('Login succeeded but no token was returned.');
         }
+
+        console.log(response);
 
         localStorage.setItem('token', result.token);
         localStorage.setItem('username', result.username);
