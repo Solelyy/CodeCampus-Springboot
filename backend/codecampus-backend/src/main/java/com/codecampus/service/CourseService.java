@@ -63,6 +63,10 @@ public class CourseService {
         return courseRepository.findByCode(code);
     }
 
+    public Course getCourseById(Long id) {
+        return courseRepository.findById(id).orElse(null);
+    }
+
     // --- Create course with activities + pre-assessment ---
     @Transactional
     public Course createCourseWithDetails(CourseCreationRequest request, User professor) {
@@ -154,5 +158,20 @@ public class CourseService {
             }).collect(Collectors.toList()));
         }
         return dto;
+    }
+
+    //Course Overview
+    public CourseOverviewDTO toOverviewDTO(Course course) {
+        int activitiesCount = course.getActivities() != null ? course.getActivities().size() : 0;
+        int studentsCount = course.getStudents() != null ? course.getStudents().size() : 0;
+
+        return new CourseOverviewDTO(
+                course.getId(),
+                course.getTitle(),
+                course.getDescription(),
+                course.getCode(),
+                studentsCount,
+                activitiesCount
+        );
     }
 }

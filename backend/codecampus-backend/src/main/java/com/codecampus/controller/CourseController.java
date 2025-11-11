@@ -2,6 +2,7 @@ package com.codecampus.controller;
 
 import com.codecampus.dto.CourseCreationRequest;
 import com.codecampus.dto.CourseDTO;
+import com.codecampus.dto.CourseOverviewDTO;
 import com.codecampus.model.Course;
 import com.codecampus.model.User;
 import com.codecampus.service.CourseService;
@@ -109,5 +110,15 @@ public class CourseController {
             logger.error("Failed to create course: " + e.getMessage(), e);
             return ResponseEntity.badRequest().body("Failed to create course");
         }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/overview")
+    public ResponseEntity<CourseOverviewDTO> getCourseOverview(@PathVariable Long id) {
+        Course course = courseService.getCourseById(id);
+        if (course == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(courseService.toOverviewDTO(course));
     }
 }
