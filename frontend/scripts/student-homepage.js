@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Combine first and last name
         const fullName = `${user.firstName} ${user.lastName}`;
-        localStorage.setItem('studentName', fullName);
+        sessionStorage.setItem('studentName', fullName);
 
         return user;
     } catch (err) {
@@ -28,49 +28,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 }
 
+async function typeWelcomeMessage(studentName) {
+    const welcomeTextEl = document.getElementById('welcome-text');
+    const studentNameEl = document.getElementById('student-name');
+    const waveEmoji = document.getElementById('wave-emoji');
 
-    // Typing Animation for Welcome Banner
-    async function typeWelcomeMessage(studentName) {
-        const welcomeTextEl = document.getElementById('welcome-text');
-        const studentNameEl = document.getElementById('student-name');
-        const waveEmoji = document.getElementById('wave-emoji');
-        
-        studentName = (studentName && studentName.trim())|| "Student";
-        const welcomeMessage = ` Welcome back, `;
+    studentName = (studentName && studentName.trim()) || "Student";
+    const welcomeMessage = ` Welcome back, `;
 
-        let i = 0;
-        welcomeTextEl.textContent = '';
+    welcomeTextEl.textContent = '';
+    studentNameEl.textContent = '';
 
-        
-        // Type welcome message
-        const typeInterval = setInterval(() => {
-            if (i < welcomeMessage.length) {
-                welcomeTextEl.textContent += welcomeMessage.charAt(i);
-                i++;
-            } else {
-                clearInterval(typeInterval);
-                welcomeTextEl.classList.add('typing-complete');
-                
-                // Show student name with slight delay
-                setTimeout(() => {
-                    studentNameEl.textContent = studentName;
-                    studentNameEl.style.opacity = '0';
-                    studentNameEl.style.display = 'inline-block';
-                    
-                    // Fade in student name
-                    setTimeout(() => {
-                        studentNameEl.style.transition = 'opacity 0.5s ease-out';
-                        studentNameEl.style.opacity = '1';
-                        
-                        // Show wave emoji
-                        setTimeout(() => {
-                            waveEmoji.style.display = 'inline';
-                        }, 300);
-                    }, 50);
-                }, 200);
-            }
-        }, 50);
+    const typingSpeed = 100;
+
+    // Helper to type text character by character
+    function typeText(element, text) {
+        return new Promise((resolve) => {
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, typingSpeed);
+        });
     }
+
+    // Type welcome message
+    await typeText(welcomeTextEl, welcomeMessage);
+
+    // Type student name
+    await typeText(studentNameEl, studentName);
+
+    // Show waving emoji after typing
+    waveEmoji.classList.remove('wave-animation'); // reset
+    void waveEmoji.offsetWidth; // force reflow
+    waveEmoji.style.opacity = '1'; // make visible
+    waveEmoji.style.display = 'inline-block'; 
+    waveEmoji.classList.add('wave-animation');    // start animation
+}
 
     const user = await fetchCurrentUser();
     const fullName = `${user.firstName} ${user.lastName}`;
