@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async() => {
+    localStorage.removeItem('professorName');
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
     const noCoursesMessage = document.getElementById('empty-state'); //greet message
@@ -18,58 +19,58 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         // Combine first and last name
         const fullName = `${user.firstName} ${user.lastName}`;
-        localStorage.setItem('professorName', fullName);
+        sessionStorage.setItem('professorName', fullName);
 
         return user;
     } catch (err) {
         console.error('Error fetching user:', err);
-        return { firstName: 'Student', lastName: '' };
+        return { firstName: 'Professor', lastName: '' };
     }
 }
 
 
-    // Typing Animation for Welcome Banner
-    async function typeWelcomeMessage(professorName) {
-        const welcomeTextEl = document.getElementById('welcome-text');
-        const professorNameEl = document.getElementById('student-name');
-        const waveEmoji = document.getElementById('wave-emoji');
-        
-        professorName = (professorName && professorName.trim())|| "Professor";
-        const welcomeMessage = ` Welcome back, `;
+    async function typeWelcomeMessage(profName) {
+    const welcomeTextEl = document.getElementById('welcome-text');
+    const profNameEl = document.getElementById('student-name');
+    const waveEmoji = document.getElementById('wave-emoji');
 
-        let i = 0;
-        welcomeTextEl.textContent = '';
+    profName = (profName && profName.trim()) || "Professor";
+    const welcomeMessage = ` Welcome back, `;
 
-        
-        // Type welcome message
-        const typeInterval = setInterval(() => {
-            if (i < welcomeMessage.length) {
-                welcomeTextEl.textContent += welcomeMessage.charAt(i);
-                i++;
-            } else {
-                clearInterval(typeInterval);
-                welcomeTextEl.classList.add('typing-complete');
-                
-                // Show student name with slight delay
-                setTimeout(() => {
-                    professorNameEl.textContent = professorName;
-                    professorNameEl.style.opacity = '0';
-                    professorNameEl.style.display = 'inline-block';
-                    
-                    // Fade in student name
-                    setTimeout(() => {
-                        professorNameEl.style.transition = 'opacity 0.5s ease-out';
-                        professorNameEl.style.opacity = '1';
-                        
-                        // Show wave emoji
-                        setTimeout(() => {
-                            waveEmoji.style.display = 'inline';
-                        }, 300);
-                    }, 50);
-                }, 200);
-            }
-        }, 50);
+    welcomeTextEl.textContent = '';
+    profNameEl.textContent = '';
+
+    const typingSpeed = 100;
+
+    // Helper to type text character by character
+    function typeText(element, text) {
+        return new Promise((resolve) => {
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, typingSpeed);
+        });
     }
+
+    // Type welcome message
+    await typeText(welcomeTextEl, welcomeMessage);
+
+    // Type student name
+    await typeText(profNameEl, profName);
+
+    // Show waving emoji after typing
+    waveEmoji.classList.remove('wave-animation'); // reset
+    void waveEmoji.offsetWidth; // force reflow
+    waveEmoji.style.opacity = '1'; // make visible
+    waveEmoji.style.display = 'inline-block'; 
+    waveEmoji.classList.add('wave-animation');    // start animation
+}
 
     const user = await fetchCurrentUser();
     const fullName = `${user.firstName} ${user.lastName}`;

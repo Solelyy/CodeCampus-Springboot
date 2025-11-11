@@ -130,6 +130,7 @@ signInForm.addEventListener('submit', async (event) => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         localStorage.removeItem('role');
+        sessionStorage.clear();
     }finally {
         signInBtn.disabled = false;
         signInBtn.textContent = 'Sign In';
