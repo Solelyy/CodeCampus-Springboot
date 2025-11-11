@@ -89,6 +89,8 @@ if (logoutBtn) {
     // Clear stored session data
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
     sessionStorage.clear();
 
     // Redirect to landing and prevent back
