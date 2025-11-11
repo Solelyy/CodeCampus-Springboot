@@ -145,7 +145,7 @@ header::after {
 /*MAIN*/
 main {
     min-height: 100dvh;
-    padding-top: 60px;
+    padding-top: 20px;
     flex: 1;
     margin-bottom: 300px;
 }

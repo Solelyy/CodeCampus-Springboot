@@ -107,8 +107,23 @@
             <button id="join-course-submit">Find Course</button>
         </div>
 
-        <div class="greet-container" id="empty-state-public-courses">
-            <p id="greet"> 📚 There's no available public courses yet.</p>
+        
+
+        <!--Changes-->
+        <div class="courses-section">
+            <h3>Available Courses</h3>
+
+            <div class="greet-container" id="empty-state-public-courses">
+                <p id="greet"> 📚 There's no available public courses yet.</p>
+            </div>
+            <div id="unjoined-courses-container" class="joined-courses-container"></div>
+        </div>
+
+        <hr style="margin: 40px 0; border: 1px solid rgba(102,195,85,0.3);">
+
+        <div class="courses-section">
+            <h3>Your Courses</h3>
+            <div id="joined-courses-container" class="joined-courses-container"></div>
         </div>
 
             <div class="joined-courses-container">
@@ -137,7 +152,7 @@
 
     
 </body>
-<script src="/frontend/scripts/student-join-course.js"></script>
+<script type="module" src="/frontend/scripts/student-join-course.js"></script>
 <script src="/frontend/scripts/general.js"></script>
 <script src="/frontend/scripts/course-card.js"></script>
 </html>

@@ -7,6 +7,7 @@ import com.codecampus.service.EnrollmentService;
 import com.codecampus.service.PreAssessmentService;
 import com.codecampus.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,6 @@ public class EnrollmentController {
     private final UserService userService;
     private final PreAssessmentService preAssessmentService;
 
-
     public EnrollmentController(
             EnrollmentService enrollmentService,
             UserService userService,
@@ -31,7 +31,6 @@ public class EnrollmentController {
         this.userService = userService;
         this.preAssessmentService = preAssessmentService;
     }
-
 
     // Enroll student in a course
     @PostMapping("/courses/{id}/join")
@@ -72,7 +71,7 @@ public class EnrollmentController {
         List<Course> enrolledCourses = enrollmentService.getStudentCourses(student);
 
         List<StudentCourseDTO> dtoList = enrolledCourses.stream().map(course -> {
-            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId()); // ✅ check
+            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
 
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
@@ -82,7 +81,7 @@ public class EnrollmentController {
                     enrollmentService.getStudentsCount(course),
                     true
             );
-            dto.setPreAssessmentCompleted(completed); // ✅ add field
+            dto.setPreAssessmentCompleted(completed);
             return dto;
         }).collect(Collectors.toList());
 
@@ -108,7 +107,7 @@ public class EnrollmentController {
                     enrollmentService.isStudentEnrolled(course, student)
             );
 
-            // ✅ add completion flag here too (optional)
+            // add completion flag here too (optional)
             boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
             dto.setPreAssessmentCompleted(completed);
 

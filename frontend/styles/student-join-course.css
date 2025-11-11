@@ -457,6 +457,20 @@ footer {
     border: 1px solid rgba(102, 195, 85, 0.6);
 }
 
+.course-card .course-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.courses-section h3 {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .student-homepage {
