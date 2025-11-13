@@ -91,8 +91,15 @@
         <section class="student-homepage">
             <div class="join-course-btn-container">
                 <button id="join-course-btn">Enter Course Code</button>
+                
             </div>
-            
+
+            <div id="join-modal" class="join-modal">
+                <input type="text" id="course-code" placeholder="Enter Code">
+                <button id="join-course-submit" disabled>Find Course</button>
+                <p id="message"></p>
+            </div>
+
             <div class="courses-header">
                 <h2>Public Courses</h2>
                     <div class="search-container">
@@ -104,7 +111,7 @@
 
         <div id="join-modal" class="join-modal">
             <input type="text" id="course-code" placeholder="Enter Code">
-            <button id="join-course-submit">Find Course</button>
+            <button id="join-course-submit" disabled>Find Course</button>
         </div>
 
         
