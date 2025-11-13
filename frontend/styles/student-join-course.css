@@ -471,6 +471,20 @@ footer {
     text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
 }
 
+/*Course Code Styles*/
+#message {
+    margin-top: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+#join-course-submit:disabled,
+#join-course-submit.disabled {
+    background-color: #ccc; /* gray when disabled */
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .student-homepage {
