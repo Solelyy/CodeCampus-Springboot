@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +21,31 @@ public class UserService implements UserDetailsService {
    // private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // Create user
-    public void createUser(String username, String password, String role, String firstName, String lastName) throws Exception {
+    public void createUser(String username, String password, String email, String role, String firstName, String lastName) throws Exception {
+        // --- Validate username
         if (username.length() < 4) {
             throw new Exception("Username must be at least 4 characters long.");
         }
 
+        // --- Validate email format
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!email.matches(emailRegex)) {
+            throw new Exception("Invalid email format.");
+        }
+
+        // --- Validate password
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$";
         if (!password.matches(passwordRegex)) {
             throw new Exception("Password must contain uppercase, lowercase, number, and special character, and be at least 8 characters long.");
         }
 
+        // --- Validate if username and email exists
         if (userRepository.existsByUsername(username)) {
             throw new Exception("Username already exists.");
+        }
+
+        if (userRepository.existsByEmail((email))) {
+            throw new Exception("Email already exists");
         }
 
         User user = new User();
@@ -42,6 +54,7 @@ public class UserService implements UserDetailsService {
         user.setRole(role);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setEmail(email);
 
         userRepository.save(user);
     }
@@ -61,6 +74,11 @@ public class UserService implements UserDetailsService {
     // Find user by username
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found."));
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found."));
     }
 
