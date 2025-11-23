@@ -30,13 +30,14 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> signup(@RequestBody Map<String, String> request) {
         String username = request.get("username");
+        String email = request.get("email");
         String password = request.get("password");
         String role = request.get("role");
         String firstName = request.get("firstName");
         String lastName = request.get("lastName");
 
         try {
-            userService.createUser(username, password, role, firstName, lastName);
+            userService.createUser(username, email, password, role, firstName, lastName);
             return ResponseEntity.ok(Map.of(
                     "status", "success",
                     "message", "Account created successfully"

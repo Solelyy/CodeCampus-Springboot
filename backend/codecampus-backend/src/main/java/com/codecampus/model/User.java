@@ -27,6 +27,9 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
     @ManyToMany(mappedBy= "students")
     private Set<Course> joinedCourses = new HashSet<>();
 
@@ -63,4 +66,6 @@ public class User {
     public String getRoleForSecurity() {
         return "ROLE_" + role.toUpperCase();
     }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email;}
 }

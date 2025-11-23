@@ -5,12 +5,13 @@ const createAccountBtn = document.getElementById('createAccount-btn');
 // Enable/disable button based on input
 function checkFormValues() {
     const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
     const confirmPassword = document.getElementById('confirmPassword').value.trim();
     const firstName = document.getElementById('firstName').value.replace(/\s+/g, ' ').trim();
     const lastName = document.getElementById('lastName').value.replace(/\s+/g, ' ').trim();
 
-    createAccountBtn.disabled = !(username && password && confirmPassword && lastName && firstName);
+    createAccountBtn.disabled = !(username && email && password && confirmPassword && lastName && firstName);
 }
 
 signupForm.addEventListener('input', checkFormValues);
@@ -22,6 +23,7 @@ signupForm.addEventListener('submit', async (event) => {
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
     const confirmPassword = document.getElementById('confirmPassword').value.trim();
     const role = signupForm.role.value;
@@ -31,7 +33,7 @@ signupForm.addEventListener('submit', async (event) => {
     errorMessage.style.color = 'red';
 
     //Check for empty fields
-    if (!username || !password || !confirmPassword || !lastName || !firstName) {
+    if (!username || !email || !password || !confirmPassword || !lastName || !firstName) {
         errorMessage.textContent = 'All fields are required!';
         return;
     }
@@ -39,6 +41,13 @@ signupForm.addEventListener('submit', async (event) => {
     //Username Validation
     if (username.length < 4) {
         errorMessage.textContent = 'Username must be at least 4 characters long.';
+        return;
+    }
+
+    // Basic email format validation
+    const emailRegex = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
+    if (!emailRegex.test(email)) {
+        errorMessage.textContent = 'Please enter a valid email address.';
         return;
     }
 
@@ -61,7 +70,7 @@ signupForm.addEventListener('submit', async (event) => {
         return;
     }
 
-    const data = {username, password, role, firstName, lastName};
+    const data = {username, email, password, role, firstName, lastName};
 
     createAccountBtn.disabled = true;
     createAccountBtn.textContent = "Creating...";

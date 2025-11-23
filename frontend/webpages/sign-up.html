@@ -37,8 +37,10 @@
         <section class="signup-section">
             <div class="signup-form-container">
                 <div class="signup-form-header">
-                    <h2>Create Account</h2>
-                    
+                    <div class="signup-form-header-top">
+                        <h2>Create Account</h2>
+                        <a href="/index.html" id="already-have-an-account">Already have an account? Sign In</a>
+                    </div>
                 </div>
 
                 <form class="form-box" id="signupForm">
@@ -54,21 +56,46 @@
                     </div>
 
                     <div class="textbox" id="name-fields">
-                        <input type="text" placeholder="First Name" name="firstName" id="firstName" required>
-                        <input type="text" placeholder="Last Name" name="lastName" id="lastName" required>
+                        <div class="field-container">
+                            <p>First name</p>
+                            <input type="text" placeholder="Juan" name="firstName" id="firstName" required>
+                        </div>
+                    </div>
+
+                    <div class="textbox" id="name-fields">
+                        <div class="field-container">
+                            <p>Last name</p>
+                            <input type="text" placeholder="Cruz" name="lastName" id="lastName" required>
+                        </div>
                     </div>
                     
-
                     <div class="textbox">
-                        <input type="text" placeholder="Username" name="username" id="username" required>
+                        <div class="field-container">
+                            <p>Email</p>
+                            <input type="text" placeholder="juancruz@gmail.com" name="email" id="email" required>
+                        </div>
                     </div>
 
                     <div class="textbox">
-                        <input type="password" placeholder="Password" name="password" id="password" required>
+                        <div class="field-container">
+                            <p>Username</p>
+                            <input type="text" placeholder="juan" name="username" id="username" required>
+                        </div>
                     </div>
 
                     <div class="textbox">
-                        <input type="password" placeholder="Confirm Password" name="confirmPassword" id="confirmPassword" required>
+                        <div class="field-container">
+                            <p>Password</p>
+                            <input type="password" placeholder="Password" name="password" id="password" required>
+                        </div>
+                        
+                    </div>
+
+                    <div class="textbox">
+                        <div class="field-container">
+                            <p>Confirm Password</p>
+                            <input type="password" placeholder="Confirm Password" name="confirmPassword" id="confirmPassword" required>
+                        </div>
                     </div>
 
                     <p id="error-message"></p>
@@ -77,12 +104,10 @@
                         <button type="submit" id="createAccount-btn"disabled>
                             Create Account
                         </button>
-                        <a href="/index.html">Already have an account?</a>
                     </div>
                 </form>
             </div>
-            <div class="bg-img-container">
-            </div>
+
         </section>
     </main>
 
