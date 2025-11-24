@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -21,17 +23,19 @@ public class UserService implements UserDetailsService {
    // private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // Create user
-    public void createUser(String username, String password, String email, String role, String firstName, String lastName) throws Exception {
+    public void createUser(String username, String password, String email, String role, String name) throws Exception {
         // --- Validate username
         if (username.length() < 4) {
             throw new Exception("Username must be at least 4 characters long.");
         }
 
         // --- Validate email format
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         if (!email.matches(emailRegex)) {
             throw new Exception("Invalid email format.");
         }
+
+        System.out.println("EMAIL RECEIVED BY BACKEND: [" + email + "]");
 
         // --- Validate password
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$";
@@ -52,23 +56,10 @@ public class UserService implements UserDetailsService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        user.setName(name);
         user.setEmail(email);
 
         userRepository.save(user);
-    }
-
-    // Manual login (used only if we bypass Spring Security)
-    public User loginUser(String username, String password) throws Exception {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new Exception("User not found."));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new Exception("Invalid password.");
-        }
-
-        return user;
     }
 
     // Find user by username
@@ -93,5 +84,41 @@ public class UserService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles(user.getRoleForSecurity().replace("ROLE_", "")) // Spring Security .roles() will prepend ROLE_
                 .build();
+    }
+
+    private static final int MAX_FAILED_ATTEMPTS = 5;
+    private static final long LOCK_TIME_DURATION = 15; // minutes
+
+    public User loginUser(String username, String password) throws Exception {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new Exception("User not found."));
+
+        // Check if account is locked
+        if (user.getLockoutTime() != null && user.getLockoutTime().isAfter(LocalDateTime.now())) {
+            throw new Exception("Account locked for 15 minutes. Try again later.");
+        }
+
+        // Check password
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            // Increment failed attempts
+            int attempts = user.getFailedLoginAttempts() + 1;
+            user.setFailedLoginAttempts(attempts);
+
+            // Lock account if max attempts reached
+            if (attempts >= MAX_FAILED_ATTEMPTS) {
+                user.setLockoutTime(LocalDateTime.now().plusMinutes(LOCK_TIME_DURATION));
+                user.setFailedLoginAttempts(0); // reset counter after lock
+            }
+
+            userRepository.save(user);
+            throw new Exception("Invalid password.");
+        }
+
+        // Reset failed attempts on successful login
+        user.setFailedLoginAttempts(0);
+        user.setLockoutTime(null);
+        userRepository.save(user);
+
+        return user;
     }
 }

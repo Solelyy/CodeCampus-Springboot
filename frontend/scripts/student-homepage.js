@@ -17,8 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const user = await response.json();
         console.log('Fetched user:', user);
 
-        // Combine first and last name
-        const fullName = `${user.firstName} ${user.lastName}`;
+        const fullName = `${user.name}`;
         sessionStorage.setItem('studentName', fullName);
 
         return user;
@@ -72,8 +71,8 @@ async function typeWelcomeMessage(studentName) {
 }
 
     const user = await fetchCurrentUser();
-    const fullName = `${user.firstName} ${user.lastName}`;
-    typeWelcomeMessage(fullName);
+    const firstName = `${user.firstName}`;
+    typeWelcomeMessage(firstName);
 
     function updateGreet() {
         const courses = container.querySelectorAll('.course-card');

@@ -94,9 +94,22 @@ signInForm.addEventListener('submit', async (event) => {
         });
         console.log(response);
 
+        // Handle error responses
         if (!response.ok) {
             const errorBody = await response.json().catch(() => ({ error: 'Incorrect username or password.' }));
-            throw new Error(errorBody.error || 'Incorrect username or password.');
+
+            if (response.status === 423) {
+                // Account locked
+                throw new Error(errorBody.error || 'Maximum login attempts reached. Account locked for 15 minutes.');
+            } else if (response.status === 401) {
+                // Wrong password
+                throw new Error(errorBody.error || 'Incorrect username or password.');
+            } else if (response.status === 404) {
+                // User not found
+                throw new Error(errorBody.error || 'User not found.');
+            } else {
+                throw new Error(errorBody.error || 'Something went wrong. Please try again.');
+            }
         }
 
         const result = await response.json();

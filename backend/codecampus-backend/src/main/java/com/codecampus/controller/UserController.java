@@ -33,11 +33,10 @@ public class UserController {
         String email = request.get("email");
         String password = request.get("password");
         String role = request.get("role");
-        String firstName = request.get("firstName");
-        String lastName = request.get("lastName");
+        String name = request.get("name");
 
         try {
-            userService.createUser(username, email, password, role, firstName, lastName);
+            userService.createUser(username, password, email, role, name);
             return ResponseEntity.ok(Map.of(
                     "status", "success",
                     "message", "Account created successfully"
@@ -53,6 +52,7 @@ public class UserController {
         }
     }
 
+    /*
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> request) {
         try {
@@ -66,6 +66,39 @@ public class UserController {
             return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getRoleForSecurity()));
         } catch (Exception e) {
             return ResponseEntity.status(401).body(Map.of("error", "Incorrect username or password"));
+        }
+    }*/
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
+
+        try {
+            // Use the UserService login method with failed-attempt tracking
+            User user = userService.loginUser(username, password);
+
+            // If login successful, generate JWT token
+            String token = jwtUtil.generateToken(username);
+
+            return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getRoleForSecurity()));
+
+        } catch (Exception e) {
+            String message = e.getMessage();
+
+            if (message.contains("locked")) {
+                return ResponseEntity.status(423) // 423 Locked
+                        .body(Map.of("error", message));
+            } else if (message.contains("Invalid password")) {
+                return ResponseEntity.status(401) // 401 Unauthorized
+                        .body(Map.of("error", "Incorrect username or password"));
+            } else if (message.contains("User not found")) {
+                return ResponseEntity.status(404) // 404 Not Found
+                        .body(Map.of("error", "User not found"));
+            } else {
+                return ResponseEntity.status(400) // 400 Bad Request
+                        .body(Map.of("error", "Login failed"));
+            }
         }
     }
 
@@ -84,8 +117,8 @@ public class UserController {
 
         return ResponseEntity.ok(Map.of(
                 "username", user.getUsername(),
+                "name", user.getName(),
                 "firstName", user.getFirstName(),
-                "lastName", user.getLastName(),
                 "role", user.getRole()
         ));
     }

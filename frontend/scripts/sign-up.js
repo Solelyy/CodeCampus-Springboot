@@ -2,85 +2,111 @@ const signupForm = document.getElementById('signupForm');
 const errorMessage = document.getElementById('error-message');
 const createAccountBtn = document.getElementById('createAccount-btn');
 
-// Enable/disable button based on input
-function checkFormValues() {
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const confirmPassword = document.getElementById('confirmPassword').value.trim();
-    const firstName = document.getElementById('firstName').value.replace(/\s+/g, ' ').trim();
-    const lastName = document.getElementById('lastName').value.replace(/\s+/g, ' ').trim();
+const usernameInput = document.getElementById('username');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const confirmPasswordInput = document.getElementById('confirmPassword');
+const nameInput = document.getElementById('name');
 
-    createAccountBtn.disabled = !(username && email && password && confirmPassword && lastName && firstName);
+// Create inline message elements
+const passwordMessage = document.createElement('div');
+const confirmMessage = document.createElement('div');
+passwordMessage.style.fontSize = '0.9em';
+confirmMessage.style.fontSize = '0.9em';
+passwordInput.insertAdjacentElement('afterend', passwordMessage);
+confirmPasswordInput.insertAdjacentElement('afterend', confirmMessage);
+
+// Validation helper functions
+function validateEmail(email) {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(email);
 }
 
-signupForm.addEventListener('input', checkFormValues);
+function validatePassword(password) {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+    return passwordRegex.test(password);
+}
+
+function setInputState(input, isValid) {
+    input.style.borderColor = isValid ? 'green' : 'red';
+}
+
+// Real-time validation
+function validateFields() {
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+    const name = nameInput.value.replace(/\s+/g, ' ').trim();
+
+    // Username validation
+    setInputState(usernameInput, username.length >= 4);
+
+    // Email validation
+    setInputState(emailInput, validateEmail(email));
+
+    // Password validation
+    const passwordValid = validatePassword(password);
+    setInputState(passwordInput, passwordValid);
+    passwordMessage.style.color = passwordValid ? 'green' : 'red';
+    passwordMessage.textContent = passwordValid
+        ? 'Password looks good ✅'
+        : 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
+
+    // Confirm password validation
+    const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
+    setInputState(confirmPasswordInput, passwordsMatch);
+    confirmMessage.style.color = passwordsMatch ? 'green' : 'red';
+    confirmMessage.textContent = passwordsMatch
+        ? 'Passwords match ✅'
+        : 'Passwords do not match';
+
+    // Name validation
+    setInputState(nameInput, name.length > 0);
+
+    // Enable/disable create account button
+    createAccountBtn.disabled = !(
+        username.length >= 4 &&
+        validateEmail(email) &&
+        passwordValid &&
+        passwordsMatch &&
+        name.length > 0
+    );
+}
+
+// Attach input listeners for real-time validation
+[usernameInput, emailInput, passwordInput, confirmPasswordInput, nameInput].forEach(input => {
+    input.addEventListener('input', validateFields);
+});
 
 // Form submission
 signupForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); //Prevent default form submission
+    event.preventDefault();
 
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+    validateFields(); // Ensure everything is valid before submit
+    if (createAccountBtn.disabled) return;
+
+    const name = nameInput.value.trim();
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    const confirmPassword = confirmPasswordInput.value.trim();
     const role = signupForm.role.value;
 
-    // Clear previous errors
+    // Clear previous error
     errorMessage.textContent = '';
     errorMessage.style.color = 'red';
 
-    //Check for empty fields
-    if (!username || !email || !password || !confirmPassword || !lastName || !firstName) {
-        errorMessage.textContent = 'All fields are required!';
-        return;
-    }
-
-    //Username Validation
-    if (username.length < 4) {
-        errorMessage.textContent = 'Username must be at least 4 characters long.';
-        return;
-    }
-
-    // Basic email format validation
-    const emailRegex = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
-    if (!emailRegex.test(email)) {
-        errorMessage.textContent = 'Please enter a valid email address.';
-        return;
-    }
-
-    //Password Validation
-    if (password.length < 8) {
-        errorMessage.textContent = 'Password must be at least 8 characters long.';
-        return;
-    }
-
-    //Password strength validation
-    const passwordRegex= /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-    if (!passwordRegex.test(password)) {
-        errorMessage.textContent = "Password must contain uppercase, lowercase, number, and special character.";
-        return;
-    }
-
-    //Check if passwords match
-    if (password !== confirmPassword) {
-        errorMessage.textContent = 'Passwords do not match!';
-        return;
-    }
-
-    const data = {username, email, password, role, firstName, lastName};
+    const data = { username, email, password, role, name };
 
     createAccountBtn.disabled = true;
     createAccountBtn.textContent = "Creating...";
-    
-try {
-        // Sign up
+
+    try {
         const signupResponse = await fetch('http://localhost:8081/api/users/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, role, firstName, lastName })
+            body: JSON.stringify(data)
         });
 
         const signupResult = await signupResponse.json();
@@ -104,16 +130,13 @@ try {
             throw new Error('Login succeeded but no token was returned.');
         }
 
-        // Store token and user info in localStorage
         localStorage.setItem('token', loginResult.token);
         localStorage.setItem('username', loginResult.username);
         localStorage.setItem('role', loginResult.role);
 
-        // Show success message
         errorMessage.style.color = 'green';
         errorMessage.textContent = 'Account created successfully! Redirecting...';
 
-        // Redirect based on role
         const normalizedRole = loginResult.role.replace("ROLE_", "").toLowerCase();
         setTimeout(() => {
             if (normalizedRole === 'professor') {
