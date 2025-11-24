@@ -45,7 +45,7 @@ public class EnrollmentController {
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
                     course.getTitle(),
-                    course.getProfessor().getFullName(),
+                    course.getProfessor().getName(),
                     course.getDescription(), // include description
                     enrollmentService.getStudentsCount(course),
                     true // now enrolled
@@ -76,7 +76,7 @@ public class EnrollmentController {
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
                     course.getTitle(),
-                    course.getProfessor().getFullName(),
+                    course.getProfessor().getName(),
                     course.getDescription(),
                     enrollmentService.getStudentsCount(course),
                     true
@@ -101,7 +101,7 @@ public class EnrollmentController {
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
                     course.getTitle(),
-                    course.getProfessor().getFullName(),
+                    course.getProfessor().getName(),
                     course.getDescription(),
                     enrollmentService.getStudentsCount(course),
                     enrollmentService.isStudentEnrolled(course, student)

@@ -2,6 +2,7 @@ package com.codecampus.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,14 +22,17 @@ public class User {
     @Column (nullable = false)
     private String role;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "failed_login_attempts", nullable = false)
+    private int failedLoginAttempts = 0;
+
+    @Column
+    private LocalDateTime lockoutTime;
 
     @ManyToMany(mappedBy= "students")
     private Set<Course> joinedCourses = new HashSet<>();
@@ -56,16 +60,29 @@ public class User {
         this.role=role.toUpperCase();
     }
     public String getRole() { return role;}
-    public String getFirstName() {return firstName;}
-    public void setFirstName(String firstName) {this.firstName = firstName;}
-    public String getLastName() {return lastName;}
-    public void setLastName(String lastName) {this.lastName = lastName;}
-    public String getFullName() {
-        return firstName + " " + lastName;
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+
+    public String getFirstName(){
+        if (name == null || name.isBlank()) return "";
+        return name.trim().split(" ")[0];
     }
     public String getRoleForSecurity() {
         return "ROLE_" + role.toUpperCase();
     }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email;}
+
+    public int getFailedLoginAttempts() { return failedLoginAttempts;}
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public LocalDateTime getLockoutTime() {
+        return lockoutTime;
+    }
+
+    public void setLockoutTime(LocalDateTime lockoutTime) {
+        this.lockoutTime = lockoutTime;
+    }
 }

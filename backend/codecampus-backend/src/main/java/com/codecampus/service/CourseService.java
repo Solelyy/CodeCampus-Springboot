@@ -130,7 +130,7 @@ public class CourseService {
                 course.getDescription(),
                 course.getCode(),
                 course.isPublic(),
-                course.getProfessor().getFullName()
+                course.getProfessor().getName()
         );
 
         // Map Activities

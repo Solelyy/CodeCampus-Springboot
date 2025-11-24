@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async() => {
         console.log('Fetched user:', user);
 
         // Combine first and last name
-        const fullName = `${user.firstName} ${user.lastName}`;
-        sessionStorage.setItem('professorName', fullName);
+        const fullName = `${user.name}`;
+        sessionStorage.setItem('professorName',fullName);
 
         return user;
     } catch (err) {
@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', async() => {
 }
 
     const user = await fetchCurrentUser();
-    const fullName = `${user.firstName} ${user.lastName}`;
-    typeWelcomeMessage(fullName);
+    const firstName = `${user.firstName}`;
+    typeWelcomeMessage(firstName);
 
 
     // Function to update visibility
