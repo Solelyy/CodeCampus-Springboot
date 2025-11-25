@@ -70,4 +70,21 @@ public class ActivityService {
 
         return dtos;
     }
+
+    public List<ActivityDTO> getActivitiesForCourse(Long courseId) {
+        List<Activity> activities = activityRepository.findByCourseId(courseId);
+
+        return activities.stream().map(activity -> {
+            ActivityDTO dto = new ActivityDTO();
+            dto.setId(activity.getId());
+            dto.setCourseId(activity.getCourse().getId());
+            dto.setTitle(activity.getTitle());
+            dto.setDifficulty(activity.getDifficulty());
+            dto.setProblemStatement(activity.getProblemStatement());
+            dto.setTestCases(activity.getTestCases());
+            dto.setCompleted(activity.isCompleted());
+            dto.setUnlocked(activity.isUnlocked());
+            return dto;
+        }).collect(Collectors.toList());
+    }
 }
