@@ -12,7 +12,7 @@ const cancelBtn = document.querySelector('.btn.cancel');
 const profilePicMsg = document.getElementById('profile-pic-update-msg');
 const bioMsg = document.getElementById('bio-update-msg');
 
-const DEFAULT_PROFILE_PIC = '/frontend/assets/images/starter-profile.jpeg';
+const DEFAULT_PROFILE_PIC = '/uploads/profile-pictures/starter-profile.jpeg';
 let selectedFile = null;
 const token = localStorage.getItem('token');
 
