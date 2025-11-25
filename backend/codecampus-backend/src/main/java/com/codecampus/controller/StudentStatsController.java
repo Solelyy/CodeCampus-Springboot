@@ -21,7 +21,7 @@ public class StudentStatsController {
         this.userService = userService;
     }
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping
     public StudentStatsDTO getStudentStats(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {

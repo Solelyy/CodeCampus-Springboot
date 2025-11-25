@@ -66,7 +66,7 @@ public class EnrollmentController {
     }
 
     // Get all active courses the logged-in student is enrolled in
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/enrollments/my-courses")
     public ResponseEntity<List<StudentCourseDTO>> getMyCourses(
             @AuthenticationPrincipal UserDetails userDetails) {
