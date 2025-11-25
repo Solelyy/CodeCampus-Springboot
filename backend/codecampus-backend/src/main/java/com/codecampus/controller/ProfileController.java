@@ -7,6 +7,7 @@ import com.codecampus.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/profile")
@@ -28,5 +29,17 @@ public class ProfileController {
         if (user == null) throw new RuntimeException("User not found");
 
         return profileService.getProfile(user);
+    }
+
+    @PostMapping
+    public ProfileDTO updateProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(value = "bio", required = false) String bio,
+            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
+    ) {
+        if (userDetails == null) throw new RuntimeException("User not authenticated");
+        User user = userService.findByUsername(userDetails.getUsername());
+        if (user == null) throw new RuntimeException("User not found");
+        return profileService.updateProfile(user, bio, profilePicture);
     }
 }
