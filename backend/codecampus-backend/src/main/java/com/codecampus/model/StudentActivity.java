@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "student_activities")
+@Table(name = "activity_submissions")
 public class StudentActivity {
 
     @Id
@@ -33,6 +33,9 @@ public class StudentActivity {
         createdAt = Instant.now();
         updatedAt = createdAt;
     }
+
+    @Column(name = "earned_points", nullable = true)
+    private Integer earnedPoints;
 
     @PreUpdate
     protected void onUpdate() {
