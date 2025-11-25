@@ -82,6 +82,7 @@ saveBtn.addEventListener('click', async () => {
         bioEl.value = updatedData.bio;
         profilePicEl.src = updatedData.profilePicture ? BACKEND_URL + updatedData.profilePicture : DEFAULT_PROFILE_PIC;
 
+        bioMsg.style.opacity = 1;
         bioMsg.textContent = 'Bio updated successfully!';
         bioMsg.style.color = 'green';
 
@@ -104,8 +105,30 @@ saveBtn.addEventListener('click', async () => {
 });
 
 // --- Cancel ---
-cancelBtn.addEventListener('click', () => {
-    window.location.href = 'student-profile.html';
+cancelBtn.addEventListener('click', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+        const res = await fetch('http://localhost:8081/api/users/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch user info');
+        const user = await res.json();
+
+        if (user.role === 'STUDENT') {
+            window.location.href = 'student-profile.html';
+        } else if (user.role === 'PROFESSOR') {
+            window.location.href = 'professor-profile.html';
+        } else {
+            console.warn('Unknown user role, redirecting to home');
+            window.location.href = 'index.html';
+        }
+    } catch (err) {
+        console.error(err);
+        window.location.href = 'index.html';
+    }
 });
 
 // --- Init ---

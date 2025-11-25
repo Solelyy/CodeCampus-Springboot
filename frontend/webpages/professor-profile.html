@@ -85,45 +85,40 @@
 
   <!-- Profile Content -->
   <main class="profile-page">
-    <!-- Left: Profile Info -->
-    <section class="profile-left">
-      <div class="profile-image">
-        <img src="/frontend/assets/images/mosh.png" alt="Profile Image">
-      </div>
-      <h2>Juan Cruz</h2>
-      <p class="username">@codemaster</p>
-      <p class="student-meta">🧑‍🏫 Professor | Joined: October 15, 2025</p>
-      <p class="bio">
-        Hi, I'm Juan Cruz, a passionate educator in the field of computer science. Happy coding!
-      </p>
-      <button class="btn" onclick="location.href='/frontend/webpages/professor-edit-profile.html'">Edit Profile</button>
-    </section>
+  <!-- Left: Profile Info -->
+  <section class="profile-left">
+    <div class="profile-image">
+      <img id="profile-pic" src="" alt="Profile Image">
+    </div>
+    <h2 id="name"></h2>
+    <p class="username" id="username"></p>
+    <p class="student-meta" id="meta"></p>
+    <p class="bio" id="bio">
+    </p>
+    <button class="btn" onclick="location.href='/frontend/webpages/professor-edit-profile.html'">Edit Profile</button>
+  </section>
 
-    <!-- Right: Achievements, Courses, Activities -->
-    <section class="profile-right">
-      <div class="card achievements">
-        <h3>🏆 Achievements</h3>
-        <ul>
-          <li>⭐ Created first course</li>
-          <li>💪 Taught 10 students</li>
-        </ul>
-      </div>
+  <!-- Right: Achievements, Courses, Activities -->
+  <section class="profile-right">
+    <div class="card achievements">
+      <h3>🏆 Achievements</h3>
+      <ul id="achievements-list">
+        <!-- JS will populate achievements dynamically -->
+      </ul>
+    </div>
 
-      <div class="card courses">
-        <h3>📚 Courses Created</h3>
-        <div class="course-list">
-          <div class="course-card">Intro to Java</div>
-        </div>
+    <div class="card courses">
+      <h3>📚 Courses Created</h3>
+      <div class="course-list" id="course-list">
+        <!-- JS will populate courses dynamically -->
       </div>
+    </div>
 
-      <div class="card activities">
-        <h3>📊 Activities</h3>
-        <p>Total Courses Created: 1</p>
-        <p>Total Students Taught: 10</p>
-        <p>Total Activities Designed: 10</p>
-      </div>
-    </section>
-  </main>
+    <div class="card activities" id="activities-card">
+      <!-- JS will populate activity stats dynamically -->
+    </div>
+  </section>
+</main>
 
   <!-- Footer -->
   <footer>
@@ -131,4 +126,5 @@
   </footer>
 </body>
 <script src="/frontend/scripts/general.js"></script>
+<script src="/frontend/scripts/professor-profile.js"></script>
 </html>
