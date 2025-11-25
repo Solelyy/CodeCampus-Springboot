@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) throw new Error(`Failed to fetch user: ${response.status}`);
 
             const user = await response.json();
-            sessionStorage.setItem('studentName', user.name);
+            sessionStorage.setItem('studentName', user.firstName);
             return user;
         } catch (err) {
             console.error('Error fetching user:', err);
@@ -24,18 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    const startWelcomeGreet = () => {
-    overlay.classList.remove('show');
-    document.body.style.overflow = ''; // restore scrolling
-    document.getElementById('welcome-text').textContent = `Welcome, `;
-    document.getElementById('student-name').textContent = studentName;
-    document.getElementById('greet-msg').textContent = `Ready to start your coding journey? Let's make today count!`;
 
-    const waveEmoji = document.getElementById('wave-emoji');
-    waveEmoji.style.opacity = '1';
-    waveEmoji.style.display = 'inline-block';
-    waveEmoji.classList.add('wave-animation');
-    };
 
     function showWelcomeOverlay(studentName) {
     const isNewUser = localStorage.getItem('isNewUser');
@@ -43,85 +32,91 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const overlay = document.getElementById('welcome-overlay');
     overlay.classList.add('show');
-    document.body.style.overflow = 'hidden'; // prevent background scrolling
 
-    // Overlay text
+    document.body.style.overflow = 'hidden';
+
     document.getElementById('overlay-title').textContent = `Welcome to CodeCampus! 🎉`;
-    document.getElementById('overlay-message').textContent =
-        `Hello ${studentName}, your account has been successfully created. Let’s jump in and start your coding journey!`;
+    document.getElementById('overlay-message').innerHTML = `
+        Welcome aboard, ${studentName}! <br><br>
+        You’re officially part of a growing community of aspiring coders.
+        Your learning journey starts now — exploring new lessons, taking courses,
+        and building your skills step-by-step. 🚀<br><br>
 
-    // Function to show welcome greet (typing or static)
-    const showWelcomeGreet = () => {
-        overlay.classList.remove('show');
-        document.body.style.overflow = ''; // restore scrolling
-        typeWelcomeMessage(studentName, false); // call your typing function
-    };
+        Whether you're just starting or sharpening what you know,
+        we’re here to guide and support your progress every step of the way.<br><br>
 
-    // Attach to buttons, passing studentName
-    document.getElementById('go-dashboard-btn').onclick = showWelcomeGreet;
-    document.getElementById('close-overlay').onclick = showWelcomeGreet;
+        Need help getting started? Check out our Student Guide!
+    `;
 
-    document.getElementById('see-courses-btn').onclick = () => {
+    // When they close overlay → start typing “Welcome”
+    document.getElementById('go-dashboard-btn').onclick = () => {
         overlay.classList.remove('show');
         document.body.style.overflow = '';
-        window.location.href = '/frontend/webpages/student-join-course.html';
+        typeWelcomeMessage(studentName, true);   // NEW user → showWelcome = true
     };
 
+    document.getElementById('help-faqs-btn').onclick = () => {
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+        window.location.href = '/frontend/webpages/student-help-faqs.html';
+    };
+
+    // Clear NEW user flag
     localStorage.removeItem('isNewUser');
     return true;
 }
 
 
     // --- Type welcome message ---
-    async function typeWelcomeMessage(studentName, isNew) {
-        const welcomeTextEl = document.getElementById('welcome-text');
-        const studentNameEl = document.getElementById('student-name');
-        const waveEmoji = document.getElementById('wave-emoji');
-        const greetMsgEl = document.getElementById('greet-msg');
+    async function typeWelcomeMessage(studentName, showWelcome) {
+    const welcomeTextEl = document.getElementById('welcome-text');
+    const studentNameEl = document.getElementById('student-name');
+    const greetMsgEl = document.getElementById('greet-msg');
+    const waveEmoji = document.getElementById('wave-emoji');
 
-        const showWelcome = sessionStorage.getItem('showWelcome');
-        studentName = (studentName && studentName.trim()) || "Student";
-        const welcomeMessage = showWelcome ? ` Welcome, ` : ` Welcome back, `;
-        const greetMessage = showWelcome
-            ? `Ready to start your coding journey? Let's make today count!`
-            : `Ready to continue your coding journey? Let's make today count!`;
+    studentName = studentName?.trim() || "Student";
 
-        // Reset content
-        welcomeTextEl.textContent = '';
-        studentNameEl.textContent = '';
-        greetMsgEl.textContent = '';
-        waveEmoji.style.opacity = '0';
-        waveEmoji.style.display = 'none';
+    const welcomeMessage = showWelcome ? ` Welcome, ` : ` Welcome back, `;
+    const greetMessage = showWelcome
+        ? `Ready to start your coding journey? Let's make today count!`
+        : `Ready to continue your coding journey? Let's make today count!`;
 
-        const typingSpeed = 100;
-        const greetSpeed = 40;
+    // Reset
+    welcomeTextEl.textContent = '';
+    studentNameEl.textContent = '';
+    greetMsgEl.textContent = '';
+    waveEmoji.style.opacity = '0';
+    waveEmoji.style.display = 'none';
 
-        function typeText(element, text, speed) {
-            return new Promise(resolve => {
-                let i = 0;
-                const interval = setInterval(() => {
-                    if (i < text.length) {
-                        element.textContent += text.charAt(i);
-                        i++;
-                    } else {
-                        clearInterval(interval);
-                        resolve();
-                    }
-                }, speed);
-            });
-        }
+    const typingSpeed = 100;
+    const greetSpeed = 40;
 
-        await typeText(welcomeTextEl, welcomeMessage, typingSpeed);
-        await typeText(studentNameEl, studentName, typingSpeed);
-
-        waveEmoji.classList.remove('wave-animation');
-        void waveEmoji.offsetWidth;
-        waveEmoji.style.opacity = '1';
-        waveEmoji.style.display = 'inline-block';
-        waveEmoji.classList.add('wave-animation');
-
-        await typeText(greetMsgEl, greetMessage, greetSpeed);
+    function typeText(el, text, speed) {
+        return new Promise(resolve => {
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i++);
+                } else {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, speed);
+        });
     }
+
+    await typeText(welcomeTextEl, welcomeMessage, typingSpeed);
+    await typeText(studentNameEl, studentName, typingSpeed);
+
+    waveEmoji.classList.remove('wave-animation');
+    void waveEmoji.offsetWidth;
+    waveEmoji.style.opacity = '1';
+    waveEmoji.style.display = 'inline-block';
+    waveEmoji.classList.add('wave-animation');
+
+    await typeText(greetMsgEl, greetMessage, greetSpeed);
+}
+
 
     // --- Fetch student stats ---
     async function fetchStudentStats() {
@@ -206,9 +201,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- Initialize page ---
     const user = await fetchCurrentUser();
-    const studentName = user.name || 'Student';
-    const isNew = showWelcomeOverlay(studentName); // shows overlay if new
-    if (!isNew) typeWelcomeMessage(studentName, false); // if not new, start typing immediately
+    const studentName = user.firstName || 'Student';
+    const isNew = showWelcomeOverlay(studentName);
+    // NEW USER → typing will start only after closing overlay
+    if (!isNew) {
+        typeWelcomeMessage(studentName, false);
+    } // if not new, start typing immediately
     fetchStudentStats();
     fetchStudentCourses();
 });
