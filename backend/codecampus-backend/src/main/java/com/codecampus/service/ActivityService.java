@@ -42,8 +42,20 @@ public class ActivityService {
         User student = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
-        List<Activity> activities = activityRepository.findByCourseOrderByDifficultyAsc(course);
+        List<Activity> activities = activityRepository.findByCourseId(courseId);
 
+        // --- Sort activities by difficulty manually ---
+        Map<String, Integer> difficultyOrder = Map.of(
+                "easy", 1,
+                "medium", 2,
+                "hard", 3
+        );
+
+        activities.sort(Comparator.comparingInt(a ->
+                difficultyOrder.getOrDefault(a.getDifficulty().toLowerCase(), 4)
+        ));
+
+        // --- Prepare completed/unlocked logic ---
         Map<Long, Boolean> completedMap = studentActivityRepository.findByStudent(student).stream()
                 .collect(Collectors.toMap(sa -> sa.getActivity().getId(), StudentActivity::isCompleted));
 

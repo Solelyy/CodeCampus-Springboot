@@ -2,13 +2,13 @@ const API_BASE_URL = 'http://localhost:8081';
 let courseId = null;
 let activities = [];
 
-// Always get courseId from URL
+// Get courseId from URL
 function getCourseIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('courseId');
 }
 
-// Always link course tabs dynamically
+// Setup course tabs
 function setupCourseTabs(courseId) {
     const tabs = {
         'tab-overview': '/frontend/webpages/student-course-overview.html',
@@ -21,7 +21,6 @@ function setupCourseTabs(courseId) {
         const tab = document.getElementById(id);
         if (tab) {
             tab.onclick = () => {
-                // Even if courseId is null, it won’t break — it just won’t append anything
                 const targetUrl = courseId
                     ? `${path}?courseId=${courseId}`
                     : path;
@@ -36,15 +35,28 @@ function getAuthToken() {
     return localStorage.getItem('token');
 }
 
+// Points calculator
+function getPoints(difficulty) {
+    if (!difficulty) return 0;
+
+    switch (difficulty.toLowerCase()) {
+        case 'easy':
+        case 'easy': return 10;
+        case 'medium': return 20;
+        case 'hard': return 30;
+        default: return 0;
+    }
+}
+
 // Fetch activities
 async function fetchCourseActivities() {
     courseId = getCourseIdFromURL();
-    setupCourseTabs(courseId); // run this immediately regardless
+    setupCourseTabs(courseId);
 
     const token = getAuthToken();
 
     if (!courseId) {
-        console.warn('⚠️ No course ID found in URL. Tabs initialized, but skipping activity fetch.');
+        console.warn('⚠️ No course ID found in URL.');
         return;
     }
     if (!token) {
@@ -67,7 +79,7 @@ async function fetchCourseActivities() {
     }
 }
 
-// Render activity cards
+// Render activities in sorted order
 function renderActivities() {
     const container = document.querySelector('.activities');
     if (!container) return;
@@ -79,40 +91,43 @@ function renderActivities() {
         card.className = 'activity-card';
         if (!activity.unlocked) card.classList.add('locked');
 
-        // Points based on difficulty
-        let points = 0;
-        switch (activity.difficulty.toLowerCase()) {
-            case 'easy':
-            case 'essay': points = 10; break;
-            case 'medium': points = 20; break;
-            case 'hard': points = 30; break;
-        }
+        // Points
+        const points = getPoints(activity.difficulty);
 
         card.innerHTML = `
             <p class="activity-title">${activity.title}</p>
             <p class="activity-points">Points: ${points}</p>
             <p class="activity-status ${
                 activity.completed
-                ? 'completed'
+                    ? 'completed'
                     : activity.unlocked
                         ? 'unlocked'
                         : 'locked'
             }">
-                ${activity.completed ? '✅ Completed' : activity.unlocked ? 'Unlocked' : 'Locked'}
+                ${
+                    activity.completed
+                        ? '✅ Completed'
+                        : activity.unlocked
+                            ? 'Unlocked'
+                            : 'Locked'
+                }
             </p>
         `;
-
+        
+        // Click handler
         card.addEventListener('click', () => {
             if (!activity.unlocked) {
                 showLockedModal();
                 return;
             }
-            window.location.href = `/frontend/webpages/student-course-challenge.html?activityId=${activity.id}&courseId=${courseId}`;
+            window.location.href =
+                `/frontend/webpages/student-course-challenge.html?activityId=${activity.id}&courseId=${courseId}`;
         });
 
         container.appendChild(card);
     });
 }
+
 
 // Locked modal
 function showLockedModal() {
@@ -128,11 +143,17 @@ function showLockedModal() {
             </div>
         `;
         document.body.appendChild(modal);
-        document.querySelector('#close-modal-btn').addEventListener('click', () => modal.style.display = 'none');
-        modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+        // Close events
+        document.querySelector('#close-modal-btn')
+            .addEventListener('click', () => modal.style.display = 'none');
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
     }
     modal.style.display = 'flex';
 }
 
-// Initialize
+//Initialize page
 window.addEventListener('DOMContentLoaded', fetchCourseActivities);
