@@ -27,52 +27,76 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 }
 
-async function typeWelcomeMessage(studentName) {
-    const welcomeTextEl = document.getElementById('welcome-text');
-    const studentNameEl = document.getElementById('student-name');
-    const waveEmoji = document.getElementById('wave-emoji');
+    async function fetchStudentStats() {
+        try {
+            const response = await fetch('http://localhost:8081/api/student/stats', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
 
-    studentName = (studentName && studentName.trim()) || "Student";
-    const welcomeMessage = ` Welcome back, `;
+            if (!response.ok) throw new Error(`Failed to fetch student stats: ${response.status}`);
 
-    welcomeTextEl.textContent = '';
-    studentNameEl.textContent = '';
+            const stats = await response.json();
+            console.log('Fetched student stats:', stats);
 
-    const typingSpeed = 100;
+            // Update the DOM
+            document.getElementById('total-courses').textContent = stats.totalCourses;
+            document.getElementById('completed-activities').textContent = stats.completedActivities;
+            document.getElementById('total-achievements').textContent = stats.totalAchievements;
+            document.getElementById('streak-days').textContent = stats.streakDays;
 
-    // Helper to type text character by character
-    function typeText(element, text) {
-        return new Promise((resolve) => {
-            let i = 0;
-            const interval = setInterval(() => {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, typingSpeed);
-        });
+        } catch (err) {
+            console.error('Error fetching student stats:', err);
+        }
     }
 
-    // Type welcome message
-    await typeText(welcomeTextEl, welcomeMessage);
+    async function typeWelcomeMessage(studentName) {
+        const welcomeTextEl = document.getElementById('welcome-text');
+        const studentNameEl = document.getElementById('student-name');
+        const waveEmoji = document.getElementById('wave-emoji');
 
-    // Type student name
-    await typeText(studentNameEl, studentName);
+        studentName = (studentName && studentName.trim()) || "Student";
+        const welcomeMessage = ` Welcome back, `;
 
-    // Show waving emoji after typing
-    waveEmoji.classList.remove('wave-animation'); // reset
-    void waveEmoji.offsetWidth; // force reflow
-    waveEmoji.style.opacity = '1'; // make visible
-    waveEmoji.style.display = 'inline-block'; 
-    waveEmoji.classList.add('wave-animation');    // start animation
-}
+        welcomeTextEl.textContent = '';
+        studentNameEl.textContent = '';
+
+        const typingSpeed = 100;
+
+        // Helper to type text character by character
+        function typeText(element, text) {
+            return new Promise((resolve) => {
+                let i = 0;
+                const interval = setInterval(() => {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, typingSpeed);
+            });
+        }
+
+        // Type welcome message
+        await typeText(welcomeTextEl, welcomeMessage);
+
+        // Type student name
+        await typeText(studentNameEl, studentName);
+
+        // Show waving emoji after typing
+        waveEmoji.classList.remove('wave-animation'); // reset
+        void waveEmoji.offsetWidth; // force reflow
+        waveEmoji.style.opacity = '1'; // make visible
+        waveEmoji.style.display = 'inline-block'; 
+        waveEmoji.classList.add('wave-animation');    // start animation
+    }
 
     const user = await fetchCurrentUser();
     const firstName = `${user.firstName}`;
     typeWelcomeMessage(firstName);
+
+    fetchStudentStats();
 
     function updateGreet() {
         const courses = container.querySelectorAll('.course-card');

@@ -50,6 +50,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/run").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/save").permitAll()
                         .requestMatchers("/api/users/me").authenticated()
+                        .requestMatchers("/api/student/stats").permitAll()
+
 
                         // Professor-only endpoints
                         .requestMatchers(HttpMethod.GET, "/api/courses/full").hasRole("PROFESSOR")
@@ -59,6 +61,7 @@ public class SecurityConfig {
 
                         // Student-only endpoints
                         .requestMatchers("/api/student/**").hasRole("STUDENT")
+
 
                         // All other requests require authentication
                         .anyRequest().authenticated()
