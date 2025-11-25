@@ -133,6 +133,9 @@ signupForm.addEventListener('submit', async (event) => {
         localStorage.setItem('token', loginResult.token);
         localStorage.setItem('username', loginResult.username);
         localStorage.setItem('role', loginResult.role);
+        // Mark this user as newly created
+        localStorage.setItem('isNewUser', 'true');
+        sessionStorage.setItem('showWelcome', 'true');
 
         errorMessage.style.color = 'green';
         errorMessage.textContent = 'Account created successfully! Redirecting...';
