@@ -29,17 +29,17 @@ body::before {
   background: 
     repeating-linear-gradient(
       0deg,
-      rgba(102, 195, 85, 0.03) 0px,
+      rgba(102, 195, 85, 0.02) 0px,
       transparent 1px,
       transparent 2px,
-      rgba(102, 195, 85, 0.03) 3px
+      rgba(102, 195, 85, 0.02) 3px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(102, 195, 85, 0.03) 0px,
+      rgba(102, 195, 85, 0.02) 0px,
       transparent 1px,
       transparent 2px,
-      rgba(102, 195, 85, 0.03) 3px
+      rgba(102, 195, 85, 0.02) 3px
     );
   pointer-events: none;
   z-index: 1;
@@ -52,171 +52,164 @@ body::before {
   margin: 0px auto 100px auto;
   font-family: "Inter", sans-serif;
   color: #FFFFFF;
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
-  padding: 0 40px;
+  padding: 40px 40px 0 40px;
   position: relative;
   z-index: 2;
 }
 
 /* ---------- TITLE ---------- */
 #challenge-title {
-  font-size: 2.25rem;
-  font-weight: 700;
+  font-size: 1.75rem;
+  font-weight: 600;
   color: #FFFFFF;
-  margin-bottom: 25px;
-  letter-spacing: 0.3px;
-  border-bottom: 4px solid var(--primary-green);
-  padding-bottom: 12px;
-  padding-left: 20px;
-  text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
+  margin-bottom: 30px;
+  letter-spacing: 0.2px;
+  border-bottom: 2px solid var(--primary-green);
+  padding-bottom: 10px;
+  padding-left: 0;
+  text-shadow: 0 0 15px rgba(102, 195, 85, 0.3);
 }
 
 /* ---------- MAIN CARD ---------- */
 .challenge-main {
-  background: linear-gradient(135deg, rgba(10, 14, 26, 0.9), rgba(26, 31, 53, 0.9));
-  border-radius: 20px;
-  padding: 30px;
-  border: 2px solid rgba(102, 195, 85, 0.25);
-  box-shadow: 0 0 25px rgba(102, 195, 85, 0.15),
-              0 8px 24px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.95), rgba(20, 25, 45, 0.95));
+  border-radius: 16px;
+  padding: 0px 20px 20px 20px;
+  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+              0 0 40px rgba(102, 195, 85, 0.08);
 }
 
 /* ---------- CHALLENGE DETAILS ---------- */
 .challenge-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 30px;
+  justify-content: space-between;
+  gap: 10x;
+  margin-bottom: 10px;
   align-items: center;
+  width: 100%;
 }
 
 #label {
-  font-weight: 600;
+  font-weight: 500;
   color: #FFFFFF;
-  background: rgba(102, 195, 85, 0.15);
-  padding: 10px 20px;
-  border-radius: 12px;
+  background: rgba(102, 195, 85, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
   display: inline-flex;
   align-items: center;
-  font-size: 0.9rem;
-  border: 1px solid rgba(102, 195, 85, 0.3);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 0.85rem;
+  border: 1px solid rgba(102, 195, 85, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   gap: 8px;
 }
 
 #label:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(102, 195, 85, 0.3);
-  border-color: rgba(102, 195, 85, 0.5);
-  background: rgba(102, 195, 85, 0.2);
+  background: rgba(102, 195, 85, 0.15);
+  border-color: rgba(102, 195, 85, 0.4);
+  transform: translateY(-1px);
 }
 
 #label::before {
-  font-size: 1.1rem;
+  font-size: 1rem;
+  animation: iconFloat 3s ease-in-out infinite;
+  display: inline-block;
 }
 
 #label:first-child::before {
   content: '⚡';
+  animation: lightningPulse 2s ease-in-out infinite;
 }
 
 #label:last-child::before {
-  content: '⭐️';
+  content: '⭐';
+  animation: starTwinkle 2.5s ease-in-out infinite;
 }
 
 #challenge-difficulty {
-  font-weight: 700;
-  color: #0a0e1a;
-  background: linear-gradient(135deg, #FFFFFF, #E0E0E0);
-  padding: 4px 12px;
-  border-radius: 8px;
-  margin-left: 6px;
-  font-size: 0.8rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: rgba(76, 175, 80, 0.2);
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-left: 4px;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.4px;
 }
 
 #challenge-difficulty.easy {
-  background: linear-gradient(135deg, #4CAF50, #66BB6A);
-  color: #FFFFFF;
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
 }
 
 #challenge-difficulty.medium {
-  background: linear-gradient(135deg, #FF9800, #FFB74D);
-  color: #FFFFFF;
+  background: rgba(255, 152, 0, 0.2);
+  color: #FFB74D;
 }
 
 #challenge-difficulty.hard {
-  background: linear-gradient(135deg, #F44336, #EF5350);
-  color: #FFFFFF;
+  background: rgba(244, 67, 54, 0.2);
+  color: #EF5350;
 }
 
 #challenge-points {
-  font-weight: 700;
-  color: #0a0e1a;
-  background: linear-gradient(135deg, #FFD700, #FFC107);
-  padding: 4px 12px;
-  border-radius: 8px;
-  margin-left: 6px;
-  font-size: 0.8rem;
+  font-weight: 600;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.1);
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-left: 4px;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  letter-spacing: 0.4px;
+  cursor: pointer;
 }
 
 /* ---------- CHALLENGE DESCRIPTION ---------- */
 #challenge-label {
-  font-weight: 700;
-  font-size: 1.3rem;
+  font-weight: 600;
+  font-size: 1rem;
   color: var(--primary-green);
   margin-top: 0;
-  margin-bottom: 15px;
-  text-shadow: 0 0 15px rgba(102, 195, 85, 0.4);
+  margin-bottom: 12px;
+  text-shadow: 0 0 10px rgba(102, 195, 85, 0.3);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
 }
 
 #challenge-description {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
-  background: linear-gradient(135deg, rgba(102, 195, 85, 0.08), rgba(102, 195, 85, 0.12));
-  padding: 20px 24px;
-  border-radius: 12px;
-  margin-bottom: 35px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
-              inset 0 0 20px rgba(102, 195, 85, 0.05);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(102, 195, 85, 0.05);
+  padding: 18px 20px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  box-shadow: inset 0 0 20px rgba(102, 195, 85, 0.03);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-}
-
-#challenge-description::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, var(--primary-green), var(--secondary-green));
-  box-shadow: 0 0 15px var(--primary-green);
+  border-left: 3px solid var(--primary-green);
 }
 
 #challenge-description:hover {
-  border-left-width: 4px;
-  background: linear-gradient(135deg, rgba(102, 195, 85, 0.12), rgba(102, 195, 85, 0.16));
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
-              inset 0 0 25px rgba(102, 195, 85, 0.1);
+  background: rgba(102, 195, 85, 0.08);
   transform: translateX(2px);
 }
 
 /* ---------- WORKSPACE (CODE + OUTPUT) ---------- */
 .challenge-workspace {
   display: flex;
-  gap: 20px;
+  gap: 25px;
   justify-content: space-between;
   align-items: stretch;
   flex-wrap: wrap;
@@ -225,43 +218,47 @@ body::before {
 .left-side,
 .right-side {
   flex: 1;
-  min-width: 400px;
-  background: rgba(15, 20, 35, 0.95);
-  border-radius: 10px;
+  min-width: 420px;
+  background: rgba(13, 17, 28, 0.98);
+  border-radius: 12px;
   padding: 0;
-  border: 1px solid rgba(102, 195, 85, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(102, 195, 85, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+              inset 0 0 20px rgba(102, 195, 85, 0.02);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .left-side::before,
 .right-side::before {
   content: attr(data-title);
   display: block;
-  background: rgba(102, 195, 85, 0.1);
-  border-bottom: 1px solid rgba(102, 195, 85, 0.2);
-  padding: 12px 20px;
-  font-size: 0.85rem;
+  background: linear-gradient(90deg, rgba(102, 195, 85, 0.08), transparent);
+  border-bottom: 1px solid rgba(102, 195, 85, 0.1);
+  padding: 14px 20px;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--primary-green);
+  color: rgba(102, 195, 85, 0.8);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
 }
 
 /* ---------- EDITOR ---------- */
 #editor {
-  height: 550px;
+  flex: 1;
   width: 100%;
   border: none;
   border-radius: 0;
   padding: 20px;
-  background: rgba(13, 17, 28, 0.95);
+  background: rgba(13, 17, 28, 0.98);
   color: #e0e0e0;
   font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
   font-size: 14px;
   line-height: 1.6;
   overflow-y: auto;
   transition: none;
+  min-height: 550px;
 }
 
 #editor:focus-within {
@@ -272,7 +269,7 @@ body::before {
 
 /* Scrollbar styling for editor */
 #editor::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 #editor::-webkit-scrollbar-track {
@@ -280,36 +277,36 @@ body::before {
 }
 
 #editor::-webkit-scrollbar-thumb {
-  background: rgba(102, 195, 85, 0.3);
-  border-radius: 5px;
+  background: rgba(102, 195, 85, 0.25);
+  border-radius: 4px;
 }
 
 #editor::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 195, 85, 0.5);
+  background: rgba(102, 195, 85, 0.4);
 }
 
 /* ---------- BUTTONS ---------- */
 .challenge-run-container {
   display: flex;
   justify-content: flex-end;
-  padding: 12px 20px;
-  background: rgba(10, 14, 26, 0.8);
-  border-top: 1px solid rgba(102, 195, 85, 0.15);
+  padding: 16px 20px;
+  background: rgba(10, 14, 26, 0.9);
+  border-top: 1px solid rgba(102, 195, 85, 0.1);
+  gap: 10px;
 }
 
 button {
-  margin: 5px;
-  padding: 12px 28px;
+  padding: 10px 24px;
   background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
   color: #0a0e1a;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 25px rgba(102, 195, 85, 0.4),
-              0 4px 12px rgba(102, 195, 85, 0.3);
+  box-shadow: 0 4px 16px rgba(102, 195, 85, 0.3),
+              0 0 20px rgba(102, 195, 85, 0.2);
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
@@ -317,30 +314,30 @@ button {
 button:hover:not(:disabled) {
   background: linear-gradient(135deg, var(--secondary-green), var(--dark-green));
   transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(102, 195, 85, 0.6),
-              0 6px 18px rgba(102, 195, 85, 0.4);
+  box-shadow: 0 6px 20px rgba(102, 195, 85, 0.4),
+              0 0 30px rgba(102, 195, 85, 0.3);
 }
 
 button:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 0 20px rgba(102, 195, 85, 0.4),
-              0 3px 10px rgba(102, 195, 85, 0.3);
+  box-shadow: 0 2px 12px rgba(102, 195, 85, 0.3);
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
-  background: rgba(102, 195, 85, 0.3);
+  background: rgba(102, 195, 85, 0.2);
 }
 
 #runBtn img {
-    height: 20px;
-    width: 20px;
+    height: 18px;
+    width: 18px;
 }
 
 /* ---------- OUTPUT + FEEDBACK ---------- */
 #output {
-  background-color: rgba(13, 17, 28, 0.95);
+  flex: 1;
+  background-color: rgba(13, 17, 28, 0.98);
   border: none;
   border-radius: 0;
   padding: 20px;
@@ -351,7 +348,6 @@ button:disabled {
   word-wrap: break-word;
   line-height: 1.7;
   min-height: 550px;
-  max-height: 550px;
   overflow-y: auto;
   box-shadow: none;
 }
@@ -363,7 +359,7 @@ button:disabled {
 
 /* Scrollbar styling for output */
 #output::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 #output::-webkit-scrollbar-track {
@@ -371,12 +367,12 @@ button:disabled {
 }
 
 #output::-webkit-scrollbar-thumb {
-  background: rgba(102, 195, 85, 0.3);
-  border-radius: 5px;
+  background: rgba(102, 195, 85, 0.25);
+  border-radius: 4px;
 }
 
 #output::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 195, 85, 0.5);
+  background: rgba(102, 195, 85, 0.4);
 }
 
 .challenge-action-container {
@@ -384,16 +380,16 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  padding: 12px 20px;
-  background: rgba(10, 14, 26, 0.8);
-  border-top: 1px solid rgba(102, 195, 85, 0.15);
+  padding: 16px 20px;
+  background: rgba(10, 14, 26, 0.9);
+  border-top: 1px solid rgba(102, 195, 85, 0.1);
 }
 
 #feedback {
-  font-weight: 600;
-  color: var(--primary-green);
-  font-size: 0.9rem;
-  text-shadow: 0 0 10px rgba(102, 195, 85, 0.4);
+  font-weight: 500;
+  color: rgba(102, 195, 85, 0.8);
+  font-size: 0.85rem;
+  text-shadow: 0 0 8px rgba(102, 195, 85, 0.3);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -401,7 +397,7 @@ button:disabled {
 
 #feedback::before {
   content: '●';
-  font-size: 1.2rem;
+  font-size: 1rem;
   animation: pulse 2s infinite;
 }
 
@@ -411,6 +407,52 @@ button:disabled {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes lightningPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0));
+  }
+  50% {
+    transform: scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0));
+  }
+  25% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  50% {
+    transform: scale(0.95) rotate(-10deg);
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+@keyframes pointsGlow {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.3);
   }
 }
 
@@ -427,9 +469,7 @@ button:disabled {
   
   #editor,
   #output {
-    height: 400px;
     min-height: 400px;
-    max-height: 400px;
   }
 }
 
@@ -439,7 +479,7 @@ button:disabled {
   }
 
   #challenge-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
   
   .challenge-details {
@@ -447,32 +487,28 @@ button:disabled {
   }
   
   #label {
-    font-size: 0.85rem;
-    padding: 8px 16px;
+    font-size: 0.8rem;
+    padding: 7px 14px;
   }
   
   #challenge-label {
-    font-size: 1.15rem;
+    font-size: 0.85rem;
   }
   
   #challenge-description {
     font-size: 0.95rem;
-    padding: 16px 20px;
+    padding: 14px 18px;
   }
 
   #editor,
   #output {
-    height: 350px;
     min-height: 350px;
-    max-height: 350px;
-    font-size: 12px;
   }
 }
 
 @media (max-width: 480px) {
   #challenge-title {
-    font-size: 1.5rem;
-    padding-left: 10px;
+    font-size: 1.3rem;
   }
   
   .challenge-details {
@@ -484,22 +520,22 @@ button:disabled {
   #label {
     width: 100%;
     justify-content: space-between;
-    font-size: 0.8rem;
-    padding: 8px 14px;
+    font-size: 0.75rem;
+    padding: 6px 12px;
   }
   
   #challenge-label {
-    font-size: 1.05rem;
+    font-size: 0.8rem;
   }
   
   #challenge-description {
     font-size: 0.9rem;
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
 
   button {
-    padding: 10px 16px;
-    font-size: 0.85rem;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
   
   .left-side,
@@ -509,9 +545,6 @@ button:disabled {
   
   #editor,
   #output {
-    height: 300px;
     min-height: 300px;
-    max-height: 300px;
-    padding: 15px;
   }
 }
