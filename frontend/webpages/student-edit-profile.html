@@ -97,22 +97,25 @@
         <img src="/frontend/assets/images/pusa.jpg" alt="Profile Image">
         <br>
         <button class="upload-btn">Upload New Profile</button>
+        <p id="profile-pic-update-msg"></p>
       </div>
 
       <!-- Right: Profile Form -->
       <div class="form-fields">
         <div class="form-group">
-          <h4>Full Name:</h4>
-          <p>Taylor Swift</p>
+          <h4>Name:</h4>
+          <p id="full-name"></p>
         </div>
         <div class="form-group">
           <h4>Username:</h4>
-          <p>@TSCoder</p>
+          <p id="username"></p>
         </div>
         <div class="form-group">
           <h4>Bio:</h4>
           <textarea id="bio" placeholder="Write something about yourself..."></textarea>
+          <p id="bio-update-msg"></p>
         </div>
+        
       </div>
     </div>
 
@@ -129,4 +132,5 @@
   </footer>
 </body>
 <script src="/frontend/scripts/general.js"></script>
+<script src="/frontend/scripts/edit-profile.js"></script>
 </html>

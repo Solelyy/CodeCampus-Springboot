@@ -299,6 +299,18 @@ textarea {
   transform: translateY(-2px);
 }
 
+#bio-update-msg {
+  opacity: 0;
+  border: none;
+}
+
+#bio {
+  opacity: .6;
+}
+
+#bio:focus {
+  opacity: 1;
+}
 /* ---------- RESPONSIVE DESIGN ---------- */
 @media (max-width: 1024px) {
   .edit-profile-page {

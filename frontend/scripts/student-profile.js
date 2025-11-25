@@ -1,6 +1,10 @@
 // student-profile.js
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Constants ---
+    const BACKEND_URL = 'http://localhost:8081';
+    const DEFAULT_PROFILE_PIC = '/frontend/assets/images/starter-profile.jpeg';
+
     // --- Elements ---
     const profilePicEl = document.getElementById('profile-pic');
     const nameEl = document.getElementById('name');
@@ -17,18 +21,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const languagesUsedEl = document.getElementById('languages-used');
     const totalPointsEl = document.getElementById('total-points');
 
-    const DEFAULT_PROFILE_PIC = '/frontend/assets/images/starter-profile.jpeg';
-
     const token = localStorage.getItem('token');
     if (!token) {
         console.error('No token found. User must be logged in.');
         return;
     }
 
+    // --- Helper ---
+    function getProfilePicUrl(picPath) {
+        return picPath ? BACKEND_URL + picPath : DEFAULT_PROFILE_PIC;
+    }
+
+    function addAchievement(text) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        achievementsListEl.appendChild(li);
+    }
+
     // --- Fetch Functions ---
     async function fetchUserProfile() {
         try {
-            const res = await fetch('http://localhost:8081/api/users/me', {
+            const res = await fetch(`${BACKEND_URL}/api/users/me`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             if (!res.ok) throw new Error('Failed to fetch user info');
@@ -41,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchStudentStats() {
         try {
-            const res = await fetch('http://localhost:8081/api/student/stats', {
+            const res = await fetch(`${BACKEND_URL}/api/student/stats`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             if (!res.ok) throw new Error('Failed to fetch student stats');
@@ -54,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchStudentCourses() {
         try {
-            const res = await fetch('http://localhost:8081/api/student/enrollments/my-courses', {
+            const res = await fetch(`${BACKEND_URL}/api/student/enrollments/my-courses`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             if (!res.ok) throw new Error('Failed to fetch courses');
@@ -67,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchProfileInfo() {
         try {
-            const res = await fetch('http://localhost:8081/api/profile', {
+            const res = await fetch(`${BACKEND_URL}/api/profile`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             if (!res.ok) throw new Error('Failed to fetch profile info');
@@ -87,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!user) return;
 
-        // Profile picture
-        profilePicEl.src = profile?.profilePicture || DEFAULT_PROFILE_PIC;
+        // Profile picture (fixed backend URL)
+        profilePicEl.src = getProfilePicUrl(profile?.profilePicture);
 
         // Name and username
         nameEl.textContent = user.name || 'Student Name';
@@ -120,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             courseListEl.innerHTML = '<p>No courses joined yet.</p>';
         }
 
-        // Activities
+        // Activities / Stats
         if (stats) {
             lastActiveEl.textContent = `Last Active: ${stats.lastActive ? new Date(stats.lastActive).toLocaleDateString() : 'N/A'}`;
             totalCoursesEl.textContent = `Courses Joined: ${stats.totalCourses}`;
@@ -128,13 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
             languagesUsedEl.textContent = 'Languages Used: Java';
             totalPointsEl.textContent = `Total Points Earned: ${stats.totalPoints || 0}`;
         }
-    }
-
-    // --- Helper ---
-    function addAchievement(text) {
-        const li = document.createElement('li');
-        li.textContent = text;
-        achievementsListEl.appendChild(li);
     }
 
     // --- Initialize ---

@@ -99,10 +99,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
-        String token = (authHeader != null && authHeader.startsWith("Bearer "))
-                ? authHeader.substring(7)
-                : null;
+        // Skip OPTIONS preflight
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String token = resolveToken(request);
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
@@ -115,18 +118,36 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-
-                    logger.info("Request URI: {}", request.getRequestURI());
-                    logger.info("Token valid for user: {}", username);
-                    logger.info("Request URI: {}, Authorization header: {}", request.getRequestURI(), authHeader);
+                    logger.info("Authenticated user: {} for URI: {}", username, request.getRequestURI());
                 }
             } catch (Exception e) {
-                logger.warn("JWT auth failed: {}", e.getMessage());
+                logger.warn("JWT authentication failed: {}", e.getMessage());
+                logger.info("Authorization header: {}", request.getHeader("Authorization"));
+                logger.info("Resolved token: {}", token);
             }
         }
 
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Resolve the token from the Authorization header.
+     * Works even if the request is multipart.
+     */
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
 
+        // If header is missing and multipart, try alternative
+        if (bearerToken == null && request.getContentType() != null
+                && request.getContentType().toLowerCase().startsWith("multipart/")) {
+            // Some browsers strip headers in multipart; this is a safe fallback if needed
+            bearerToken = request.getParameter("Authorization");
+        }
+
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+
+        return null;
+    }
 }

@@ -41,6 +41,9 @@ public class SecurityConfig {
                 }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/api/profile/**").permitAll()
+                )
+                .authorizeHttpRequests(auth -> auth
                         // OPTIONS requests always allowed
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
@@ -51,6 +54,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/save").permitAll()
                         .requestMatchers("/api/profile", "/api/profile/**").authenticated()
                         .requestMatchers("/api/users/me").authenticated()
+                        .requestMatchers("/api/profile", "/api/profile/**").authenticated()
+                        .requestMatchers("/uploads/**").permitAll()
 
                         // Professor-only endpoints
                         .requestMatchers(HttpMethod.GET, "/api/courses/full").hasRole("PROFESSOR")
@@ -84,4 +89,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
