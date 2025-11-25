@@ -1,0 +1,7 @@
+package com.codecampus.model;
+
+public enum EnrollmentStatus {
+    ACTIVE,
+    COMPLETED,
+    DROPPED
+}

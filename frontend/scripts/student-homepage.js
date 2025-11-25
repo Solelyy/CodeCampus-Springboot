@@ -88,7 +88,7 @@ async function typeWelcomeMessage(studentName) {
 
     async function fetchStudentCourses() {
         try {
-            const response = await fetch('http://localhost:8081/api/enrollments/my-courses', {
+            const response = await fetch('http://localhost:8081/api/student/enrollments/my-courses', {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
 

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/student")
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
@@ -39,19 +39,22 @@ public class EnrollmentController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         try {
+            if (userDetails == null) return ResponseEntity.status(401).body("User not authenticated");
+
             User student = userService.findByUsername(userDetails.getUsername());
+            if (student == null) return ResponseEntity.badRequest().body("Student not found");
+
             Course course = enrollmentService.enrollStudentById(id, student);
 
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
                     course.getTitle(),
                     course.getProfessor().getName(),
-                    course.getDescription(), // include description
-                    enrollmentService.getStudentsCount(course),
-                    true // now enrolled
+                    course.getDescription(),
+                    (int) enrollmentService.getStudentsCount(course),
+                    true
             );
 
-            // also check pre-assessment
             boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
             dto.setPreAssessmentCompleted(completed);
 
@@ -62,7 +65,8 @@ public class EnrollmentController {
         }
     }
 
-    // Get all courses the logged-in student is enrolled in
+    // Get all active courses the logged-in student is enrolled in
+    @PreAuthorize("permitAll()")
     @GetMapping("/enrollments/my-courses")
     public ResponseEntity<List<StudentCourseDTO>> getMyCourses(
             @AuthenticationPrincipal UserDetails userDetails) {
@@ -71,16 +75,15 @@ public class EnrollmentController {
         List<Course> enrolledCourses = enrollmentService.getStudentCourses(student);
 
         List<StudentCourseDTO> dtoList = enrolledCourses.stream().map(course -> {
-            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
-
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
                     course.getTitle(),
                     course.getProfessor().getName(),
                     course.getDescription(),
-                    enrollmentService.getStudentsCount(course),
+                    (int) enrollmentService.getStudentsCount(course),
                     true
             );
+            boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
             dto.setPreAssessmentCompleted(completed);
             return dto;
         }).collect(Collectors.toList());
@@ -98,22 +101,24 @@ public class EnrollmentController {
             Course course = enrollmentService.getCourseById(id);
             User student = userService.findByUsername(userDetails.getUsername());
 
+            boolean enrolled = enrollmentService.isStudentActiveInCourse(course, student);
+
             StudentCourseDTO dto = new StudentCourseDTO(
                     course.getId(),
                     course.getTitle(),
                     course.getProfessor().getName(),
                     course.getDescription(),
-                    enrollmentService.getStudentsCount(course),
-                    enrollmentService.isStudentEnrolled(course, student)
+                    (int) enrollmentService.getStudentsCount(course),
+                    enrolled
             );
 
-            // add completion flag here too (optional)
             boolean completed = preAssessmentService.hasCompletedPreAssessment(student.getId(), course.getId());
             dto.setPreAssessmentCompleted(completed);
 
             return ResponseEntity.ok(dto);
 
         } catch (Exception e) {
+            // Always return course info, even if student isn't enrolled
             return ResponseEntity.badRequest().build();
         }
     }

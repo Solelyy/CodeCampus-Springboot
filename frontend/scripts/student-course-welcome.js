@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Fetch course and set name
     try {
-        const res = await fetch(`http://localhost:8081/api/courses/${courseId}`, {
+        const res = await fetch(`http://localhost:8081/api/student/courses/${courseId}`, {
             headers: { 'Authorization': 'Bearer ' + token }
         });
 

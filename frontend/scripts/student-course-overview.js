@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8081/api/courses/${courseId}`, {
+        const response = await fetch(`http://localhost:8081/api/student/courses/${courseId}`, {
             headers: { 'Authorization': 'Bearer ' + token }
         });
         console.log('Fetch response:', response);
