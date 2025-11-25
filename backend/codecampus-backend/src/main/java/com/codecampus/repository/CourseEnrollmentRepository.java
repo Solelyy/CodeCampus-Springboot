@@ -28,6 +28,13 @@ public interface CourseEnrollmentRepository extends JpaRepository<CourseEnrollme
     // Count number of students enrolled in a course
     long countByCourse(Course course);
 
+    // Count number of courses a student is enrolled in
+    long countByStudent(User student);
+
+    long countByStudent_Username(String username);
+
+    long countByStudent_Id(Long studentId);
+
     // Optional: find all enrollments by course and status
     List<CourseEnrollment> findByCourseAndStatus(Course course, EnrollmentStatus status);
 }
