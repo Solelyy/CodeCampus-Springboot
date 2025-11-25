@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Constants ---
     const BACKEND_URL = 'http://localhost:8081';
-    const DEFAULT_PROFILE_PIC = '/frontend/assets/images/starter-profile.jpeg';
+    const DEFAULT_PROFILE_PIC = '/uploads/profile-pictures/starter-profile.jpeg';
 
     // --- Elements ---
     const profilePicEl = document.getElementById('profile-pic');

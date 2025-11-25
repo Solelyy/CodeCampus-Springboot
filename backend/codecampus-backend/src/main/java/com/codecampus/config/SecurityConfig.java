@@ -56,6 +56,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/me").authenticated()
                         .requestMatchers("/api/profile", "/api/profile/**").authenticated()
                         .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/frontend/**").permitAll()
+
 
                         // Professor-only endpoints
                         .requestMatchers(HttpMethod.GET, "/api/courses/full").hasRole("PROFESSOR")
