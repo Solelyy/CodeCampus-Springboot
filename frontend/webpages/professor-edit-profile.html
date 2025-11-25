@@ -82,32 +82,35 @@
     </nav>
   </header>
 
-  <!-- Edit Profile Content -->
+<!-- Edit Profile Content -->
   <main class="edit-profile-page">
    <h2 class="title">Edit Profile</h2>
 
     <div class="edit-card">
       <!-- Left: Profile Image -->
       <div class="profile-image">
-        <img src="/frontend/assets/images/mosh.png" alt="Profile Image">
+        <img alt="Profile Image">
         <br>
         <button class="upload-btn">Upload New Profile</button>
+        <p id="profile-pic-update-msg"></p>
       </div>
 
       <!-- Right: Profile Form -->
       <div class="form-fields">
         <div class="form-group">
-          <h4>Full Name:</h4>
-          <p>Juan Cruz</p>
+          <h4>Name:</h4>
+          <p id="full-name"></p>
         </div>
         <div class="form-group">
           <h4>Username:</h4>
-          <p>@codemaster</p>
+          <p id="username"></p>
         </div>
         <div class="form-group">
           <h4>Bio:</h4>
           <textarea id="bio" placeholder="Write something about yourself..."></textarea>
+          <p id="bio-update-msg"></p>
         </div>
+        
       </div>
     </div>
 
@@ -115,8 +118,10 @@
     <div class="form-actions">
       <button class="btn cancel" onclick="location.href='professor-profile.html'">Cancel</button>
       <button class="btn save">Save</button>
+      <p></p>
     </div>
   </main>
+
 
   <!-- Footer -->
   <footer>
@@ -124,4 +129,5 @@
   </footer>
 </body>
 <script src="/frontend/scripts/general.js"></script>
+<script src="/frontend/scripts/edit-profile.js"></script>
 </html>
