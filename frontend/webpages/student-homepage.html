@@ -96,7 +96,7 @@
                     <span class="student-name" id="student-name"></span>
                     <span id="wave-emoji">👋</span>
                 </h1>
-                <p>Ready to continue your coding journey? Let's make today count!</p>
+                <p id="greet-msg"></p>
             </div>
 
             <!-- Stats Overview -->
@@ -159,6 +159,21 @@
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
     </footer>
+
+    <!-- Welcome Overlay -->
+    <div id="welcome-overlay" class="overlay">
+    <div class="overlay-content">
+        <button id="close-overlay" class="close-btn">&times;</button>
+        <h2 id="overlay-title">Welcome!</h2>
+        <p id="overlay-message">
+            <span id="overlay-student-name"></span>, your account has been successfully created. Let’s jump in and start your coding journey!
+        </p>
+        <div class="overlay-buttons">
+        <button id="see-courses-btn" class="primary-btn">See Courses</button>
+        <button id="go-dashboard-btn" class="secondary-btn">Go to Dashboard</button>
+        </div>
+    </div>
+    </div>
 </body>
 <script src="/frontend/scripts/student-homepage.js"></script>
 <script src="/frontend/scripts/general.js"></script>

@@ -122,6 +122,8 @@ signInForm.addEventListener('submit', async (event) => {
         localStorage.setItem('token', result.token);
         localStorage.setItem('username', result.username);
         localStorage.setItem('role', result.role);
+        localStorage.setItem('isNewUser', 'false');
+        sessionStorage.setItem('showWelcome', 'false');
 
         errorMessage.style.color = 'rgb(119, 211, 119)';
         errorMessage.textContent = 'Sign in successful! Redirecting...';
@@ -143,6 +145,7 @@ signInForm.addEventListener('submit', async (event) => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         localStorage.removeItem('role');
+        localStorage.removeItem('isNewUser');
         sessionStorage.clear();
     }finally {
         signInBtn.disabled = false;

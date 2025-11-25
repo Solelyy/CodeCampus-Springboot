@@ -91,6 +91,7 @@ if (logoutBtn) {
     localStorage.removeItem("user");
     localStorage.removeItem("username");
     localStorage.removeItem("role");
+    localStorage.removeItem('isNewUser');
     sessionStorage.clear();
 
     // Redirect to landing and prevent back
