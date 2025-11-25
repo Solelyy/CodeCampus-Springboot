@@ -6,6 +6,7 @@ import com.codecampus.repository.ActivityRepository;
 import com.codecampus.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,5 +63,13 @@ public class ActivityController {
     public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
         activityRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // NEW: Get all activities for a course (Professor version)
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<ActivityDTO>> getActivitiesForCourse(@PathVariable Long courseId) {
+        List<ActivityDTO> activityDTOs = activityService.getActivitiesForCourse(courseId);
+        return ResponseEntity.ok(activityDTOs);
     }
 }
