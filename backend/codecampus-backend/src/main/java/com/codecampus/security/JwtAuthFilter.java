@@ -118,6 +118,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                     logger.info("Request URI: {}", request.getRequestURI());
                     logger.info("Token valid for user: {}", username);
+                    logger.info("Request URI: {}, Authorization header: {}", request.getRequestURI(), authHeader);
                 }
             } catch (Exception e) {
                 logger.warn("JWT auth failed: {}", e.getMessage());

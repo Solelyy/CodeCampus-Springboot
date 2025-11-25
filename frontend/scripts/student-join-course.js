@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const publicCourses = await publicResponse.json();
 
             // Fetch joined courses
-            const joinedResponse = await fetch('http://localhost:8081/api/enrollments/my-courses', {
+            const joinedResponse = await fetch('http://localhost:8081/api/student/enrollments/my-courses', {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
 

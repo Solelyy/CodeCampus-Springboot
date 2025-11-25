@@ -1,57 +1,55 @@
 package com.codecampus.service;
 
 import com.codecampus.model.Course;
+import com.codecampus.model.CourseEnrollment;
+import com.codecampus.model.EnrollmentStatus;
 import com.codecampus.model.User;
+import com.codecampus.repository.CourseEnrollmentRepository;
 import com.codecampus.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class EnrollmentService {
 
     private final CourseRepository courseRepository;
+    private final CourseEnrollmentRepository enrollmentRepository;
 
-    public EnrollmentService(CourseRepository courseRepository) {
+    public EnrollmentService(CourseRepository courseRepository,
+                             CourseEnrollmentRepository enrollmentRepository) {
         this.courseRepository = courseRepository;
+        this.enrollmentRepository = enrollmentRepository;
     }
 
     // Enroll a student by course code
     public Course enrollStudent(String code, User student) throws Exception {
         Course course = getCourseByCode(code);
-        if (course == null) {
-            throw new Exception("Course not found with the given code.");
-        }
-
-        Set<User> students = course.getStudents();
-        if (students.contains(student)) {
-            throw new Exception("Student already enrolled in this course.");
-        }
-
-        students.add(student);
-        course.setStudents(students);
-
-        return courseRepository.save(course);
+        if (course == null) throw new Exception("Course not found with the given code.");
+        return enrollStudentInCourse(course, student);
     }
 
     // Enroll a student by course ID
     public Course enrollStudentById(Long id, User student) throws Exception {
         Course course = getCourseById(id);
-        if (course == null) {
-            throw new Exception("Course not found with the given ID.");
-        }
+        return enrollStudentInCourse(course, student);
+    }
 
-        Set<User> students = course.getStudents();
-        if (students.contains(student)) {
+    // Common private method to handle enrollment
+    private Course enrollStudentInCourse(Course course, User student) throws Exception {
+        if (enrollmentRepository.findByStudentAndCourse(student, course).isPresent()) {
             throw new Exception("Student already enrolled in this course.");
         }
 
-        students.add(student);
-        course.setStudents(students);
+        // Use managed Course entity
+        Course managedCourse = courseRepository.findById(course.getId())
+                .orElseThrow(() -> new Exception("Course not found."));
 
-        return courseRepository.save(course);
+        CourseEnrollment enrollment = new CourseEnrollment(managedCourse, student, EnrollmentStatus.ACTIVE);
+        enrollmentRepository.saveAndFlush(enrollment); // immediately persist to DB
+
+        return managedCourse;
     }
 
     // Get course by ID
@@ -60,27 +58,23 @@ public class EnrollmentService {
                 .orElseThrow(() -> new Exception("Course not found."));
     }
 
-    // Get all courses a student is enrolled in
+    // Get all active courses a student is enrolled in
     public List<Course> getStudentCourses(User student) {
-        return courseRepository.findAll()
+        return enrollmentRepository.findByStudentAndStatus(student, EnrollmentStatus.ACTIVE)
                 .stream()
-                .filter(course -> course.getStudents().contains(student))
+                .map(CourseEnrollment::getCourse)
                 .collect(Collectors.toList());
     }
 
     // Leave a course
-    public Course leaveCourse(Long courseId, User student) throws Exception {
+    public void leaveCourse(Long courseId, User student) throws Exception {
         Course course = getCourseById(courseId);
 
-        Set<User> students = course.getStudents();
-        if (!students.contains(student)) {
-            throw new Exception("Student is not enrolled in this course.");
-        }
+        CourseEnrollment enrollment = enrollmentRepository.findByStudentAndCourse(student, course)
+                .orElseThrow(() -> new Exception("Student is not enrolled in this course."));
 
-        students.remove(student);
-        course.setStudents(students);
-
-        return courseRepository.save(course);
+        enrollment.setStatus(EnrollmentStatus.DROPPED);
+        enrollmentRepository.saveAndFlush(enrollment);
     }
 
     // Get course by code
@@ -88,13 +82,15 @@ public class EnrollmentService {
         return courseRepository.findByCode(code);
     }
 
-    // Check if student is enrolled
-    public boolean isStudentEnrolled(Course course, User student) {
-        return course.getStudents().contains(student);
+    // Check if student is actively enrolled
+    public boolean isStudentActiveInCourse(Course course, User student) {
+        return enrollmentRepository.findByStudentAndCourse(student, course)
+                .filter(e -> e.getStatus() == EnrollmentStatus.ACTIVE)
+                .isPresent();
     }
 
-    // Get total students enrolled in a course
-    public int getStudentsCount(Course course) {
-        return course.getStudents().size();
+    // Get total active students in a course
+    public long getStudentsCount(Course course) {
+        return enrollmentRepository.findByCourseAndStatus(course, EnrollmentStatus.ACTIVE).size();
     }
 }
