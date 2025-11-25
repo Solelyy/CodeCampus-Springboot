@@ -5,6 +5,30 @@ document.addEventListener('DOMContentLoaded', async() => {
     const noCoursesMessage = document.getElementById('empty-state'); //greet message
     const coursesContainer = document.querySelector('.joined-courses-container');
 
+    // Professor Stats Function
+    async function fetchProfessorStats() {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const response = await fetch('http://localhost:8081/api/professor/stats', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            if (!response.ok) throw new Error(`Failed to fetch professor stats: ${response.status}`);
+
+            const stats = await response.json();
+
+            document.getElementById('total-courses-created').textContent = stats.totalCoursesCreated || 0;
+            document.getElementById('total-students').textContent = stats.totalStudents || 0;
+            document.getElementById('total-activities').textContent = stats.totalActivities || 0;
+            document.getElementById('achievements').textContent = stats.achievements || 0;
+
+        } catch (err) {
+            console.error('Error fetching professor stats:', err);
+        }
+    }
+
     async function fetchCurrentUser() {
     try {
         const token = localStorage.getItem('token'); 
@@ -76,6 +100,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     const firstName = `${user.firstName}`;
     typeWelcomeMessage(firstName);
 
+    fetchProfessorStats();
 
     // Function to update visibility
     function updateNoCoursesMessage() {
