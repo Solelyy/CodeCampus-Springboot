@@ -74,3 +74,6 @@ application-*.properties
 # Local test files
 *.swp
 *.tmp
+
+#uploaded profiles
+backend/codecampus-backend/uploads/
