@@ -2,6 +2,9 @@ package com.codecampus.model;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -29,9 +32,8 @@ public class Activity {
 
     private Integer points;
 
-    @Lob
-    @Column(name = "test_cases")
-    private String testCases;
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActivityTestCase> testCases = new ArrayList<>();
 
     @Column(name = "created_at", updatable = false)
     private Instant createdAt;
@@ -88,8 +90,14 @@ public class Activity {
     public Integer getPoints() { return points; }
     public void setPoints(Integer points) { this.points = points; }
 
-    public String getTestCases() { return testCases; }
-    public void setTestCases(String testCases) { this.testCases = testCases; }
+    public List<ActivityTestCase> getTestCases() { return testCases; }
+    public void setTestCases(List<ActivityTestCase> testCases) {
+        this.testCases.clear();
+        if(testCases != null) {
+            testCases.forEach(tc -> tc.setActivity(this));
+            this.testCases.addAll(testCases);
+        }
+    }
 
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
