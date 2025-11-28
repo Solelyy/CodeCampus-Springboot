@@ -13,19 +13,23 @@ import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
+
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     private final CourseRepository courseRepository;
+    private final EnrollmentService enrollmentService;
 
-    public CourseService(CourseRepository courseRepository) {
+    // ---- FIXED: Only ONE constructor ----
+    public CourseService(CourseRepository courseRepository, EnrollmentService enrollmentService) {
         this.courseRepository = courseRepository;
+        this.enrollmentService = enrollmentService;
     }
 
     // --- Utility: Generate unique random course code ---
     private String generateRandomCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random = new Random();
-        StringBuilder sb = new StringBuilder("CC"); // prefix for CodeCampus
+        StringBuilder sb = new StringBuilder("CC");
         for (int i = 0; i < 6; i++) {
             sb.append(characters.charAt(random.nextInt(characters.length())));
         }
@@ -83,7 +87,7 @@ public class CourseService {
             course.setPreAssessmentQuestions(new ArrayList<>());
 
             // --- Map activities ---
-            if (request.getActivities() != null && !request.getActivities().isEmpty()) {
+            if (request.getActivities() != null) {
                 request.getActivities().forEach(aDto -> {
                     Activity activity = new Activity();
                     activity.setTitle(aDto.getTitle());
@@ -92,7 +96,6 @@ public class CourseService {
                     activity.setPoints(aDto.getPoints());
                     activity.setCourse(course);
 
-                    // Map test cases properly using the updated field name 'testCases'
                     if (aDto.getTestCases() != null) {
                         List<ActivityTestCase> testCases = aDto.getTestCases().stream().map(tcDTO -> {
                             ActivityTestCase tc = new ActivityTestCase();
@@ -108,12 +111,11 @@ public class CourseService {
                     }
 
                     course.getActivities().add(activity);
-                    logger.info("Added activity: {}", activity.getTitle());
                 });
             }
 
             // --- Map pre-assessment questions ---
-            if (request.getPreAssessments() != null && !request.getPreAssessments().isEmpty()) {
+            if (request.getPreAssessments() != null) {
                 request.getPreAssessments().forEach(pDto -> {
                     PreAssessmentQuestion question = new PreAssessmentQuestion();
                     question.setQuestion(pDto.getQuestion());
@@ -121,17 +123,17 @@ public class CourseService {
                     question.setOptions(pDto.getOptions());
                     question.setCorrectAnswer(pDto.getCorrectAnswer());
                     question.setCourse(course);
+
                     course.getPreAssessmentQuestions().add(question);
-                    logger.info("Added pre-assessment question: {}", question.getQuestion());
                 });
             }
 
             Course savedCourse = courseRepository.save(course);
-            logger.info("✅ Course created successfully with ID: {}", savedCourse.getId());
+            logger.info("Course created successfully with ID: {}", savedCourse.getId());
             return savedCourse;
 
         } catch (Exception e) {
-            logger.error("❌ Failed to create course: {}", e.getMessage(), e);
+            logger.error("Failed to create course: {}", e.getMessage(), e);
             throw e;
         }
     }
@@ -147,7 +149,7 @@ public class CourseService {
                 course.getProfessor().getName()
         );
 
-        // Map Activities
+        // Activities
         if (course.getActivities() != null) {
             dto.setActivities(course.getActivities().stream().map(a -> {
                 ActivityDTO aDto = new ActivityDTO();
@@ -157,17 +159,15 @@ public class CourseService {
                 aDto.setDifficulty(a.getDifficulty());
                 aDto.setPoints(a.getPoints());
 
-                // Map test cases using the updated 'testCases' field
                 if (a.getTestCases() != null) {
-                    List<ActivityTestCaseDTO> testCaseDTOs = a.getTestCases().stream().map(tc -> {
+                    aDto.setTestCases(a.getTestCases().stream().map(tc -> {
                         ActivityTestCaseDTO tcdto = new ActivityTestCaseDTO();
                         tcdto.setId(tc.getId());
                         tcdto.setInput(tc.getInput());
-                        tcdto.setNoInput(tc.getNoInput() != null && tc.getNoInput());
+                        tcdto.setNoInput(Boolean.TRUE.equals(tc.getNoInput()));
                         tcdto.setExpectedOutput(tc.getExpectedOutput());
                         return tcdto;
-                    }).collect(Collectors.toList());
-                    aDto.setTestCases(testCaseDTOs); // updated setter
+                    }).collect(Collectors.toList()));
                 } else {
                     aDto.setTestCases(new ArrayList<>());
                 }
@@ -176,7 +176,7 @@ public class CourseService {
             }).collect(Collectors.toList()));
         }
 
-        // Map Pre-Assessment Questions
+        // Pre Assessment
         if (course.getPreAssessmentQuestions() != null) {
             dto.setPreAssessments(course.getPreAssessmentQuestions().stream().map(q -> {
                 PreAssessmentQuestionDTO qDto = new PreAssessmentQuestionDTO();
@@ -186,16 +186,15 @@ public class CourseService {
                 qDto.setCorrectAnswer(q.getCorrectAnswer());
                 return qDto;
             }).collect(Collectors.toList()));
-        } else {
-            dto.setPreAssessments(new ArrayList<>());
         }
+
         return dto;
     }
 
     // --- Course Overview ---
     public CourseOverviewDTO toOverviewDTO(Course course) {
         int activitiesCount = course.getActivities() != null ? course.getActivities().size() : 0;
-        int studentsCount = course.getStudents() != null ? course.getStudents().size() : 0;
+        int studentsCount = (int) enrollmentService.getStudentsCount(course);
 
         return new CourseOverviewDTO(
                 course.getId(),

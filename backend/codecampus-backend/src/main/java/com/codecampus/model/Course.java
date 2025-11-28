@@ -59,14 +59,6 @@ public class Course {
     @JsonManagedReference
     private List<PreAssessmentQuestion> preAssessmentQuestions = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "course_students",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private Set<User> students = new HashSet<>();
-
     // --- Getters and Setters ---
     public Long getId() { return id; }
 
@@ -95,10 +87,6 @@ public class Course {
     public Instant getCreatedAt() { return createdAt; }
 
     public Instant getUpdatedAt() { return updatedAt; }
-
-    public Set<User> getStudents() { return students; }
-
-    public void setStudents(Set<User> students) { this.students = students; }
 
     public List<Activity> getActivities() { return activities; }
 

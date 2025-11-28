@@ -34,9 +34,6 @@ public class User {
     @Column
     private LocalDateTime lockoutTime;
 
-    @ManyToMany(mappedBy= "students")
-    private Set<Course> joinedCourses = new HashSet<>();
-
     // --- IMPORTANT: Equals and HashCode ---
     @Override
     public boolean equals(Object o) {
