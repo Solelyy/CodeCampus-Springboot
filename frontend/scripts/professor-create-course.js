@@ -476,7 +476,6 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
             title: item.querySelector('.activity-title-input').value.trim(),
             problemStatement: item.querySelector('.activity-problem').value.trim(),
             difficulty: item.querySelector('.activity-difficulty').value,
-            points: 100, // default placeholder value
             testCases // array of {input, noInput, expectedOutput}
         };
     });
