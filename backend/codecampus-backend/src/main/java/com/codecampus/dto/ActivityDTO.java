@@ -1,12 +1,19 @@
 package com.codecampus.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 public class ActivityDTO {
-    private Long courseId; // optional but useful for updates
+    private Long courseId;
     private String title;
     private String problemStatement;
     private String difficulty;
     private Integer points;
-    private String testCases; // JSON array as String
+
+    @JsonProperty("testCases") // ensures JSON mapping
+    private List<ActivityTestCaseDTO> testCases;
+
     private boolean completed;
     private boolean unlocked;
     private Long id;
@@ -24,10 +31,8 @@ public class ActivityDTO {
     public void setProblemStatement(String problemStatement) { this.problemStatement = problemStatement; }
 
     public String getDifficulty() { return difficulty; }
-
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
-
         if (difficulty != null) {
             switch (difficulty.trim().toLowerCase()) {
                 case "easy": this.points = 10; break;
@@ -41,10 +46,11 @@ public class ActivityDTO {
     }
 
     public Integer getPoints() { return points; }
-    public void setPoints(Integer points) { this.points = points; } // optional, avoid overwriting
+    public void setPoints(Integer points) { this.points = points; }
 
-    public String getTestCases() { return testCases; }
-    public void setTestCases(String testCases) { this.testCases = testCases; }
+    // --- FIXED getter/setter names ---
+    public List<ActivityTestCaseDTO> getTestCases() { return testCases; }
+    public void setTestCases(List<ActivityTestCaseDTO> testCases) { this.testCases = testCases; }
 
     public boolean isCompleted() { return completed; }
     public void setCompleted(boolean completed) { this.completed = completed; }

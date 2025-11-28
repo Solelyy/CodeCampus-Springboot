@@ -1,8 +1,6 @@
 package com.codecampus.controller;
 
 import com.codecampus.dto.ActivityDTO;
-import com.codecampus.model.Activity;
-import com.codecampus.repository.ActivityRepository;
 import com.codecampus.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +16,7 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-    @Autowired
-    private ActivityRepository activityRepository;
-
-    // List of activities for student (already uses DTO logic)
+    // STUDENT VIEW: List activities for a course
     @GetMapping("/course/{courseId}/student/{username}")
     public ResponseEntity<List<ActivityDTO>> getActivitiesForStudent(
             @PathVariable Long courseId,
@@ -29,47 +24,50 @@ public class ActivityController {
         return ResponseEntity.ok(activityService.getActivitiesForStudent(courseId, username));
     }
 
-    // Single activity for challenge page (returns DTO with points based on difficulty)
+    // SINGLE ACTIVITY DETAIL
     @GetMapping("/{id}")
     public ResponseEntity<ActivityDTO> getActivityById(@PathVariable Long id) {
-        return activityRepository.findById(id)
-                .map(activity -> {
-                    ActivityDTO dto = new ActivityDTO();
-                    dto.setId(activity.getId());
-                    dto.setCourseId(activity.getCourse().getId());
-                    dto.setTitle(activity.getTitle());
-                    dto.setProblemStatement(activity.getProblemStatement());
-
-                    // Set difficulty, points auto-calculated
-                    dto.setDifficulty(activity.getDifficulty());
-
-                    dto.setTestCases(activity.getTestCases());
-                    dto.setCompleted(activity.isCompleted());
-                    dto.setUnlocked(activity.isUnlocked());
-
-                    return ResponseEntity.ok(dto);
-                })
-                .orElse(ResponseEntity.notFound().build());
+        try {
+            ActivityDTO dto = activityService.getActivityById(id);
+            return ResponseEntity.ok(dto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    // Optional: Create a new activity
-    @PostMapping
-    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
-        return ResponseEntity.ok(activityRepository.save(activity));
-    }
 
-    // Optional: Delete an activity
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
-        activityRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    // NEW: Get all activities for a course (Professor version)
+    // PROFESSOR VIEW: All activities in a course
     @PreAuthorize("hasRole('PROFESSOR')")
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<ActivityDTO>> getActivitiesForCourse(@PathVariable Long courseId) {
         List<ActivityDTO> activityDTOs = activityService.getActivitiesForCourse(courseId);
         return ResponseEntity.ok(activityDTOs);
+    }
+
+
+    // CREATE ACTIVITY
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @PostMapping
+    public ResponseEntity<ActivityDTO> createActivity(@RequestBody ActivityDTO dto) {
+        ActivityDTO savedDTO = activityService.saveActivity(dto);
+        return ResponseEntity.status(201).body(savedDTO);
+    }
+
+
+    // UPDATE ACTIVITY
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @PutMapping("/{id}")
+    public ResponseEntity<ActivityDTO> updateActivity(@PathVariable Long id, @RequestBody ActivityDTO dto) {
+        dto.setId(id);
+        ActivityDTO updatedDTO = activityService.saveActivity(dto);
+        return ResponseEntity.ok(updatedDTO);
+    }
+
+    // DELETE ACTIVITY
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
+        activityService.deleteActivity(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -467,6 +467,7 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
 
             return {
                 input: noInput ? null : inputField.value.trim(), // use null if no input needed
+                noInput: noInput,                                // explicitly send the boolean
                 expectedOutput: tc.querySelector('.test-output').value.trim()
             };
         });
@@ -476,9 +477,10 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
             problemStatement: item.querySelector('.activity-problem').value.trim(),
             difficulty: item.querySelector('.activity-difficulty').value,
             points: 100, // default placeholder value
-            testCases // array of {input, expectedOutput}
+            testCases // array of {input, noInput, expectedOutput}
         };
     });
+
 
 
     // Collect pre-assessment questions
