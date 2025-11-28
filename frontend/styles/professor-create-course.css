@@ -461,6 +461,116 @@ button {
     margin-bottom: 1rem;
 }
 
+.test-cases-section {
+    margin-bottom: 1.5rem;
+}
+
+.test-cases-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.test-case {
+    background: #1a1f35;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid rgba(102, 195, 85, 0.2);
+    box-shadow: 0 0 10px rgba(102, 195, 85, 0.05);
+}
+
+.test-case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(102, 195, 85, 0.2);
+}
+
+.test-case-number {
+    font-weight: 600;
+    color: var(--primary-green);
+    text-shadow: 0 0 8px rgba(102, 195, 85, 0.2);
+}
+
+.test-case-header .btn-remove-test-case {
+    background: rgba(26, 31, 53, 0.8);
+    color: #FF006E;
+    border: 2px solid rgba(255, 0, 110, 0.5);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.test-case-header .btn-remove-test-case:hover {
+    background: linear-gradient(135deg, #FF006E, #d43f30);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+}
+
+.test-case-input-group,
+.test-case-output-group {
+    margin-bottom: 1rem;
+}
+
+.test-case-input-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.test-case-input-group label:first-child,
+.test-case-output-group label:first-child {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-input-label {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(224, 224, 224, 0.7);
+    font-weight: 400;
+}
+
+.no-input-label input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+input[type="text"].disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(26, 31, 53, 0.4);
+}
+
+.btn-add-test-case {
+    background: rgba(26, 31, 53, 0.6);
+    color: var(--primary-green);
+    border: 2px dashed var(--primary-green);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-add-test-case:hover {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: #0a0e1a;
+    border-style: solid;
+    border-color: transparent;
+    box-shadow: 0 0 25px rgba(102, 195, 85, 0.5);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 2rem 1.5rem;
