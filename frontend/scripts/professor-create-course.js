@@ -63,15 +63,15 @@ document.getElementById('step1Next').addEventListener('click', () => {
 // Step 2: Activities Management
 function createActivity() {
     const activityCount = activities.length + 1;
-    const activityId = `activity-${Date.now()}`; // Use timestamp for unique ID
+    const activityId = `activity-${Date.now()}`;
 
     const activityHTML = `
         <div class="activity-item" data-id="${activityId}">
             <div class="activity-header">
                 <span class="activity-title">Activity ${activityCount}</span>
-                <button type="button" class="btn-remove" onclick="removeActivity('${activityId}')">Remove</button>
+                <button type="button" class="btn-remove">Remove</button>
             </div>
-            
+
             <div class="form-group">
                 <label>Activity Title <span class="required">*</span></label>
                 <input type="text" class="activity-title-input" required placeholder="e.g., Hello World Challenge">
@@ -92,39 +92,130 @@ function createActivity() {
                 <textarea class="activity-problem" required placeholder="Describe the problem students need to solve..."></textarea>
             </div>
 
-            <div class="form-group">
-    <label>Test Cases <span class="required">*</span></label>
-    <textarea class="activity-tests" required
-        placeholder="Enter test cases, one per line. 
-Example:
-Hello, CodeCampus!
-Welcome to Java!"></textarea>
-</div>
+            <div class="form-group test-cases-section">
+                <label>Test Cases <span class="required">*</span></label>
+                <div class="test-cases-container">
+                    <div class="test-case">
+                        <div class="test-case-header">
+                            <span class="test-case-number">Test Case 1</span>
+                            <button type="button" class="btn-remove-test-case">Remove</button>
+                        </div>
+
+                        <div class="test-case-input-group">
+                            <label>Input</label>
+                            <input type="text" class="test-input" placeholder="Example input: 10" required>
+                            <label class="no-input-label"><input type="checkbox" class="no-input-activity"> No input needed</label>
+                        </div>
+
+                        <div class="test-case-output-group">
+                            <label>Output</label>
+                            <input type="text" class="test-output" placeholder="Expected output example: Even" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-add btn-add-test-case">+ Add Test Case</button>
+            </div>
         </div>
     `;
 
-    document.getElementById('activitiesContainer').insertAdjacentHTML('beforeend', activityHTML);
+    const container = document.getElementById('activitiesContainer');
+    container.insertAdjacentHTML('beforeend', activityHTML);
     activities.push(activityId);
     updateActivityNumbers();
     validateStep2();
 
-    // Add input listeners
-    const activityElement = document.querySelector(`[data-id="${activityId}"]`);
-    activityElement.querySelectorAll('input, select, textarea').forEach(input => {
+    const activityEl = container.querySelector(`[data-id="${activityId}"]`);
+
+    // Remove Activity
+    activityEl.querySelector('.btn-remove').addEventListener('click', function() {
+        const activityItem = this.closest('.activity-item');
+        const index = activities.indexOf(activityItem.getAttribute('data-id'));
+        if (index > -1) activities.splice(index, 1);
+        activityItem.remove();
+        updateActivityNumbers();
+        validateStep2();
+    });
+
+    // Add Test Case
+    activityEl.querySelector('.btn-add-test-case').addEventListener('click', function() {
+        const testCasesContainer = this.closest('.activity-item').querySelector('.test-cases-container');
+        const testCaseCount = testCasesContainer.querySelectorAll('.test-case').length + 1;
+
+        const newTestCaseHTML = `
+            <div class="test-case">
+                <div class="test-case-header">
+                    <span class="test-case-number">Test Case ${testCaseCount}</span>
+                    <button type="button" class="btn-remove-test-case">Remove</button>
+                </div>
+
+                <div class="test-case-input-group">
+                    <label>Input</label>
+                    <input type="text" class="test-input" placeholder="Example input: 10" required>
+                    <label class="no-input-label"><input type="checkbox" class="no-input-activity"> No input needed</label>
+                </div>
+
+                <div class="test-case-output-group">
+                    <label>Output</label>
+                    <input type="text" class="test-output" placeholder="Expected output example: Even" required>
+                </div>
+            </div>
+        `;
+
+        testCasesContainer.insertAdjacentHTML('beforeend', newTestCaseHTML);
+        attachTestCaseListeners(testCasesContainer);
+        updateTestCaseNumbers(testCasesContainer);
+        validateStep2();
+    });
+
+    // Attach listeners for initial test case
+    const testCasesContainer = activityEl.querySelector('.test-cases-container');
+    attachTestCaseListeners(testCasesContainer);
+
+    // Input listeners for validation
+    activityEl.querySelectorAll('input, select, textarea').forEach(input => {
         input.addEventListener('input', validateStep2);
     });
 }
 
-function removeActivity(activityId) {
-    const index = activities.indexOf(activityId);
-    if (index > -1) {
-        activities.splice(index, 1);
-    }
-    document.querySelector(`[data-id="${activityId}"]`).remove();
-    updateActivityNumbers();
-    validateStep2();
+// Update test case numbers dynamically
+function updateTestCaseNumbers(container) {
+    container.querySelectorAll('.test-case').forEach((tc, index) => {
+        const numberSpan = tc.querySelector('.test-case-number');
+        numberSpan.textContent = `Test Case ${index + 1}`;
+    });
 }
 
+// Attach remove & "No input needed" checkbox listeners
+function attachTestCaseListeners(container) {
+    container.querySelectorAll('.btn-remove-test-case').forEach(btn => {
+        btn.onclick = function(e) {
+            e.preventDefault();
+            e.target.closest('.test-case').remove();
+            updateTestCaseNumbers(container);
+            validateStep2();
+        };
+    });
+
+    container.querySelectorAll('.no-input-activity').forEach(cb => {
+        const inputField = cb.closest('.test-case-input-group').querySelector('.test-input');
+        cb.onchange = function() {
+            if (cb.checked) {
+                inputField.value = 'NA';
+                inputField.disabled = true;
+                inputField.classList.add('disabled');
+                inputField.removeAttribute('required');
+            } else {
+                inputField.value = '';
+                inputField.disabled = false;
+                inputField.classList.remove('disabled');
+                inputField.setAttribute('required', 'required');
+            }
+            validateStep2();
+        };
+    });
+}
+
+// Update activity numbers dynamically
 function updateActivityNumbers() {
     const activityItems = document.querySelectorAll('.activity-item');
     activityItems.forEach((item, index) => {
@@ -133,6 +224,7 @@ function updateActivityNumbers() {
     });
 }
 
+// Validation
 function validateStep2() {
     const activityItems = document.querySelectorAll('.activity-item');
     let allValid = activityItems.length > 0;
@@ -141,24 +233,84 @@ function validateStep2() {
         const title = item.querySelector('.activity-title-input').value.trim();
         const difficulty = item.querySelector('.activity-difficulty').value;
         const problem = item.querySelector('.activity-problem').value.trim();
-        const tests = item.querySelector('.activity-tests').value.trim();
+        const testCases = item.querySelectorAll('.test-case');
 
-        if (!title || !difficulty || !problem || !tests) {
+        // Main activity fields must not be empty
+        if (!title || !difficulty || !problem || testCases.length === 0) {
             allValid = false;
         }
+
+        testCases.forEach(tc => {
+            const checkbox = tc.querySelector('.no-input-activity');
+            const inputField = tc.querySelector('.test-input');
+            const outputField = tc.querySelector('.test-output');
+
+            const inputVal = inputField.value.trim();
+            const outputVal = outputField.value.trim();
+
+            // Valid if checkbox checked OR input has value
+            const inputValid = checkbox.checked || inputVal !== '';
+            const outputValid = outputVal !== '';
+
+            if (!inputValid || !outputValid) {
+                allValid = false;
+            }
+        });
     });
 
     document.getElementById('step2Next').disabled = !allValid;
     document.getElementById('activitiesError').classList.toggle('show', activityItems.length === 0);
 }
 
-document.getElementById('addActivity').addEventListener('click', createActivity);
-document.getElementById('step2Prev').addEventListener('click', () => goToStep(1));
-document.getElementById('step2Next').addEventListener('click', () => {
-    if (activities.length > 0) {
-        goToStep(3);
-    }
-});
+    // Event listeners
+    document.getElementById('addActivity').addEventListener('click', createActivity);
+    document.getElementById('step2Prev').addEventListener('click', () => goToStep(1));
+    document.getElementById('step2Next').addEventListener('click', () => {
+        if (activities.length > 0) goToStep(3);
+    });
+
+    function attachTestCaseListeners(container) {
+    container.querySelectorAll('.btn-remove-test-case').forEach(btn => {
+        btn.onclick = function(e) {
+            e.preventDefault();
+            e.target.closest('.test-case').remove();
+            updateTestCaseNumbers(container);
+            validateStep2();
+        };
+    });
+
+    container.querySelectorAll('.no-input-activity').forEach(cb => {
+        // Avoid attaching multiple listeners
+        if (!cb.dataset.listenerAttached) {
+            cb.dataset.listenerAttached = 'true';
+
+            const inputField = cb.closest('.test-case-input-group').querySelector('.test-input');
+
+            cb.onchange = function() {
+                if (cb.checked) {
+                    inputField.value = 'NA';
+                    inputField.disabled = true;
+                    inputField.classList.add('disabled');
+                    inputField.removeAttribute('required');
+                } else {
+                    inputField.value = '';
+                    inputField.disabled = false;
+                    inputField.classList.remove('disabled');
+                    inputField.setAttribute('required', 'required');
+                }
+                validateStep2();
+            };
+        }
+    });
+
+    // Input listener for newly added test inputs
+    container.querySelectorAll('.test-input, .test-output').forEach(input => {
+        if (!input.dataset.listenerAttached) {
+            input.dataset.listenerAttached = 'true';
+            input.addEventListener('input', validateStep2);
+        }
+    });
+}
 
 // Step 3: Questions Management
 function createQuestion() {
@@ -306,19 +458,30 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
     const title = document.getElementById('courseTitle').value.trim();
     const description = document.getElementById('courseDescription').value.trim();
     const isPublic = document.querySelector('input[name="visibility"]:checked').value === 'public';
-    console.log('Selected radio:', isPublic);
-    console.log('Selected value:', isPublic ? 'public' : 'private');
 
-    // Collect activities
-    const activities = Array.from(document.querySelectorAll('.activity-item')).map(item => ({
-        title: item.querySelector('.activity-title-input').value.trim(),
-        problemStatement: item.querySelector('.activity-problem').value.trim(),
-        difficulty: item.querySelector('.activity-difficulty').value,
-        points: 100, // default placeholder value
-        testCases: item.querySelector('.activity-tests').value.trim()
-    }));
+    // Collect activities with proper test cases
+    const activities = Array.from(document.querySelectorAll('.activity-item')).map(item => {
+        const testCases = Array.from(item.querySelectorAll('.test-case')).map(tc => {
+            const inputField = tc.querySelector('.test-input');
+            const noInput = tc.querySelector('.no-input-activity').checked;
 
-    // Collect questions
+            return {
+                input: noInput ? null : inputField.value.trim(), // use null if no input needed
+                expectedOutput: tc.querySelector('.test-output').value.trim()
+            };
+        });
+
+        return {
+            title: item.querySelector('.activity-title-input').value.trim(),
+            problemStatement: item.querySelector('.activity-problem').value.trim(),
+            difficulty: item.querySelector('.activity-difficulty').value,
+            points: 100, // default placeholder value
+            testCases // array of {input, expectedOutput}
+        };
+    });
+
+
+    // Collect pre-assessment questions
     const preAssessments = Array.from(document.querySelectorAll('.question-item')).map(item => {
         const type = item.querySelector('.question-type').value;
         let questionObj = {
@@ -352,11 +515,10 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
     submitBtn.textContent = 'Creating...';
     creationMessage.style.display = 'none';
 
-    console.log('📤 Sending to backend:', courseData);
+    console.log('Sending to backend:', courseData);
 
     try {
         const token = localStorage.getItem('token');
-        console.log('Token in localStorage before sending course:', localStorage.getItem('token'));
         if (!token) throw new Error('You must be logged in to create a course.');
 
         const response = await fetch('http://localhost:8081/api/courses/full', {
@@ -375,20 +537,18 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
         const result = await response.json();
         console.log('✅ Backend response:', result);
 
-        // Instead of result.status, just check if an id exists
         if (result && result.id) {
             creationMessage.style.color = 'green';
             creationMessage.textContent = 'Course created successfully!';
             creationMessage.style.display = 'block';
-            console.log('Course created' + (isPublic ? ' as Public' : ' as Private'));
 
-        setTimeout(() => {
-        creationMessage.style.display = 'none';
-        window.location.href = '/frontend/webpages/professor-homepage.html';
-        }, 2000);
-    } else {
-    throw new Error('Failed to create course.');
-}
+            setTimeout(() => {
+                creationMessage.style.display = 'none';
+                window.location.href = '/frontend/webpages/professor-homepage.html';
+            }, 2000);
+        } else {
+            throw new Error('Failed to create course.');
+        }
 
     } catch (error) {
         console.error('❌ Error creating course:', error);
