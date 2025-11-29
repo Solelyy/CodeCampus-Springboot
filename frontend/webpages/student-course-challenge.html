@@ -88,51 +88,54 @@
 </header>
 
 <main>
+    <!-- FIXED HTML STRUCTURE ONLY -->
   <section class="course-challenge">
-    <!-- Everything inside one main card -->
-    <div class="challenge-main">
-      
-      <div class="challenge-details">
-        <h3 id="challenge-title">Challenge Title</h3>
-        <div class="challenge-points-container">
-            <p class="label">Difficulty: <span id="challenge-difficulty">Easy</span></p>
-            <p class="label">Points: <span id="challenge-points">10</span></p>
-        </div>
+      <div class="challenge-main">
 
-      </div>
-
-      <p id="challenge-label">Challenge:</p>
-      <p id="challenge-description">Solve the problem here.</p>
-
-      <!-- Split area: code editor and output side by side -->
-      <div class="challenge-workspace">
-        <div class="left-side">
-          <div id="editor">// Write your code here</div>
-          <div class="challenge-run-container">
-            <button type="button" id="runBtn">
-              <img src="/frontend/assets/icons/run-code.svg" alt="Run Code button">
-            </button>
+          <div class="challenge-details">
+              <h3 id="challenge-title">Challenge Title</h3>
+              <div class="challenge-points-container">
+                  <p class="label">Difficulty: <span id="challenge-difficulty">Easy</span></p>
+                  <p class="label">Points: <span id="challenge-points">10</span></p>
+              </div>
           </div>
-        </div>
 
-        <div class="right-side">
+          <p id="challenge-label">Challenge:</p>
+          <p id="challenge-description">Solve the problem here.</p>
 
-          <!-- NEW: Input area -->
-          <div class="input-container">
-            <label for="user-input" class="input-label">Input:</label>
-            <textarea id="user-input" placeholder="Enter input here..."></textarea>
-        </div>
+          <div class="challenge-workspace">
 
-          <!-- Output area -->
-          <label for="output" class="output-label">Output:</label>
-          <textarea id="output" readonly></textarea>
+              <!-- LEFT SIDE -->
+              <div class="left-side">
+                  <div id="editor">// Write your code here</div>
+                  <div class="challenge-run-container">
+                      <button type="button" id="runBtn">
+                          <img src="/frontend/assets/icons/run-code.svg" alt="Run Code button">
+                      </button>
+                  </div>
+              </div>
 
-          <div class="challenge-action-container">
-            <p id="feedback">Feedback:</p>
-            <button type="button" id="saveBtn" disabled>Submit</button>
-          </div>
-      </div>
-  </section>
+              <!-- RIGHT SIDE -->
+              <div class="right-side">
+
+                  <div class="input-container">
+                      <label for="user-input" class="input-label">Input:</label>
+                      <textarea id="user-input" placeholder="Enter input here..."></textarea>
+                  </div>
+
+                  <label for="output" class="output-label">Output:</label>
+                  <textarea id="output" readonly></textarea>
+
+                  <div class="challenge-action-container">
+                      <p id="feedback">Feedback:</p>
+                      <button type="button" id="saveBtn" disabled>Submit</button>
+                  </div>
+
+              </div><!-- END right-side -->
+
+          </div><!-- END challenge-workspace -->
+      </div><!-- END challenge-main -->
+  </section><!-- END course-challenge -->
 </main>
 
 
@@ -140,10 +143,7 @@
   <p>&copy; 2025. All rights reserved.</p>
 </footer>
 
-<!-- Scripts 
-<script src="/frontend/scripts/student-course-challenge-editor.js"></script>
-<script src="/frontend/scripts/student-course-challenge.js"></script>
-<script src="/frontend/scripts/general.js"></script> -->
 </body>
 <script src="/frontend/scripts/combined.js"></script>
+<script src="/frontend/scripts/general.js"></script>
 </html>
