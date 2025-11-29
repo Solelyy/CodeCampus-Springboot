@@ -95,8 +95,8 @@
       <div class="challenge-details">
         <h3 id="challenge-title">Challenge Title</h3>
         <div class="challenge-points-container">
-            <p id="label">Difficulty: <span id="challenge-difficulty">Easy</span></p>
-            <p id="label">Points: <span id="challenge-points">10</span></p>
+            <p class="label">Difficulty: <span id="challenge-difficulty">Easy</span></p>
+            <p class="label">Points: <span id="challenge-points">10</span></p>
         </div>
 
       </div>
@@ -116,14 +116,22 @@
         </div>
 
         <div class="right-side">
-          <pre id="output"></pre>
+
+          <!-- NEW: Input area -->
+          <div class="input-container">
+            <label for="user-input" class="input-label">Input:</label>
+            <textarea id="user-input" placeholder="Enter input here..."></textarea>
+        </div>
+
+          <!-- Output area -->
+          <label for="output" class="output-label">Output:</label>
+          <textarea id="output" readonly></textarea>
+
           <div class="challenge-action-container">
             <p id="feedback">Feedback:</p>
             <button type="button" id="saveBtn" disabled>Submit</button>
           </div>
-        </div>
       </div>
-    </div>
   </section>
 </main>
 

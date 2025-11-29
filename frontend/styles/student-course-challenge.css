@@ -93,7 +93,7 @@ body::before {
   width: 100%;
 }
 
-#label {
+.label {
   font-weight: 500;
   color: #FFFFFF;
   background: rgba(102, 195, 85, 0.1);
@@ -108,24 +108,24 @@ body::before {
   gap: 8px;
 }
 
-#label:hover {
+.label:hover {
   background: rgba(102, 195, 85, 0.15);
   border-color: rgba(102, 195, 85, 0.4);
   transform: translateY(-1px);
 }
 
-#label::before {
+.label::before {
   font-size: 1rem;
   animation: iconFloat 3s ease-in-out infinite;
   display: inline-block;
 }
 
-#label:first-child::before {
+.label:first-child::before {
   content: '⚡';
   animation: lightningPulse 2s ease-in-out infinite;
 }
 
-#label:last-child::before {
+.label:last-child::before {
   content: '⭐';
   animation: starTwinkle 2.5s ease-in-out infinite;
 }
@@ -228,6 +228,7 @@ body::before {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .left-side::before,
@@ -285,6 +286,163 @@ body::before {
   background: rgba(102, 195, 85, 0.4);
 }
 
+/* ---------- INPUT TEXTAREA STYLING ---------- */
+.input-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: rgba(102, 195, 85, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 16px 20px 8px 20px;
+  text-shadow: 0 0 8px rgba(102, 195, 85, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-container {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-container.show {
+  display: block;
+  opacity: 1;
+}
+
+
+#user-input {
+  margin: 0 20px 16px 20px;
+  padding: 12px 14px;
+  background: rgba(13, 17, 28, 0.85);
+  border: 1px solid rgba(102, 195, 85, 0.2);
+  border-radius: 8px;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 13px;
+  color: #e0e0e0;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 140px;
+  flex: 0 0 auto;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3),
+              0 0 0px rgba(102, 195, 85, 0);
+}
+
+#user-input.show {
+  display: block;
+  opacity: 1;
+}
+
+#user-input::placeholder {
+  color: rgba(224, 224, 224, 0.3);
+  font-style: italic;
+}
+
+#user-input:focus {
+  outline: none;
+  border-color: rgba(102, 195, 85, 0.5);
+  background: rgba(13, 17, 28, 0.95);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3),
+              0 0 16px rgba(102, 195, 85, 0.2);
+  color: #ffffff;
+}
+
+#user-input:hover:not(:focus) {
+  border-color: rgba(102, 195, 85, 0.35);
+  background: rgba(13, 17, 28, 0.9);
+}
+
+/* Scrollbar styling for input */
+#user-input::-webkit-scrollbar {
+  width: 6px;
+}
+
+#user-input::-webkit-scrollbar-track {
+  background: rgba(10, 14, 26, 0.5);
+  border-radius: 3px;
+}
+
+#user-input::-webkit-scrollbar-thumb {
+  background: rgba(102, 195, 85, 0.25);
+  border-radius: 3px;
+}
+
+#user-input::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 195, 85, 0.4);
+}
+
+/* ---------- OUTPUT LABEL & TEXTAREA ---------- */
+.output-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: rgba(102, 195, 85, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 16px 20px 8px 20px;
+  text-shadow: 0 0 8px rgba(102, 195, 85, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#output {
+  margin: 0 20px 0 20px;
+  padding: 12px 14px;
+  background-color: rgba(13, 17, 28, 0.85);
+  border: 1px solid rgba(102, 195, 85, 0.2);
+  border-radius: 8px;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 13px;
+  color: #00ff00;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.7;
+  min-height: 200px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3),
+              0 0 0px rgba(102, 195, 85, 0);
+  transition: all 0.3s ease;
+}
+
+#output:focus {
+  outline: none;
+  border-color: rgba(102, 195, 85, 0.5);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3),
+              0 0 16px rgba(102, 195, 85, 0.2);
+}
+
+#output::before {
+  color: var(--primary-green);
+  font-weight: bold;
+}
+
+/* Scrollbar styling for output */
+#output::-webkit-scrollbar {
+  width: 6px;
+}
+
+#output::-webkit-scrollbar-track {
+  background: rgba(10, 14, 26, 0.5);
+  border-radius: 3px;
+}
+
+#output::-webkit-scrollbar-thumb {
+  background: rgba(102, 195, 85, 0.25);
+  border-radius: 3px;
+}
+
+#output::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 195, 85, 0.4);
+}
+
 /* ---------- BUTTONS ---------- */
 .challenge-run-container {
   display: flex;
@@ -334,55 +492,17 @@ button:disabled {
     width: 18px;
 }
 
-/* ---------- OUTPUT + FEEDBACK ---------- */
-#output {
-  flex: 1;
-  background-color: rgba(13, 17, 28, 0.98);
-  border: none;
-  border-radius: 0;
-  padding: 20px;
-  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
-  font-size: 13px;
-  color: #00ff00;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  line-height: 1.7;
-  min-height: 550px;
-  overflow-y: auto;
-  box-shadow: none;
-}
-
-#output::before {
-  color: var(--primary-green);
-  font-weight: bold;
-}
-
-/* Scrollbar styling for output */
-#output::-webkit-scrollbar {
-  width: 8px;
-}
-
-#output::-webkit-scrollbar-track {
-  background: rgba(10, 14, 26, 0.5);
-}
-
-#output::-webkit-scrollbar-thumb {
-  background: rgba(102, 195, 85, 0.25);
-  border-radius: 4px;
-}
-
-#output::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 195, 85, 0.4);
-}
-
+/* ---------- FEEDBACK & ACTION CONTAINER ---------- */
 .challenge-action-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  padding: 16px 20px;
+  padding: 14px 20px;
   background: rgba(10, 14, 26, 0.9);
   border-top: 1px solid rgba(102, 195, 85, 0.1);
+  flex: 0 0 auto;
+  margin-top: 16px;
 }
 
 #feedback {
@@ -401,12 +521,88 @@ button:disabled {
   animation: pulse 2s infinite;
 }
 
+#feedback.feedback-passed {
+  color: rgba(76, 175, 80, 0.9);
+}
+
+#feedback.feedback-passed::before {
+  content: '✓';
+  animation: checkMark 0.5s ease-out;
+}
+
+#feedback.feedback-error {
+  color: rgba(244, 67, 54, 0.9);
+}
+
+#feedback.feedback-error::before {
+  content: '✕';
+  animation: errorShake 0.5s ease-out;
+}
+
+#feedback.feedback-warning {
+  color: rgba(255, 152, 0, 0.9);
+}
+
+#feedback.feedback-warning::before {
+  content: '⚠';
+  animation: warningBounce 0.5s ease-out;
+}
+
+.feedback-info {
+    color: #FFD700; /* gold/yellow */
+}
+
+.feedback-warning {
+    color: #FFA500; /* orange */
+}
+
+.feedback-success {
+    color: #7CFC00; /* green */
+}
+
+
+/* ---------- ANIMATIONS ---------- */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes checkMark {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes errorShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes warningBounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 
@@ -467,9 +663,17 @@ button:disabled {
     min-width: 300px;
   }
   
-  #editor,
+  #editor {
+    min-height: 450px;
+  }
+
+  #user-input {
+    min-height: 80px;
+    max-height: 140px;
+  }
+
   #output {
-    min-height: 400px;
+    min-height: 200px;
   }
 }
 
@@ -486,7 +690,7 @@ button:disabled {
     gap: 10px;
   }
   
-  #label {
+  .label {
     font-size: 0.8rem;
     padding: 7px 14px;
   }
@@ -500,9 +704,17 @@ button:disabled {
     padding: 14px 18px;
   }
 
-  #editor,
-  #output {
+  #editor {
     min-height: 350px;
+  }
+
+  #user-input {
+    min-height: 70px;
+    max-height: 120px;
+  }
+
+  #output {
+    min-height: 150px;
   }
 }
 
@@ -517,14 +729,14 @@ button:disabled {
     gap: 8px;
   }
   
-  #label {
+  .label {
     width: 100%;
     justify-content: space-between;
     font-size: 0.75rem;
     padding: 6px 12px;
   }
   
-  #challenge-label {
+  #challenge_label {
     font-size: 0.8rem;
   }
   
@@ -543,8 +755,34 @@ button:disabled {
     min-width: 250px;
   }
   
-  #editor,
-  #output {
+  #editor {
     min-height: 300px;
+  }
+
+  #user-input {
+    max-height: 100px;
+    margin: 0 16px 12px 16px;
+  }
+
+  #output {
+    min-height: 120px;
+    margin: 0 16px 16px 16px;
+  }
+
+  .input-label,
+  .output-label {
+    margin: 12px 16px 6px 16px;
+    font-size: 0.75rem;
+  }
+
+  .challenge-action-container {
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    margin: 12px 16px 0 16px;
+    border-radius: 8px;
+  }
+
+  #feedback {
+    font-size: 0.8rem;
   }
 }
