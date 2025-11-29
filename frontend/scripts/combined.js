@@ -1,3 +1,5 @@
+console.log("Loaded challenge JS");
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("JS fully ready");
 
@@ -10,53 +12,67 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputContainer = document.querySelector(".input-container");
     const inputBox = document.getElementById("user-input");
 
-    // Clear input and hide input container initially
-    if (inputBox) inputBox.value = "";
-    if (inputContainer) inputContainer.classList.remove("show");
-
     // --- Initialize ACE Editor ---
     const editor = ace.edit(editorEl);
     editor.setTheme("ace/theme/dracula");
     editor.session.setMode("ace/mode/java");
-    editor.setValue("", -1); // start empty
+    editor.setValue("", -1);
     editor.session.getUndoManager().markClean();
 
-    let lastCode = "";
     let isRunning = false;
 
-    // --- Utility: check if code uses Scanner ---
+    // --- Utility: detect if code uses Scanner ---
     function requiresInput(code) {
         return /Scanner\s+\w+\s*=\s*new\s+Scanner\s*\(\s*System\.in\s*\)/.test(code);
     }
 
-    // --- Enable/disable Run button dynamically ---
+    // --- Utility: detect numeric input expectation ---
+    function expectsNumericInput(code) {
+        return /\.\s*next(Int|Double|Float)\s*\(\)/.test(code);
+    }
+
+    // --- Update Run button, feedback, and input visibility ---
     function updateRunButtonState() {
         const code = editor.getValue().trim();
         const needsInput = requiresInput(code);
+        const inputEmpty = !inputBox?.value.trim();
+        const numericRequired = expectsNumericInput(code);
+        const inputIsInvalidNumeric = numericRequired && inputBox && isNaN(inputBox.value.trim());
 
-        if (!runBtn) return;
+        // Show/hide input container and textarea
+        if (inputContainer && inputBox) {
+            inputContainer.classList.toggle("show", needsInput);
+            inputBox.classList.toggle("show", needsInput);
+            if (!needsInput) inputBox.value = "";
+        }
 
+        // Determine Run button state
         if (!code) {
             runBtn.disabled = true;
             feedback.textContent = "Please enter code to run.";
             feedback.className = "feedback-info";
-        } else if (needsInput && (!inputBox || !inputBox.value.trim())) {
+            submitBtn.disabled = true;
+        } else if (needsInput && (inputEmpty || inputIsInvalidNumeric)) {
             runBtn.disabled = true;
-            feedback.textContent = "Please provide input for your program.";
+            if (inputIsInvalidNumeric) {
+                feedback.textContent = "Input should be numeric!";
+            } else {
+                feedback.textContent = "Please provide input before running.";
+            }
             feedback.className = "feedback-info";
+            submitBtn.disabled = true;
         } else {
             runBtn.disabled = false;
             feedback.textContent = "";
             feedback.className = "";
         }
 
-        // Show/hide input box based on Scanner usage
-        if (inputContainer) {
-            inputContainer.classList.toggle("show", needsInput);
-        }
+        // Clear previous output on any change
+        outputBox.value = "";
+        submitBtn.disabled = true;
     }
 
-    // Debounce to avoid too many rapid calls
+    // --- Debounce editor changes ---
     let debounceTimeout;
     editor.session.on('change', () => {
         clearTimeout(debounceTimeout);
@@ -64,8 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     if (inputBox) inputBox.addEventListener('input', updateRunButtonState);
 
-    // Initial state
-    updateRunButtonState();
+    updateRunButtonState(); // initial state
 
     // --- Run Code ---
     runBtn.addEventListener("click", async (event) => {
@@ -76,8 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const code = editor.getValue().trim();
         const input = inputBox ? inputBox.value.trim() : "";
 
-        lastCode = code;
-        outputBox.value = ""; // clear previous output
+        // Show running feedback immediately
+        outputBox.value = "Running code...";
+        feedback.textContent = "Running code...";
+        feedback.className = "feedback-info";
 
         try {
             const bodyData = new URLSearchParams();
@@ -90,20 +107,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: bodyData.toString()
             });
 
-            const output = await res.text();
-            outputBox.value = output ? output : "No output produced.";
+            const data = await res.json(); // { output, requiresInput, hasMain }
+            outputBox.value = data.output || "";
 
-            // Feedback handling
-            if (!output.trim()) {
-                feedback.textContent = "No output produced yet.";
+            // Show/hide input
+            if (inputContainer && inputBox) {
+                inputContainer.classList.toggle("show", data.requiresInput);
+                inputBox.classList.toggle("show", data.requiresInput);
+                if (!data.requiresInput) inputBox.value = "";
+            }
+
+            // Feedback and buttons
+            if (!data.hasMain) {
+                runBtn.disabled = true;
+                feedback.textContent = "No runnable code detected.";
                 feedback.className = "feedback-info";
                 submitBtn.disabled = true;
-            } else if (/error/i.test(output)) {
-                feedback.textContent = /compilation/i.test(output)
-                    ? "Compilation error detected."
-                    : /exception/i.test(output)
-                        ? "Runtime exception occurred."
-                        : "Check your code for issues.";
+            } else if (data.requiresInput && !inputBox.value.trim()) {
+                runBtn.disabled = true;
+                feedback.textContent = "Please provide input before running.";
+                feedback.className = "feedback-info";
+                submitBtn.disabled = true;
+            } else if (/error/i.test(data.output) || data.output.trim() === "") {
+                feedback.textContent = "Compilation error or no output generated.";
                 feedback.className = "feedback-warning";
                 submitBtn.disabled = true;
             } else {
@@ -124,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- Submit Code (placeholder) ---
+    // --- Submit Code ---
     submitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         const code = editor.getValue().trim();
@@ -143,25 +169,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const activityId = urlParams.get("activityId");
 
     (async function fetchChallenge() {
-        if (!activityId) {
-            console.warn('No activityId found in URL.');
-            return;
-        }
-        if (!token) {
-            alert('Session expired. Please log in again.');
-            window.location.href = '/frontend/webpages/login.html';
-            return;
-        }
+        if (!activityId || !token) return;
 
         try {
             const res = await fetch(`${API_BASE_URL}/api/activities/${activityId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-
-            if (!res.ok) {
-                console.warn("Error fetching challenge:", res.status);
-                return;
-            }
+            if (!res.ok) return;
 
             const challenge = await res.json();
             document.getElementById("challenge-title").textContent = challenge.title || "Untitled Challenge";
@@ -169,8 +183,10 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("challenge-difficulty").textContent = challenge.difficulty || "N/A";
             document.getElementById("challenge-points").textContent = challenge.points ?? "N/A";
 
-            if (inputContainer) {
-                inputContainer.classList.toggle("show", challenge.noInput === false);
+            if (inputContainer && inputBox) {
+                const showInput = challenge.noInput === false;
+                inputContainer.classList.toggle("show", showInput);
+                inputBox.classList.toggle("show", showInput);
             }
 
         } catch (err) {
@@ -178,23 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })();
 
-    // Smooth page transitions
+    // Smooth fade-in
     const main = document.querySelector("main");
     if (main) main.classList.add("fade-in");
-
-    document.querySelectorAll("a").forEach(link => {
-        if (link.hostname === window.location.hostname && link.getAttribute("href")) {
-            link.addEventListener("click", e => {
-                const url = link.getAttribute("href");
-                if (!url.startsWith("#") && !url.startsWith("javascript:")) {
-                    e.preventDefault();
-                    if (main) {
-                        main.classList.remove("fade-in");
-                        main.classList.add("fade-out");
-                    }
-                    setTimeout(() => { window.location.href = url; }, 180);
-                }
-            });
-        }
-    });
 });
