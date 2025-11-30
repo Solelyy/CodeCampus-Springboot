@@ -42,7 +42,19 @@ public class StudentActivity {
         updatedAt = Instant.now();
     }
 
-    // Getters and Setters
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String code;  // store the student's submitted code
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String output; // store the output after running code
+
+    // getters and setters
+    public String getCode() { return code; }
+    public void setCode(String code) { this.code = code; }
+
+    public String getOutput() { return output; }
+    public void setOutput(String output) { this.output = output; }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -60,4 +72,14 @@ public class StudentActivity {
 
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
+
+    // StudentActivity.java
+    public Integer getEarnedPoints() {
+        return earnedPoints;
+    }
+
+    public void setEarnedPoints(Integer earnedPoints) {
+        this.earnedPoints = earnedPoints;
+    }
+
 }
