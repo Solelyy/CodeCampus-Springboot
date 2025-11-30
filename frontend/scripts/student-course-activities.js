@@ -106,7 +106,7 @@ function renderActivities() {
             }">
                 ${
                     activity.completed
-                        ? '✅ Completed'
+                        ? 'Completed'
                         : activity.unlocked
                             ? 'Unlocked'
                             : 'Locked'

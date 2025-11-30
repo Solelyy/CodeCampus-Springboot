@@ -19,63 +19,100 @@ document.addEventListener("DOMContentLoaded", () => {
     editor.setValue("", -1);
     editor.session.getUndoManager().markClean();
 
+    // NEW
     let isRunning = false;
+    let isChallengeLocked = false;
 
     const API_BASE_URL = "http://localhost:8081";
+
+    function lockChallenge(message, savedOutput) {
+        isChallengeLocked = true;
+        runBtn.disabled = true;
+        submitBtn.disabled = true;
+        editor.setReadOnly(true);
+
+        if (typeof savedOutput === "string") {
+            outputBox.value = savedOutput;
+        }
+        if (message) {
+            feedback.textContent = message;
+            feedback.className = "feedback-success";
+        }
+
+        // Hide input
+        if (inputContainer && inputBox) {
+            inputContainer.classList.remove("show");
+            inputBox.classList.remove("show");
+        }
+    }
+
     const token = localStorage.getItem("token");
     const urlParams = new URLSearchParams(window.location.search);
     const activityId = urlParams.get("activityId");
 
-    // --- Utility: detect if code uses Scanner ---
+    // --- Detect Scanner input ---
     function requiresInput(code) {
         return /Scanner\s+\w+\s*=\s*new\s+Scanner\s*\(\s*System\.in\s*\)/.test(code);
     }
 
-    // --- Utility: detect numeric input expectation ---
     function expectsNumericInput(code) {
         return /\.\s*next(Int|Double|Float)\s*\(\)/.test(code);
     }
 
-    // --- Update Run button, feedback, and input visibility ---
+    // --- Update Run button ---
     function updateRunButtonState() {
+        if (isChallengeLocked) {
+            runBtn.disabled = true;
+            submitBtn.disabled = true;
+            return;
+        }
+
         const code = editor.getValue().trim();
         const needsInput = requiresInput(code);
         const inputEmpty = !inputBox?.value.trim();
         const numericRequired = expectsNumericInput(code);
         const inputIsInvalidNumeric = numericRequired && inputBox && isNaN(inputBox.value.trim());
 
-        // --- Show/hide input container ---
+        // Show/hide input box
         if (inputContainer && inputBox) {
             inputContainer.classList.toggle("show", needsInput);
             inputBox.classList.toggle("show", needsInput);
             if (!needsInput) inputBox.value = "";
         }
 
-        // --- Run button & feedback logic ---
-        if (!code) {
-            runBtn.disabled = true;
-            feedback.textContent = "Please enter code to run.";
-            feedback.className = "feedback-info";
-            submitBtn.disabled = true;
-            outputBox.value = "";
-        } else if (needsInput && (inputEmpty || inputIsInvalidNumeric)) {
-            runBtn.disabled = true;
-            feedback.textContent = inputIsInvalidNumeric ? "Input should be numeric!" : "Please provide input before running.";
-            feedback.className = "feedback-warning";
-            submitBtn.disabled = true;
-        } else {
-            runBtn.disabled = false;
-            feedback.textContent = ""; // clear warning
-            feedback.className = "";
+        // ⚠ DO NOT ERASE FEEDBACK if run already happened.
+        // Only show feedback when nothing was run yet.
+        if (!isRunning) {
+            if (!code) {
+                runBtn.disabled = true;
+                submitBtn.disabled = true;
+                feedback.textContent = "Please enter code to run.";
+                feedback.className = "feedback-info";
+                return;
+            }
+
+            if (needsInput && (inputEmpty || inputIsInvalidNumeric)) {
+                runBtn.disabled = true;
+                submitBtn.disabled = true;
+                feedback.textContent = inputIsInvalidNumeric
+                    ? "Input should be numeric!"
+                    : "Please provide input before running.";
+                feedback.className = "feedback-warning";
+                return;
+            }
         }
+
+        // If everything is valid:
+        runBtn.disabled = false;
     }
 
     let debounceTimeout;
-    editor.session.on('change', () => {
+    editor.session.on("change", () => {
         clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(updateRunButtonState, 100);
     });
-    if (inputBox) inputBox.addEventListener('input', updateRunButtonState);
+
+    if (inputBox) inputBox.addEventListener("input", updateRunButtonState);
 
     updateRunButtonState();
 
@@ -84,27 +121,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!activityId || !token) return;
         try {
             const res = await fetch(`${API_BASE_URL}/api/student/activities/${activityId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` }
             });
             if (!res.ok) return;
 
             const submission = await res.json();
+
             if (submission.submitted) {
                 editor.setValue(submission.code || "", -1);
                 editor.setReadOnly(true);
                 editor.session.getUndoManager().markClean();
 
-                outputBox.value = submission.output || "";
-                feedback.textContent = submission.feedback + (submission.earnedPoints != null ? ` Earned Points: ${submission.earnedPoints}` : "");
-                feedback.className = "feedback-success";
+                lockChallenge(
+                    submission.feedback || "You have already submitted this activity.",
+                    submission.output || ""
+                );
 
-                runBtn.disabled = true;
-                submitBtn.disabled = true;
-
-                if (inputContainer && inputBox) {
-                    inputContainer.classList.remove("show");
-                    inputBox.classList.remove("show");
-                }
+                return;
             }
         } catch (err) {
             console.error("Error fetching submission:", err);
@@ -112,101 +145,92 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
 
     // --- Run Code ---
-    // --- Run Code ---
-runBtn.addEventListener("click", async (event) => {
-    event.preventDefault();
-    if (isRunning) return; // only block if already running
-    isRunning = true;
+    runBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+        if (isChallengeLocked || isRunning) return;
 
-    const code = editor.getValue().trim();
-    const input = inputBox ? inputBox.value.trim() : "";
+        isRunning = true;
 
-    outputBox.value = "Running code...";
-    feedback.textContent = "Running code...";
-    feedback.className = "feedback-info";
+        const code = editor.getValue().trim();
+        const input = inputBox ? inputBox.value.trim() : "";
 
-    try {
-        // --- Step 1: Run code ---
-        const bodyData = new URLSearchParams();
-        bodyData.append("code", code);
-        if (requiresInput(code)) bodyData.append("input", input);
+        outputBox.value = "Running code...";
+        feedback.textContent = "Running code...";
+        feedback.className = "feedback-info";
 
-        const res = await fetch(`${API_BASE_URL}/api/run`, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: bodyData.toString()
-        });
+        try {
+            // Step 1: Run code
+            const bodyData = new URLSearchParams();
+            bodyData.append("code", code);
+            if (requiresInput(code)) bodyData.append("input", input);
 
-        const data = await res.json();
-        outputBox.value = data.output || "";
+            const res = await fetch(`${API_BASE_URL}/api/run`, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: bodyData.toString()
+            });
 
-        // --- Show/hide input box ---
-        if (inputContainer && inputBox) {
-            const showInput = requiresInput(code);
-            inputContainer.classList.toggle("show", showInput);
-            inputBox.classList.toggle("show", showInput);
-        }
+            const data = await res.json();
+            outputBox.value = data.output || "";
 
-        // --- Feedback if activity doesn't require input but code does ---
-        if (!data.noInput && requiresInput(code) && input === "") {
-            feedback.textContent = "Activity does not require input, but your code expects it.";
+            // Step 2: Evaluate
+            const evalRes = await fetch(`${API_BASE_URL}/api/student/activities/evaluate`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    activityId,
+                    code,
+                    input: requiresInput(code) ? input : null
+                })
+            });
+
+            const evalResult = await evalRes.json();
+
+            const testResults = evalResult.testCaseResults.map(tc => ({
+                expectedOutput: (tc.expectedOutput || "").trim(),
+                actualOutput: (tc.actualOutput || "").trim(),
+                passed:
+                    (tc.expectedOutput || "").trim() ===
+                    (tc.actualOutput || "").trim()
+            }));
+
+            const allPassed = testResults.every(tc => tc.passed);
+
+            if (allPassed) {
+                feedback.textContent = "You passed the challenge! You can now submit it.";
+                feedback.className = "feedback-success";
+            } else {
+                const expectedList = testResults
+                    .map(tc => `${tc.expectedOutput || "[no expected output]"}`)
+                    .join("\n");
+
+                feedback.textContent =
+                    "Expected output is not met.\nExpected:\n" + expectedList;
+                feedback.className = "feedback-warning";
+            }
+
+            submitBtn.disabled = !allPassed;
+            editor.session.getUndoManager().markClean();
+        } catch (err) {
+            console.error(err);
+            outputBox.value = "ERROR: Cannot connect to server.\n" + err.message;
+            feedback.textContent = "Server error. Please try again.";
             feedback.className = "feedback-warning";
+            submitBtn.disabled = true;
+        } finally {
+            isRunning = false;
+            updateRunButtonState();
         }
-
-        // --- Step 2: Evaluate code ---
-        const evalRes = await fetch(`${API_BASE_URL}/api/student/activities/evaluate`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                activityId,
-                code,
-                input: requiresInput(code) ? input : null
-            })
-        });
-
-        const evalResult = await evalRes.json();
-        const testResults = evalResult.testCaseResults.map(tc => ({
-            expectedOutput: (tc.expectedOutput || "").trim(),
-            actualOutput: (tc.actualOutput || "").trim(),
-            passed: ((tc.expectedOutput || "").trim() === (tc.actualOutput || "").trim())
-        }));
-
-        const allPassed = testResults.every(tc => tc.passed);
-
-        // --- Feedback based on evaluation ---
-        if (allPassed) {
-            feedback.textContent = "You passed the challenge! You can now submit it.";
-            feedback.className = "feedback-success";
-        } else {
-            const expectedList = testResults
-                .map(tc => `${(tc.expectedOutput || "").trim() || "[no expected output]"}`)
-                .join("\n");
-            feedback.textContent = "Expected output is not met. Check your code and instructions.\nExpected:\n" + expectedList;
-            feedback.className = "feedback-warning";
-        }
-
-        submitBtn.disabled = !allPassed;
-        editor.session.getUndoManager().markClean();
-
-    } catch (err) {
-        console.error(err);
-        outputBox.value = "ERROR: Cannot connect to server.\n" + err.message;
-        feedback.textContent = "Server error. Please try again.";
-        feedback.className = "feedback-warning";
-        submitBtn.disabled = true;
-    } finally {
-        isRunning = false;
-        runBtn.disabled = false; // ensure run button is always re-enabled
-    }
-});
-
+    });
 
     // --- Submit Code ---
     submitBtn.addEventListener("click", async (event) => {
         event.preventDefault();
+        if (isChallengeLocked) return;
+
         const code = editor.getValue().trim();
         const input = inputBox ? inputBox.value.trim() : "";
         if (!code) return;
@@ -221,22 +245,26 @@ runBtn.addEventListener("click", async (event) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({ activityId, code, input })
             });
 
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText || "Submission failed.");
+            }
+
             const result = await res.json();
-            feedback.textContent = `${result.feedback} Earned Points: ${result.earnedPoints}`;
-            feedback.className = result.passedAllTestCases ? "feedback-success" : "feedback-warning";
 
             localStorage.setItem("lastChallengeResult", JSON.stringify(result));
-            outputBox.value = "Code submitted successfully!";
+
+            // redirect
+            window.location.href = `student-challenge-result.html?activityId=${activityId}`;
         } catch (err) {
             console.error(err);
-            feedback.textContent = "Error submitting code.";
+            feedback.textContent = "Error submitting code: " + err.message;
             feedback.className = "feedback-warning";
-        } finally {
             submitBtn.disabled = false;
         }
     });
@@ -247,15 +275,19 @@ runBtn.addEventListener("click", async (event) => {
 
         try {
             const res = await fetch(`${API_BASE_URL}/api/activities/${activityId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` }
             });
             if (!res.ok) return;
 
             const challenge = await res.json();
-            document.getElementById("challenge-title").textContent = challenge.title || "Untitled Challenge";
-            document.getElementById("challenge-description").textContent = challenge.problemStatement || "No description available.";
-            document.getElementById("challenge-difficulty").textContent = challenge.difficulty || "N/A";
-            document.getElementById("challenge-points").textContent = challenge.points ?? "N/A";
+            document.getElementById("challenge-title").textContent =
+                challenge.title || "Untitled Challenge";
+            document.getElementById("challenge-description").textContent =
+                challenge.problemStatement || "No description available.";
+            document.getElementById("challenge-difficulty").textContent =
+                challenge.difficulty || "N/A";
+            document.getElementById("challenge-points").textContent =
+                challenge.points ?? "N/A";
 
             if (inputContainer && inputBox) {
                 const showInput = challenge.noInput === false;
@@ -263,11 +295,11 @@ runBtn.addEventListener("click", async (event) => {
                 inputBox.classList.toggle("show", showInput);
             }
         } catch (err) {
-            console.error('Error fetching challenge:', err);
+            console.error("Error fetching challenge:", err);
         }
     })();
 
-    // Smooth fade-in
+    // smooth fade
     const main = document.querySelector("main");
     if (main) main.classList.add("fade-in");
 });

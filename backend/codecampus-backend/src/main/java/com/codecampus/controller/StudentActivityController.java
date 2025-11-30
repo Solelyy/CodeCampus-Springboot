@@ -1,16 +1,22 @@
 package com.codecampus.controller;
 
+import com.codecampus.dto.ActivityResultDTO;
 import com.codecampus.dto.SubmitActivityRequestDTO;
 import com.codecampus.dto.SubmitActivityResponseDTO;
+import com.codecampus.model.Activity;
 import com.codecampus.model.StudentActivity;
+import com.codecampus.service.ActivityService;
 import com.codecampus.service.StudentActivityService;
+import com.codecampus.service.StudentStatsService;
 import com.codecampus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -24,19 +30,43 @@ public class StudentActivityController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Submit activity code.
-     * Only passes if all test cases pass.
-     * JWT used to identify student (username from token).
-     */
+    @Autowired
+    private ActivityService activityService;
+
+    @Autowired
+    private StudentStatsService studentStatsService;
+
+    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/submit")
-    public ResponseEntity<SubmitActivityResponseDTO> submitActivity(
+    public ResponseEntity<Map<String, Object>> submitActivity(
             @RequestBody SubmitActivityRequestDTO request,
-            Authentication authentication // JWT principal
+            Authentication authentication
     ) {
-        String username = authentication.getName(); // extract username from JWT
+        String username = authentication.getName();
+
+        // Submit and get result
         SubmitActivityResponseDTO response = studentActivityService.submitActivity(username, request);
-        return ResponseEntity.ok(response);
+
+        // Fetch student activity to check completion and next unlocked activity
+        StudentActivity studentActivity = studentActivityService.getSubmissionForActivity(username, request.getActivityId());
+        Long unlockedNextActivityId = null;
+
+        if (studentActivity.isCompleted()) {
+            // Determine next unlocked activity for this student
+            unlockedNextActivityId = studentActivityService.getNextUnlockedActivityId(
+                    username, studentActivity.getActivity().getCourse().getId(), studentActivity.getActivity().getId()
+            );
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("completed", studentActivity.isCompleted());
+        result.put("earnedPoints", studentActivity.getEarnedPoints());
+        result.put("feedback", response.getFeedback());
+        result.put("testCaseResults", response.getTestCaseResults()); // can be null
+        result.put("nextActivityId", unlockedNextActivityId); // can be null
+
+
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -80,4 +110,35 @@ public class StudentActivityController {
         SubmitActivityResponseDTO result = studentActivityService.evaluateActivity(username, request);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @GetMapping("/{activityId}/result")
+    public ResponseEntity<ActivityResultDTO> getActivityResult(
+            @PathVariable Long activityId,
+            Authentication authentication
+    ) {
+        String username = authentication.getName();
+
+        // Get student's submission
+        StudentActivity submission = studentActivityService.getSubmissionForActivity(username, activityId);
+        if (submission == null || !submission.isCompleted()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        Activity activity = submission.getActivity();
+        int totalPoints = studentStatsService.getTotalPointsInCourse(username, activity.getCourse().getId());
+
+        // Find next activity
+        Long nextActivityId = activityService.getNextActivityId(activity.getCourse().getId(), activityId);
+
+        ActivityResultDTO result = new ActivityResultDTO();
+        result.setActivityId(activityId);
+        result.setActivityTitle(activity.getTitle());
+        result.setEarnedPoints(submission.getEarnedPoints());
+        result.setTotalPointsInCourse(totalPoints);
+        result.setNextActivityId(nextActivityId);
+        result.setCourseId(activity.getCourse().getId());
+
+        return ResponseEntity.ok(result);
+    }
+
 }

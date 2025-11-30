@@ -166,4 +166,26 @@ public class ActivityService {
         return activityRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Activity not found"));
     }
+
+    /**
+     * Get the next activity ID in a course after the given activityId.
+     * Returns null if there’s no next activity.
+     */
+    @Transactional(readOnly = true)
+    public Long getNextActivityId(Long courseId, Long currentActivityId) {
+        List<Activity> activities = activityRepository.findByCourseId(courseId);
+
+        // Sort by difficulty (or by ID if you want sequential)
+        Map<String, Integer> difficultyOrder = Map.of(
+                "easy", 1, "medium", 2, "hard", 3
+        );
+        activities.sort(Comparator.comparingInt(a -> difficultyOrder.getOrDefault(a.getDifficulty().toLowerCase(), 4)));
+
+        for (int i = 0; i < activities.size(); i++) {
+            if (activities.get(i).getId().equals(currentActivityId) && i + 1 < activities.size()) {
+                return activities.get(i + 1).getId();
+            }
+        }
+        return null; // No next activity
+    }
 }

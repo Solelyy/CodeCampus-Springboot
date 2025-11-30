@@ -5,6 +5,7 @@ import com.codecampus.model.StudentActivity;
 import com.codecampus.model.User;
 import com.codecampus.repository.CourseEnrollmentRepository;
 import com.codecampus.repository.StudentActivityRepository;
+import com.codecampus.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -16,16 +17,19 @@ public class StudentStatsService {
 
     private final CourseEnrollmentRepository enrollmentRepo;
     private final StudentActivityRepository activityRepo;
+    private final UserRepository userRepository;
 
     public StudentStatsService(CourseEnrollmentRepository enrollmentRepo,
-                               StudentActivityRepository activityRepo) {
+                               StudentActivityRepository activityRepo,
+                               UserRepository userRepository) {
         this.enrollmentRepo = enrollmentRepo;
         this.activityRepo = activityRepo;
+        this.userRepository = userRepository;
     }
 
     public StudentStatsDTO getStudentStats(User student) {
 
-        // --- Total Courses: include all enrollments ---
+        // --- Total Courses ---
         long totalCourses = enrollmentRepo.countByStudent_Id(student.getId());
 
         // --- Completed Activities ---
@@ -48,7 +52,6 @@ public class StudentStatsService {
     private long computeDayStreak(List<StudentActivity> completedActivitiesList) {
         if (completedActivitiesList.isEmpty()) return 0;
 
-        // Unique completion dates
         Set<LocalDate> completedDates = completedActivitiesList.stream()
                 .map(a -> a.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate())
                 .collect(Collectors.toSet());
@@ -62,5 +65,16 @@ public class StudentStatsService {
             current = current.minusDays(1);
         }
         return streak;
+    }
+
+    // ======================= NEW METHOD =======================
+    public int getTotalPointsInCourse(String username, Long courseId) {
+        User student = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Student not found"));
+
+        return activityRepo.findByStudent(student).stream()
+                .filter(sa -> sa.getActivity().getCourse().getId().equals(courseId))
+                .mapToInt(StudentActivity::getEarnedPoints)
+                .sum();
     }
 }
