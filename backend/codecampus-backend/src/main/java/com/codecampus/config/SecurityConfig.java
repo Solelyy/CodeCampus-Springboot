@@ -54,7 +54,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/save").permitAll()
                         .requestMatchers("/api/profile", "/api/profile/**").authenticated()
                         .requestMatchers("/api/users/me").authenticated()
-                        .requestMatchers("/api/profile", "/api/profile/**").authenticated()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/frontend/**").permitAll()
                         .requestMatchers("/api/professor/stats").authenticated()
@@ -67,7 +66,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/activities/**").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/activities/**").hasRole("PROFESSOR")
 
-                        // Student-only endpoints
                         .requestMatchers("/api/student/**").hasRole("STUDENT")
                         .requestMatchers("/api/student/stats").hasRole("STUDENT")
                         .requestMatchers("/api/student/enrollments/my-courses").hasRole("STUDENT")

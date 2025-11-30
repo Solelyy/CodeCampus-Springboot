@@ -29,12 +29,32 @@ public class StudentActivityService {
     private CodeRunnerService codeRunnerService;
 
     /**
+     * Normalize line endings, trim, and avoid nulls.
+     */
+    private String normalize(String value) {
+        return value == null ? "" : value.replace("\r\n", "\n").trim();
+    }
+
+    /**
+     * Build a standard error response for both evaluate and submit.
+     */
+    private SubmitActivityResponseDTO buildErrorResponse(String message) {
+        SubmitActivityResponseDTO resp = new SubmitActivityResponseDTO();
+        resp.setPassedAllTestCases(false);
+        resp.setEarnedPoints(0);
+        resp.setFeedback(message);
+        resp.setTestCaseResults(new ArrayList<>());
+        return resp;
+    }
+
+    /**
      * Evaluate student's code against activity test cases.
-     * Does NOT mark the activity as completed.
+     * Does NOT mark activity as completed.
      */
     @Transactional(readOnly = true)
     public SubmitActivityResponseDTO evaluateActivity(String username, SubmitActivityRequestDTO request) {
-        User student = userRepository.findByUsername(username)
+
+        userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
         ActivityDTO activityDTO = activityService.getActivityById(request.getActivityId());
@@ -43,37 +63,43 @@ public class StudentActivityService {
         boolean allPassed = true;
 
         for (ActivityTestCaseDTO tc : activityDTO.getTestCases()) {
-            String input = tc.isNoInput() ? "" : request.getInput(); // or tc.getInput() if each test case has input
+
+            String testInput = tc.isNoInput()
+                    ? ""
+                    : (tc.getInput() != null ? tc.getInput()
+                    : (request.getInput() != null ? request.getInput() : ""));
+
             CodeExecutionResultDTO execResult;
             try {
-                execResult = codeRunnerService.runJavaCode(request.getCode(), input);
+                execResult = codeRunnerService.runJavaCode(request.getCode(), testInput);
             } catch (Exception e) {
-                SubmitActivityResponseDTO errorResp = new SubmitActivityResponseDTO();
-                errorResp.setPassedAllTestCases(false);
-                errorResp.setEarnedPoints(0);
-                errorResp.setFeedback("Error executing code: " + e.getMessage());
-                return errorResp;
+                return buildErrorResponse("Error executing code: " + e.getMessage());
             }
 
-            String output = execResult.getOutput() == null ? "" : execResult.getOutput();
-            boolean passed = output.trim().equals(tc.getExpectedOutput().trim());
+            if (execResult.isCompileError()) {
+                return buildErrorResponse(execResult.getOutput() == null
+                        ? "Compilation failed."
+                        : execResult.getOutput());
+            }
+
+            String output = normalize(execResult.getOutput());
+            String expected = normalize(tc.getExpectedOutput());
+            boolean passed = output.equals(expected);
 
             TestCaseResultDTO tcResult = new TestCaseResultDTO();
             tcResult.setTestCaseId(tc.getId());
             tcResult.setPassed(passed);
-            tcResult.setExpectedOutput(tc.getExpectedOutput());
+            tcResult.setExpectedOutput(expected);
             tcResult.setActualOutput(output);
 
             results.add(tcResult);
             if (!passed) allPassed = false;
         }
 
-        int pointsEarned = allPassed ? activityDTO.getPoints() : 0;
-
         SubmitActivityResponseDTO response = new SubmitActivityResponseDTO();
         response.setPassedAllTestCases(allPassed);
         response.setTestCaseResults(results);
-        response.setEarnedPoints(pointsEarned);
+        response.setEarnedPoints(allPassed ? activityDTO.getPoints() : 0);
         response.setFeedback(allPassed
                 ? "All test cases passed. You may submit."
                 : "Some test cases failed. Keep trying!");
@@ -82,11 +108,11 @@ public class StudentActivityService {
     }
 
     /**
-     * Submit student's code for the activity.
-     * Marks activity as completed if all test cases pass.
+     * Submit student's code and save results.
      */
     @Transactional
     public SubmitActivityResponseDTO submitActivity(String username, SubmitActivityRequestDTO request) {
+
         User student = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
@@ -96,26 +122,34 @@ public class StudentActivityService {
         List<TestCaseResultDTO> results = new ArrayList<>();
         boolean allPassed = true;
 
+        // Evaluate all test cases
         for (ActivityTestCaseDTO tc : activityDTO.getTestCases()) {
-            String input = tc.isNoInput() ? "" : request.getInput();
+            String testInput = tc.isNoInput()
+                    ? ""
+                    : (tc.getInput() != null ? tc.getInput()
+                    : (request.getInput() != null ? request.getInput() : ""));
+
             CodeExecutionResultDTO execResult;
             try {
-                execResult = codeRunnerService.runJavaCode(request.getCode(), input);
+                execResult = codeRunnerService.runJavaCode(request.getCode(), testInput);
             } catch (Exception e) {
-                SubmitActivityResponseDTO errorResponse = new SubmitActivityResponseDTO();
-                errorResponse.setPassedAllTestCases(false);
-                errorResponse.setEarnedPoints(0);
-                errorResponse.setFeedback("Error running code: " + e.getMessage());
-                return errorResponse;
+                return buildErrorResponse("Error executing code: " + e.getMessage());
             }
 
-            String output = execResult.getOutput() == null ? "" : execResult.getOutput();
-            boolean passed = output.trim().equals(tc.getExpectedOutput().trim());
+            if (execResult.isCompileError()) {
+                return buildErrorResponse(execResult.getOutput() == null
+                        ? "Compilation failed."
+                        : execResult.getOutput());
+            }
+
+            String output = normalize(execResult.getOutput());
+            String expected = normalize(tc.getExpectedOutput());
+            boolean passed = output.equals(expected);
 
             TestCaseResultDTO tcResult = new TestCaseResultDTO();
             tcResult.setTestCaseId(tc.getId());
             tcResult.setPassed(passed);
-            tcResult.setExpectedOutput(tc.getExpectedOutput());
+            tcResult.setExpectedOutput(expected);
             tcResult.setActualOutput(output);
 
             results.add(tcResult);
@@ -124,22 +158,45 @@ public class StudentActivityService {
 
         int pointsEarned = allPassed ? activityDTO.getPoints() : 0;
 
-        // Save or update StudentActivity
+        // Fetch or create the StudentActivity record
         StudentActivity studentActivity = studentActivityRepository
                 .findByStudentAndActivity(student, activityEntity)
                 .orElseGet(() -> {
                     StudentActivity sa = new StudentActivity();
                     sa.setStudent(student);
                     sa.setActivity(activityEntity);
+                    sa.setUnlocked(true); // Current activity must be unlocked
                     return sa;
                 });
 
-        studentActivity.setCompleted(allPassed);
-        studentActivity.setEarnedPoints(pointsEarned);
+        // Update code, output, and points
         studentActivity.setCode(request.getCode());
         studentActivity.setOutput(results.stream()
                 .map(TestCaseResultDTO::getActualOutput)
-                .reduce("", (acc, s) -> acc + s + "\n").trim());
+                .reduce("", (acc, s) -> acc + (s.isEmpty() ? "" : s + "\n"))
+                .trim());
+        studentActivity.setEarnedPoints(pointsEarned);
+
+        // Only mark completed if all test cases pass
+        if (allPassed) {
+            studentActivity.setCompleted(true);
+
+            // Unlock next activity for this student
+            Long nextActivityId = activityService.getNextActivityId(activityEntity.getCourse().getId(), activityEntity.getId());
+            if (nextActivityId != null) {
+                Activity nextActivity = activityService.getActivityEntityById(nextActivityId);
+                StudentActivity nextSubmission = studentActivityRepository
+                        .findByStudentAndActivity(student, nextActivity)
+                        .orElseGet(() -> {
+                            StudentActivity sa = new StudentActivity();
+                            sa.setStudent(student);
+                            sa.setActivity(nextActivity);
+                            return sa;
+                        });
+                nextSubmission.setUnlocked(true);
+                studentActivityRepository.save(nextSubmission);
+            }
+        }
 
         studentActivityRepository.save(studentActivity);
 
@@ -149,19 +206,53 @@ public class StudentActivityService {
         response.setEarnedPoints(pointsEarned);
         response.setFeedback(allPassed
                 ? "Great job! You passed the activity."
-                : "Keep trying!");
+                : "Some test cases failed. Keep trying!");
 
         return response;
     }
 
     /**
-     * Fetch student's submission for a given activity.
+     * Get the next activity unlocked for this student in the course.
      */
-    public StudentActivity getSubmissionForActivity(String username, Long activityId) {
+    @Transactional(readOnly = true)
+    public Long getNextUnlockedActivityId(String username, Long courseId, Long currentActivityId) {
         User student = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
-        return studentActivityRepository.findByStudentAndActivity(student, activityService.getActivityEntityById(activityId))
+        // Get the next activity in the course after currentActivityId
+        Long nextActivityId = activityService.getNextActivityId(courseId, currentActivityId);
+        if (nextActivityId == null) return null;
+
+        // Check if student already has a record
+        Activity nextActivity = activityService.getActivityEntityById(nextActivityId);
+        StudentActivity nextSubmission = studentActivityRepository.findByStudentAndActivity(student, nextActivity)
                 .orElse(null);
+
+        if (nextSubmission != null && nextSubmission.isUnlocked()) {
+            return nextActivityId; // Already unlocked
+        } else if (nextSubmission == null) {
+            return nextActivityId; // Will be unlocked on first submit
+        }
+
+        return null; // Not unlocked yet
     }
+
+
+
+    /**
+     * Fetch student's submission for a given activity.
+     */
+    public StudentActivity getSubmissionForActivity(String username, Long activityId) {
+
+        User student = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Student not found"));
+
+        return studentActivityRepository.findByStudentAndActivity(
+                student,
+                activityService.getActivityEntityById(activityId)
+        ).orElse(null);
+    }
+
+
+    
 }

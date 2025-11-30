@@ -53,24 +53,6 @@ public class Activity {
     }
 
     public Activity() {}
-
-    private boolean completed;
-    private boolean unlocked;
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public boolean isUnlocked() {
-        return unlocked;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public void setUnlocked(boolean unlocked) {
-        this.unlocked = unlocked;
-    }
     // --- Getters and Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

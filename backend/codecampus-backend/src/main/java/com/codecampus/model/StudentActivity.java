@@ -48,6 +48,9 @@ public class StudentActivity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String output; // store the output after running code
 
+    @Column(nullable = false)
+    private boolean unlocked = false;
+
     // getters and setters
     public String getCode() { return code; }
     public void setCode(String code) { this.code = code; }
@@ -82,4 +85,6 @@ public class StudentActivity {
         this.earnedPoints = earnedPoints;
     }
 
+    public boolean isUnlocked() { return unlocked; }
+    public void setUnlocked(boolean unlocked) { this.unlocked = unlocked; }
 }
