@@ -159,4 +159,11 @@ public class ActivityService {
 
         return dto;
     }
+
+    // ActivityService.java
+    @Transactional(readOnly = true)
+    public Activity getActivityEntityById(Long id) {
+        return activityRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Activity not found"));
+    }
 }
