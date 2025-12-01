@@ -307,6 +307,10 @@ body::before {
     color: rgba(224, 224, 224, 0.6);
 }
 
+#activities-done {
+    text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .leaderboard-container {

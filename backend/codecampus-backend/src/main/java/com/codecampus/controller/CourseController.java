@@ -4,7 +4,9 @@ import com.codecampus.dto.*;
 import com.codecampus.model.Course;
 import com.codecampus.model.User;
 import com.codecampus.service.CourseService;
+import com.codecampus.service.LeaderboardService;
 import com.codecampus.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +26,8 @@ public class CourseController {
 
     private final CourseService courseService;
     private final UserService userService;
+    @Autowired
+    private LeaderboardService leaderboardService;
 
     public CourseController(CourseService courseService, UserService userService) {
         this.courseService = courseService;
@@ -120,5 +124,11 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         if (course == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(courseService.toOverviewDTO(course));
+    }
+
+    //Leaderboard
+    @GetMapping("/{courseId}/leaderboard")
+    public List<LeaderboardDTO> getLeaderboard(@PathVariable Long courseId) {
+        return leaderboardService.getLeaderboardForCourse(courseId);
     }
 }
