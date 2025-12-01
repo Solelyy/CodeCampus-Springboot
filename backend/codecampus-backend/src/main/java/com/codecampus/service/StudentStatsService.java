@@ -67,7 +67,7 @@ public class StudentStatsService {
         return streak;
     }
 
-    // ======================= NEW METHOD =======================
+    // For Leaderboard
     public int getTotalPointsInCourse(String username, Long courseId) {
         User student = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));

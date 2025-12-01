@@ -1,10 +1,12 @@
 package com.codecampus.controller;
 
 import com.codecampus.dto.ActivityDTO;
+import com.codecampus.dto.LeaderboardDTO;
 import com.codecampus.model.Course;
 import com.codecampus.model.User;
 import com.codecampus.service.ActivityService;
 import com.codecampus.service.EnrollmentService;
+import com.codecampus.service.LeaderboardService;
 import com.codecampus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class StudentCourseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LeaderboardService leaderboardService;
 
     @GetMapping("/{courseId}/activities")
     @PreAuthorize("hasRole('STUDENT')")
