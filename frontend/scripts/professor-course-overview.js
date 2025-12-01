@@ -34,33 +34,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('activities-count').textContent = course.activitiesCount ?? 0;
 
         // Copy code functionality
-const copyIcon = document.getElementById('copy-icon');
-const copyMessage = document.getElementById('copy-message');
+        const copyIcon = document.getElementById('copy-icon');
+        const copyMessage = document.getElementById('copy-message');
 
-copyIcon.addEventListener('click', () => {
-    if (!course.code) {
-        copyMessage.textContent = 'No course code available.';
-        copyMessage.style.color = 'red';
-        setTimeout(() => copyMessage.textContent = '', 3000); // clear after 3 seconds
-        return;
-    }
+        copyIcon.addEventListener('click', () => {
+            if (!course.code) {
+                copyMessage.textContent = 'No course code available.';
+                copyMessage.style.color = 'red';
+                setTimeout(() => copyMessage.textContent = '', 3000); // clear after 3 seconds
+                return;
+            }
 
-    navigator.clipboard.writeText(course.code)
-        .then(() => {
-            copyMessage.textContent = 'Course code copied!';
-            copyMessage.style.color = 'green';
-            copyMessage.style.textAlign = 'center';
-            setTimeout(() => copyMessage.textContent = '', 3000); // clear after 3 seconds
-        })
-        .catch(err => {
-            console.error('Failed to copy', err);
-            copyMessage.textContent = 'Failed to copy course code.';
-            copyMessage.style.color = 'red';
-            setTimeout(() => copyMessage.textContent = '', 3000);
+            navigator.clipboard.writeText(course.code)
+                .then(() => {
+                    copyMessage.textContent = 'Course code copied!';
+                    copyMessage.style.color = 'green';
+                    copyMessage.style.textAlign = 'center';
+                    setTimeout(() => copyMessage.textContent = '', 3000); // clear after 3 seconds
+                })
+                .catch(err => {
+                    console.error('Failed to copy', err);
+                    copyMessage.textContent = 'Failed to copy course code.';
+                    copyMessage.style.color = 'red';
+                    setTimeout(() => copyMessage.textContent = '', 3000);
+                });
         });
-});
 
-    } catch (error) {
-        console.error('Error fetching course overview:', error);
-    }
-});
+        const courseAnalytics = document.getElementById('btn-course-analytics');
+
+        courseAnalytics.onclick = () => {
+            window.location.href = `/frontend/webpages/professor-course-analytics.html?courseId=${courseId}`;
+        };
+
+        } catch (error) {
+            console.error('Error fetching course overview:', error);
+        }
+    });

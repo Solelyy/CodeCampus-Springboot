@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         .map(([key]) => key);
 
     if (missing.length > 0) {
-        console.error(`❌ Missing DOM elements: ${missing.join(', ')}`);
-        console.log('🧩 Current body HTML:', document.body.innerHTML);
+        console.error(`Missing DOM elements: ${missing.join(', ')}`);
+        console.log('Current body HTML:', document.body.innerHTML);
         return;
     }
 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const course = await response.json();
         console.log('Fetched course object:', course);
 
-        // Populate course details
+        // Populate course detailsl
         courseTitleEl.textContent = course.title || 'No Title';
         courseDescriptionEl.textContent = course.description || 'No description available';
 
