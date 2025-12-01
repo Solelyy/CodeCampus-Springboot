@@ -31,12 +31,12 @@ public class ProfileService {
                     Profile starter = new Profile();
                     starter.setUser(user);
                     starter.setBio("");
-                    starter.setProfilePicture("/uploads/profile-pictures/starter-profile.jpeg");
+                    starter.setProfilePicture("/uploads/profile-pictures/starter-profile.jpg");
                     return starter;
                 });
 
         String picture = profile.getProfilePicture() != null ? profile.getProfilePicture()
-                : "/uploads/profile-pictures/starter-profile.jpeg";
+                : "/uploads/profile-pictures/starter-profile.jpg";
 
         return new ProfileDTO(profile.getBio(), picture);
     }
@@ -75,7 +75,7 @@ public class ProfileService {
         profileRepository.save(profile);
 
         String picture = profile.getProfilePicture() != null ? profile.getProfilePicture()
-                : "/uploads/profile-pictures/starter-profile.jpeg";
+                : "/uploads/profile-pictures/starter-profile.jpg";
 
         return new ProfileDTO(profile.getBio(), picture);
     }

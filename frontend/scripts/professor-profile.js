@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const BACKEND_URL = 'http://localhost:8081';
-    const DEFAULT_PROFILE_PIC = '/uploads/profile-pictures/starter-profile.jpeg';
+    const DEFAULT_PROFILE_PIC = '/uploads/profile-pictures/starter-profile.jpg';
 
     // Elements
     const profilePicEl = document.querySelector('.profile-left .profile-image img');
