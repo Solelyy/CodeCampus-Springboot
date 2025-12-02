@@ -1,3 +1,15 @@
+import { showCourseCreationGuide } from './course-creation-guide.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Course Creation Guide Toggle ---
+    const guideBtn = document.getElementById('showGuideBtn');
+
+    guideBtn.addEventListener('click', () => {
+    showCourseCreationGuide('courseGuideContainer');
+    });
+
+
+
 // State management
 let currentStep = 1;
 let activities = [];
@@ -10,6 +22,7 @@ const stepIndicators = document.querySelectorAll('.step-indicator');
 const formSteps = document.querySelectorAll('.form-step');
 const creationMessage = document.getElementById('course-creation-message');
 const submitBtn = document.getElementById('submitCourse');
+
 
 // Step navigation
 function goToStep(step) {
@@ -563,3 +576,4 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
 
 // Initialize form validation
 validateStep1();
+});

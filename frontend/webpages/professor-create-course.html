@@ -88,6 +88,16 @@
                 <p style="color: #667;">Build your course step-by-step</p>
             </div>
 
+             <!-- Button to toggle/show guide -->
+            <div style="text-align: center; margin: 2rem 0;">
+                <button id="showGuideBtn" style="cursor: pointer; transition: all 0.3s ease; color: #000000;">
+                    📚 See Course Creation Guide
+                </button>
+            </div>
+
+            <!-- Container for the guide -->
+            <div id="courseGuideContainer"></div>
+
             <div class="progress-bar" data-step="1">
                 <div class="step-indicator active" data-step="1">
                     <div class="step-number">1</div>
@@ -194,6 +204,6 @@
     
 
 </body>
-<script src="/frontend/scripts/professor-create-course.js"></script>
+<script type="module" src="/frontend/scripts/professor-create-course.js"></script>
 <script src="/frontend/scripts/general.js"></script>
 </html>

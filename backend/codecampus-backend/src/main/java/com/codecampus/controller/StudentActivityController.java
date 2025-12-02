@@ -76,27 +76,36 @@ public class StudentActivityController {
     @GetMapping("/{activityId}")
     public ResponseEntity<?> getSubmission(
             @PathVariable Long activityId,
-            Authentication authentication // JWT principal
+            Authentication authentication
     ) {
         String username = authentication.getName();
+
         StudentActivity submission = studentActivityService.getSubmissionForActivity(username, activityId);
 
-        if (submission == null) {
-            return ResponseEntity.ok().body(Map.of(
-                    "submitted", false
-            ));
+        // No submission yet
+        if (submission == null || submission.getCode() == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("submitted", false);
+            response.put("completed", false);
+            response.put("code", "");
+            response.put("output", "");
+            response.put("earnedPoints", 0);
+            response.put("feedback", null);
+            return ResponseEntity.ok(response);
         }
 
-        // Build JSON with submission details
-        Map<String, Object> response = Map.of(
-                "submitted", true,
-                "code", submission.getCode(),
-                "output", submission.getOutput(),
-                "earnedPoints", submission.getEarnedPoints(),
-                "feedback", submission.isCompleted()
-                        ? "You have already passed this activity!"
-                        : "You have already submitted this activity."
-        );
+        // Submission exists
+        boolean completed = submission.isCompleted();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("submitted", true);
+        response.put("completed", completed);
+        response.put("code", submission.getCode());
+        response.put("output", submission.getOutput() != null ? submission.getOutput() : "");
+        response.put("earnedPoints", submission.getEarnedPoints());
+        response.put("feedback", completed
+                ? "You have already passed this activity!"
+                : "You have submitted this activity but can still edit.");
 
         return ResponseEntity.ok(response);
     }

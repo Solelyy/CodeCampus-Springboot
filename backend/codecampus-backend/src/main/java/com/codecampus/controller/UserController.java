@@ -94,10 +94,10 @@ public class UserController {
                         .body(Map.of("error", "Incorrect username or password"));
             } else if (message.contains("User not found")) {
                 return ResponseEntity.status(404) // 404 Not Found
-                        .body(Map.of("error", "User not found"));
+                        .body(Map.of("error", "Incorrect username or password."));
             } else {
                 return ResponseEntity.status(400) // 400 Bad Request
-                        .body(Map.of("error", "Login failed"));
+                        .body(Map.of("error", "Incorrect username or password."));
             }
         }
     }
