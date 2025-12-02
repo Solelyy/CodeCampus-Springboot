@@ -1,13 +1,18 @@
 package com.codecampus.controller;
 
+import com.codecampus.dto.StudentCourseProgressDTO;
 import com.codecampus.dto.StudentStatsDTO;
 import com.codecampus.model.User;
 import com.codecampus.service.StudentStatsService;
 import com.codecampus.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/student/stats")
@@ -34,5 +39,14 @@ public class StudentStatsController {
         }
 
         return studentStatsService.getStudentStats(student);
+    }
+
+    @GetMapping("/progress")
+    @PreAuthorize("hasRole('STUDENT')")
+    public ResponseEntity<List<StudentCourseProgressDTO>> getStudentProgress(Principal principal) {
+        User student = userService.findByUsername(principal.getName());
+
+        List<StudentCourseProgressDTO> progressList = studentStatsService.getStudentProgress(student);
+        return ResponseEntity.ok(progressList);
     }
 }

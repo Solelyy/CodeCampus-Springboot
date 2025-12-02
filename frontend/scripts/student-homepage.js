@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = document.querySelector('.joined-courses-container');
     const templateCard = document.querySelector('.course-card-template');
     const noCoursesMessage = document.getElementById('empty-state'); // greet message
+    let progressMap = {};
 
     // --- Fetch current user ---
     async function fetchCurrentUser() {
@@ -23,8 +24,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             return { firstName: 'Student', lastName: '' };
         }
     }
-
-
 
     function showWelcomeOverlay(studentName) {
     const isNewUser = localStorage.getItem('isNewUser');
@@ -65,7 +64,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.removeItem('isNewUser');
     return true;
 }
-
 
     // --- Type welcome message ---
     async function typeWelcomeMessage(studentName, showWelcome) {
@@ -159,6 +157,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+        // --- Fetch course progress ---
+    async function fetchCourseProgress() {
+        try {
+            const response = await fetch('http://localhost:8081/api/student/stats/progress', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            if (!response.ok) throw new Error(`Failed to fetch progress: ${response.status}`);
+            const progressList = await response.json();
+
+            // Create a map for fast lookup by courseId
+            progressMap = {};
+            progressList.forEach(p => {
+                progressMap[p.courseId] = p.progress;
+            });
+
+            return progressMap;
+
+        } catch (error) {
+            console.error('Error fetching course progress:', error);
+            return {};
+        }
+    } 
+
     // --- Display courses ---
     function displayCourses(courses) {
         container.querySelectorAll('.course-card:not(.course-card-template)').forEach(c => c.remove());
@@ -173,15 +195,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             titleEl.setAttribute('data-tooltip', course.title);
 
             card.querySelector('.course-author').textContent = `By ${course.professorName}`;
-            card.querySelector('.course-progress').textContent = `Progress: 0%`;
+
+            const progress = progressMap[course.id] || 0;
+            card.querySelector('.course-progress').textContent = `Progress: ${progress}%`;
 
             const img = card.querySelector('img');
             img.src = '/frontend/assets/images/java.png';
             img.alt = course.title;
 
             const btn = card.querySelector('button');
-            btn.textContent = 'Continue';
-
+            if (progress == 100) {
+                btn.textContent = 'Completed';
+            } else{
+                btn.textContent = 'Continue';
+            }
+            
             if (course.preAssessmentCompleted) {
                 btn.onclick = () => {
                     window.location.href = `/frontend/webpages/student-course-overview.html?courseId=${course.id}`;
@@ -208,5 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         typeWelcomeMessage(studentName, false);
     } // if not new, start typing immediately
     fetchStudentStats();
-    fetchStudentCourses();
+    // Fetch progress first, then courses
+    progressMap = await fetchCourseProgress();
+    fetchStudentCourses(progressMap);
 });

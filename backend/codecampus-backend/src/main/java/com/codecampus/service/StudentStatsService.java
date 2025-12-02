@@ -1,6 +1,9 @@
 package com.codecampus.service;
 
+import com.codecampus.dto.StudentCourseProgressDTO;
 import com.codecampus.dto.StudentStatsDTO;
+import com.codecampus.model.Activity;
+import com.codecampus.model.CourseEnrollment;
 import com.codecampus.model.StudentActivity;
 import com.codecampus.model.User;
 import com.codecampus.repository.CourseEnrollmentRepository;
@@ -76,5 +79,27 @@ public class StudentStatsService {
                 .filter(sa -> sa.getActivity().getCourse().getId().equals(courseId))
                 .mapToInt(StudentActivity::getEarnedPoints)
                 .sum();
+    }
+
+    //Student progress in a course
+    public List<StudentCourseProgressDTO> getStudentProgress(User student) {
+        List<CourseEnrollment> enrollments = enrollmentRepo.findByStudent(student);
+
+        return enrollments.stream()
+                .map(enrollment -> new StudentCourseProgressDTO(
+                        enrollment.getCourse().getId(),
+                        calculateProgress(student, enrollment)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private int calculateProgress(User student, CourseEnrollment enrollment) {
+        List<Activity> activities = enrollment.getCourse().getActivities();
+        if (activities == null || activities.isEmpty()) return 0;
+
+        List<StudentActivity> completed = activityRepo
+                .findByStudentAndActivityInAndCompletedTrue(student, activities);
+
+        return (int) ((completed.size() * 100) / activities.size());
     }
 }
