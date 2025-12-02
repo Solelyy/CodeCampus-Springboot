@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,6 +105,14 @@ public class CourseController {
                 .map(courseService::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping("/{id}/public")
+    public ResponseEntity<?> getCoursePublicStatus(@PathVariable Long id) {
+        Course course = courseService.getCourseById(id);
+        if (course == null) return ResponseEntity.notFound().build();
+        boolean isPublic = course.isPublic(); // assuming your Course entity has this
+        return ResponseEntity.ok(Collections.singletonMap("isPublic", isPublic));
     }
 
     // Get course by code

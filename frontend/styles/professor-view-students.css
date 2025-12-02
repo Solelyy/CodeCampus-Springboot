@@ -1,0 +1,464 @@
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes neonPulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(102, 195, 85, 0.5),
+                    0 0 10px rgba(102, 195, 85, 0.3),
+                    0 0 20px rgba(102, 195, 85, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(102, 195, 85, 0.8),
+                    0 0 20px rgba(102, 195, 85, 0.5),
+                    0 0 30px rgba(102, 195, 85, 0.3);
+    }
+}
+
+/* Body Background */
+body {
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(102, 195, 85, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(102, 195, 85, 0.03) 3px
+        );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Main Section */
+.manage-students-section {
+    padding: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Page Title */
+.page-title {
+    color: white;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(102, 195, 85, 0.5);
+}
+
+.student-count {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin: 0;
+}
+
+.student-count span {
+    color: var(--primary-green);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Export Button */
+.export-btn {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    color: #0a0e1a;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-btn span {
+    font-size: 18px;
+}
+
+.export-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(102, 195, 85, 0.6);
+    animation: neonPulse 1.5s ease-in-out infinite;
+}
+
+.export-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Search and Filter Section */
+.search-filter-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    animation: fadeIn 0.7s ease-out;
+}
+
+.search-container {
+    flex: 1;
+    position: relative;
+}
+
+.search-container input {
+    width: 100%;
+    background: rgba(10, 14, 26, 0.8);
+    border: 2px solid rgba(102, 195, 85, 0.3);
+    border-radius: 10px;
+    padding: 14px 50px 14px 18px;
+    color: white;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(102, 195, 85, 0.1);
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    background: rgba(10, 14, 26, 0.95);
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.3);
+}
+
+.search-container input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-icon {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.filter-container {
+    min-width: 200px;
+}
+
+.filter-select {
+    width: 100%;
+    background: rgba(10, 14, 26, 0.8);
+    border: 2px solid rgba(102, 195, 85, 0.3);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: white;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(102, 195, 85, 0.1);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    background: rgba(10, 14, 26, 0.95);
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.3);
+}
+
+.filter-select option {
+    background: #1a1f35;
+    color: white;
+}
+
+/* Students Card */
+.students-card {
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.8) 0%, rgba(26, 31, 53, 0.8) 100%);
+    border-radius: 16px;
+    padding: 32px;
+    border: 2px solid rgba(102, 195, 85, 0.2);
+    box-shadow: 
+        0 0 30px rgba(102, 195, 85, 0.1),
+        0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Table Styling */
+.students-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+}
+
+.students-table thead tr {
+    background: rgba(102, 195, 85, 0.1);
+}
+
+.students-table th {
+    color: var(--primary-green);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 18px 20px;
+    text-align: left;
+    border: none;
+}
+
+.students-table th:first-child {
+    border-radius: 8px 0 0 8px;
+    width: 50px;
+}
+
+.students-table th:last-child {
+    border-radius: 0 8px 8px 0;
+    text-align: center;
+}
+
+.students-table tbody tr {
+    background: rgba(10, 14, 26, 0.5);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.students-table tbody tr:hover {
+    background: rgba(102, 195, 85, 0.08);
+    transform: translateX(4px);
+    box-shadow: 0 0 20px rgba(102, 195, 85, 0.2);
+}
+
+.students-table td {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    padding: 18px 20px;
+    border: none;
+}
+
+.students-table tbody tr td:first-child {
+    border-radius: 8px 0 0 8px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.students-table tbody tr td:last-child {
+    border-radius: 0 8px 8px 0;
+    text-align: center;
+}
+
+/* Student Info with Avatar */
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.student-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0a0e1a;
+    box-shadow: 0 0 15px rgba(102, 195, 85, 0.4);
+}
+
+.student-info span {
+    font-weight: 600;
+    color: white;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.badge-activities {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-points {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.2) 100%);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Remove Button */
+.remove-btn {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%);
+    color: #ef4444;
+    border: 2px solid #ef4444;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.remove-btn:hover {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+    animation: neonPulse 1.5s ease-in-out infinite;
+}
+
+.remove-btn:active {
+    transform: translateY(0);
+}
+
+/* Empty State */
+.students-table tbody:empty::after {
+    content: 'No students enrolled yet';
+    display: block;
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .manage-students-section {
+        padding: 40px 30px;
+    }
+    
+    .search-filter-section {
+        flex-direction: column;
+    }
+    
+    .filter-container {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .manage-students-section {
+        padding: 30px 20px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .export-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .page-title {
+        font-size: 28px;
+    }
+
+    .students-card {
+        padding: 24px 20px;
+        overflow-x: auto;
+    }
+
+    .students-table {
+        min-width: 800px;
+    }
+
+    .students-table th,
+    .students-table td {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+
+    .student-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .remove-btn {
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .manage-students-section {
+        padding: 20px 16px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .students-card {
+        padding: 20px 16px;
+    }
+
+    .students-table th {
+        font-size: 11px;
+        padding: 12px 14px;
+    }
+
+    .students-table td {
+        font-size: 13px;
+        padding: 14px 14px;
+    }
+
+    .student-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 11px;
+    }
+}
