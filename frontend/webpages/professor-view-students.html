@@ -20,7 +20,7 @@
     <!--Styles-->
     <link rel="stylesheet" href="/frontend/styles/common-styles/general.css">
     <link rel="stylesheet" href="/frontend/styles/common-styles/elements.css">
-    <link rel="stylesheet" href="/frontend/styles/professor-manage-students.css">
+    <link rel="stylesheet" href="/frontend/styles/professor-view-students.css">
 
     <title>CodeCampus</title>
 </head>
@@ -90,13 +90,40 @@
 
     <main>
         <section class="manage-students-section">
-            <h1 class="page-title">Manage Students</h1>
+            <div class="page-header">
+                <div class="header-content">
+                    <h1 class="page-title">Students in this Course</h1>
+                    <p class="student-count">Total Students: <span id="student-count">2</span></p>
+                </div>
+                <button class="export-btn">
+                    <span>📊</span> Export Data
+                </button>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <div class="search-container">
+                    <input type="text" id="search-students" placeholder="Search students by name..." />
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="filter-container">
+                    <select id="sort-students" class="filter-select">
+                        <option value="name">Sort by Name</option>
+                        <option value="activities">Sort by Activities</option>
+                        <option value="points">Sort by Points</option>
+                        <option value="date">Sort by Join Date</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="students-card">
                 <table class="students-table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Student Name</th>
+                            <th>Activities Done</th>
+                            <th>Total Points</th>
                             <th>Joined Date</th>
                             <th>Action</th>
                         </tr>
@@ -105,7 +132,15 @@
                     <tbody id="students-table-body">
                         <!-- Sample Rows -->
                         <tr>
-                            <td>John Doe</td>
+                            <td>1</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">JD</div>
+                                    <span>John Doe</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-activities">12</span></td>
+                            <td><span class="badge badge-points">245</span></td>
                             <td>Oct 20, 2025</td>
                             <td>
                                 <button class="remove-btn">Remove</button>
@@ -113,7 +148,15 @@
                         </tr>
 
                         <tr>
-                            <td>Ana Cruz</td>
+                            <td>2</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">AC</div>
+                                    <span>Ana Cruz</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-activities">8</span></td>
+                            <td><span class="badge badge-points">180</span></td>
                             <td>Oct 18, 2025</td>
                             <td>
                                 <button class="remove-btn">Remove</button>
@@ -124,7 +167,6 @@
             </div>
         </section>
     </main>
-
 
     <footer>
         <p>&copy; 2025. All rights reserved.</p>
