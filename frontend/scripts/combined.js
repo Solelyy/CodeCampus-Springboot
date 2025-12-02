@@ -1,4 +1,4 @@
-console.log("Loaded challenge JS");
+import { showActivityGuide } from './activity-guide.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("JS fully ready");
@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
     editor.setTheme("ace/theme/dracula");
     editor.session.setMode("ace/mode/java");
     editor.setValue("", -1);
+
+    console.log("Editor initialized value:", editor.getValue());
     editor.session.getUndoManager().markClean();
 
     // NEW
@@ -47,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const token = localStorage.getItem("token");
+    console.log("Token being sent inside DOMContentLoaded:", token);
+
     const urlParams = new URLSearchParams(window.location.search);
     const activityId = urlParams.get("activityId");
 
@@ -119,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Fetch previous submission ---
     (async function fetchSubmission() {
         if (!activityId || !token) return;
+        console.log('fetchSubmission'+ token);
         try {
             const res = await fetch(`${API_BASE_URL}/api/student/activities/${activityId}`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -129,16 +134,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (submission.submitted) {
                 editor.setValue(submission.code || "", -1);
-                editor.setReadOnly(true);
+                editor.setReadOnly(submission.completed); // lock only if completed
                 editor.session.getUndoManager().markClean();
 
-                lockChallenge(
-                    submission.feedback || "You have already submitted this activity.",
-                    submission.output || ""
-                );
-
+                if (submission.completed) {
+                    lockChallenge(
+                        submission.feedback || "You have already submitted this activity.",
+                        submission.output || ""
+                    );
+                }
                 return;
             }
+
+
         } catch (err) {
             console.error("Error fetching submission:", err);
         }
@@ -235,6 +243,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = inputBox ? inputBox.value.trim() : "";
         if (!code) return;
 
+        console.log("Submitting code:", editor.getValue());
+
         outputBox.value = "Submitting code...";
         feedback.textContent = "Submitting...";
         feedback.className = "feedback-info";
@@ -293,6 +303,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 const showInput = challenge.noInput === false;
                 inputContainer.classList.toggle("show", showInput);
                 inputBox.classList.toggle("show", showInput);
+            }
+
+            const username = localStorage.getItem("username");
+            if (username) {
+                const hasSeenGuideKey = `seenActivityGuideEver-${username}`;
+                const hasSeenGuideEver = localStorage.getItem(hasSeenGuideKey);
+
+                if (!hasSeenGuideEver) {
+                    showActivityGuide({ alreadySubmitted: false });
+                    localStorage.setItem(hasSeenGuideKey, 'true');
+                }
             }
         } catch (err) {
             console.error("Error fetching challenge:", err);

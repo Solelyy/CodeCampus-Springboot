@@ -122,16 +122,17 @@ public class StudentActivityService {
         List<TestCaseResultDTO> results = new ArrayList<>();
         boolean allPassed = true;
 
+        String submittedCode = request.getCode() != null ? request.getCode() : "";
+
         // Evaluate all test cases
         for (ActivityTestCaseDTO tc : activityDTO.getTestCases()) {
             String testInput = tc.isNoInput()
                     ? ""
-                    : (tc.getInput() != null ? tc.getInput()
-                    : (request.getInput() != null ? request.getInput() : ""));
+                    : (tc.getInput() != null ? tc.getInput() : "");
 
             CodeExecutionResultDTO execResult;
             try {
-                execResult = codeRunnerService.runJavaCode(request.getCode(), testInput);
+                execResult = codeRunnerService.runJavaCode(submittedCode, testInput);
             } catch (Exception e) {
                 return buildErrorResponse("Error executing code: " + e.getMessage());
             }
@@ -166,11 +167,13 @@ public class StudentActivityService {
                     sa.setStudent(student);
                     sa.setActivity(activityEntity);
                     sa.setUnlocked(true); // Current activity must be unlocked
+                    sa.setCode(""); // default empty code to avoid null
+                    sa.setOutput("");
                     return sa;
                 });
 
-        // Update code, output, and points
-        studentActivity.setCode(request.getCode());
+        // Update code, output, and points safely
+        studentActivity.setCode(submittedCode);
         studentActivity.setOutput(results.stream()
                 .map(TestCaseResultDTO::getActualOutput)
                 .reduce("", (acc, s) -> acc + (s.isEmpty() ? "" : s + "\n"))
@@ -191,6 +194,8 @@ public class StudentActivityService {
                             StudentActivity sa = new StudentActivity();
                             sa.setStudent(student);
                             sa.setActivity(nextActivity);
+                            sa.setCode("");
+                            sa.setOutput("");
                             return sa;
                         });
                 nextSubmission.setUnlocked(true);

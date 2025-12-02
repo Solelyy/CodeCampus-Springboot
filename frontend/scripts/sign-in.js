@@ -106,7 +106,7 @@ signInForm.addEventListener('submit', async (event) => {
                 throw new Error(errorBody.error || 'Incorrect username or password.');
             } else if (response.status === 404) {
                 // User not found
-                throw new Error(errorBody.error || 'User not found.');
+                throw new Error(errorBody.error || 'Incorrect username or password.');
             } else {
                 throw new Error(errorBody.error || 'Something went wrong. Please try again.');
             }

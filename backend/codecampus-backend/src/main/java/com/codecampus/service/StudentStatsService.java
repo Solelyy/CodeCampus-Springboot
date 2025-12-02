@@ -76,8 +76,11 @@ public class StudentStatsService {
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
         return activityRepo.findByStudent(student).stream()
-                .filter(sa -> sa.getActivity().getCourse().getId().equals(courseId))
-                .mapToInt(StudentActivity::getEarnedPoints)
+                .filter(sa -> sa != null
+                        && sa.getActivity() != null
+                        && sa.getActivity().getCourse() != null
+                        && sa.getActivity().getCourse().getId().equals(courseId))
+                .mapToInt(sa -> sa.getEarnedPoints() != null ? sa.getEarnedPoints() : 0)
                 .sum();
     }
 

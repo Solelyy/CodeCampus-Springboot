@@ -91,7 +91,7 @@ public class UserService implements UserDetailsService {
 
     public User loginUser(String username, String password) throws Exception {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new Exception("User not found."));
+                .orElseThrow(() -> new Exception("Incorrect username or password."));
 
         // Check if account is locked
         if (user.getLockoutTime() != null && user.getLockoutTime().isAfter(LocalDateTime.now())) {
