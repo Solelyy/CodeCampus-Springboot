@@ -13,4 +13,7 @@ import java.util.List;
 public interface StudentActivityRepository extends JpaRepository<StudentActivity, Long> {
     List<StudentActivity> findByStudent(User student);
     Optional<StudentActivity> findByStudentAndActivity(User student, Activity activity);
+
+    // Completed activities for a student among a list of activities
+    List<StudentActivity> findByStudentAndActivityInAndCompletedTrue(User student, List<Activity> activities);
 }
