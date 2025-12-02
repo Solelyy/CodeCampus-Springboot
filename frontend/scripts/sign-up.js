@@ -11,10 +11,35 @@ const nameInput = document.getElementById('name');
 // Create inline message elements
 const passwordMessage = document.createElement('div');
 const confirmMessage = document.createElement('div');
-passwordMessage.style.fontSize = '0.9em';
-confirmMessage.style.fontSize = '0.9em';
+const usernameMessage = document.createElement('div');
+const emailMessage = document.createElement('div');
+const nameMessage = document.createElement('div');
+
+passwordMessage.className = 'validation-message';
+confirmMessage.className = 'validation-message';
+usernameMessage.className = 'validation-message';
+emailMessage.className = 'validation-message';
+nameMessage.className = 'validation-message';
+
 passwordInput.insertAdjacentElement('afterend', passwordMessage);
 confirmPasswordInput.insertAdjacentElement('afterend', confirmMessage);
+usernameInput.insertAdjacentElement('afterend', usernameMessage);
+emailInput.insertAdjacentElement('afterend', emailMessage);
+nameInput.insertAdjacentElement('afterend', nameMessage);
+
+// Create password strength indicator
+const strengthIndicator = document.createElement('div');
+strengthIndicator.className = 'strength-indicator';
+strengthIndicator.innerHTML = `
+    <div class="strength-bars">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+    <span class="strength-text">Password strength</span>
+`;
+passwordMessage.insertAdjacentElement('afterend', strengthIndicator);
 
 // Validation helper functions
 function validateEmail(email) {
@@ -27,8 +52,52 @@ function validatePassword(password) {
     return passwordRegex.test(password);
 }
 
-function setInputState(input, isValid) {
-    input.style.borderColor = isValid ? 'green' : 'red';
+function getPasswordStrength(password) {
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++;
+    if (/[@$!%*?&]/.test(password)) strength++;
+    return Math.min(strength, 4);
+}
+
+function updateStrengthIndicator(strength) {
+    const bars = strengthIndicator.querySelectorAll('.bar');
+    const strengthText = strengthIndicator.querySelector('.strength-text');
+    const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+    const colors = ['#ff4757', '#ffa502', '#f39c12', '#66C355'];
+    
+    bars.forEach((bar, index) => {
+        if (index < strength) {
+            bar.classList.add('active');
+            bar.style.backgroundColor = colors[strength - 1];
+        } else {
+            bar.classList.remove('active');
+            bar.style.backgroundColor = '';
+        }
+    });
+    
+    strengthText.textContent = strength > 0 ? labels[strength - 1] : 'Password strength';
+    strengthText.style.color = strength > 0 ? colors[strength - 1] : '';
+}
+
+function setInputState(input, isValid, message = '') {
+    const parent = input.closest('.textbox');
+    if (isValid) {
+        parent.classList.add('valid');
+        parent.classList.remove('invalid');
+        input.classList.add('valid-input');
+        input.classList.remove('invalid-input');
+    } else if (input.value.length > 0) {
+        parent.classList.add('invalid');
+        parent.classList.remove('valid');
+        input.classList.add('invalid-input');
+        input.classList.remove('valid-input');
+    } else {
+        parent.classList.remove('valid', 'invalid');
+        input.classList.remove('valid-input', 'invalid-input');
+    }
 }
 
 // Real-time validation
@@ -40,29 +109,77 @@ function validateFields() {
     const name = nameInput.value.replace(/\s+/g, ' ').trim();
 
     // Username validation
-    setInputState(usernameInput, username.length >= 4);
+    const usernameValid = username.length >= 4;
+    setInputState(usernameInput, usernameValid);
+    if (username.length > 0) {
+        usernameMessage.textContent = usernameValid 
+            ? '✓ Username looks good' 
+            : '✗ Username must be at least 4 characters';
+        usernameMessage.className = usernameValid ? 'validation-message success' : 'validation-message error';
+    } else {
+        usernameMessage.textContent = '';
+    }
 
     // Email validation
-    setInputState(emailInput, validateEmail(email));
+    const emailValid = validateEmail(email);
+    setInputState(emailInput, emailValid);
+    if (email.length > 0) {
+        emailMessage.textContent = emailValid 
+            ? '✓ Email is valid' 
+            : '✗ Please enter a valid email';
+        emailMessage.className = emailValid ? 'validation-message success' : 'validation-message error';
+    } else {
+        emailMessage.textContent = '';
+    }
 
-    // Password validation
+    // Password validation with strength indicator
     const passwordValid = validatePassword(password);
     setInputState(passwordInput, passwordValid);
-    passwordMessage.style.color = passwordValid ? 'green' : 'red';
-    passwordMessage.textContent = passwordValid
-        ? 'Password looks good ✅'
-        : 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
+    const strength = getPasswordStrength(password);
+    
+    if (password.length > 0) {
+        updateStrengthIndicator(strength);
+        if (passwordValid) {
+            passwordMessage.textContent = '✓ Strong password';
+            passwordMessage.className = 'validation-message success';
+        } else {
+            const missing = [];
+            if (password.length < 8) missing.push('8+ characters');
+            if (!/[A-Z]/.test(password)) missing.push('uppercase');
+            if (!/[a-z]/.test(password)) missing.push('lowercase');
+            if (!/\d/.test(password)) missing.push('number');
+            if (!/[@$!%*?&]/.test(password)) missing.push('special char');
+            passwordMessage.textContent = `✗ Need: ${missing.join(', ')}`;
+            passwordMessage.className = 'validation-message error';
+        }
+    } else {
+        updateStrengthIndicator(0);
+        passwordMessage.textContent = '';
+    }
 
     // Confirm password validation
     const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
     setInputState(confirmPasswordInput, passwordsMatch);
-    confirmMessage.style.color = passwordsMatch ? 'green' : 'red';
-    confirmMessage.textContent = passwordsMatch
-        ? 'Passwords match ✅'
-        : 'Passwords do not match';
+    if (confirmPassword.length > 0) {
+        confirmMessage.textContent = passwordsMatch 
+            ? '✓ Passwords match' 
+            : '✗ Passwords do not match';
+        confirmMessage.className = passwordsMatch ? 'validation-message success' : 'validation-message error';
+    } else {
+        confirmMessage.textContent = '';
+    }
 
     // Name validation
-    setInputState(nameInput, name.length > 0);
+    const nameValid = name.length > 0;
+    setInputState(nameInput, nameValid);
+    if (name.length > 0) {
+        nameMessage.textContent = nameValid 
+            ? '✓ Name looks good' 
+            : '✗ Name is required';
+        nameMessage.className = nameValid ? 'validation-message success' : 'validation-message error';
+    } else {
+        nameMessage.textContent = '';
+    }
 
     // Enable/disable create account button
     createAccountBtn.disabled = !(
@@ -83,7 +200,7 @@ function validateFields() {
 signupForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    validateFields(); // Ensure everything is valid before submit
+    validateFields();
     if (createAccountBtn.disabled) return;
 
     const name = nameInput.value.trim();
@@ -93,14 +210,12 @@ signupForm.addEventListener('submit', async (event) => {
     const confirmPassword = confirmPasswordInput.value.trim();
     const role = signupForm.role.value;
 
-    // Clear previous error
     errorMessage.textContent = '';
-    errorMessage.style.color = 'red';
 
     const data = { username, email, password, role, name };
 
     createAccountBtn.disabled = true;
-    createAccountBtn.textContent = "Creating...";
+    createAccountBtn.innerHTML = '<span class="spinner"></span>Creating...';
 
     try {
         const signupResponse = await fetch('http://localhost:8081/api/users/signup', {
@@ -133,12 +248,11 @@ signupForm.addEventListener('submit', async (event) => {
         localStorage.setItem('token', loginResult.token);
         localStorage.setItem('username', loginResult.username);
         localStorage.setItem('role', loginResult.role);
-        // Mark this user as newly created
         localStorage.setItem('isNewUser', 'true');
         sessionStorage.setItem('showWelcome', 'true');
 
-        errorMessage.style.color = 'green';
-        errorMessage.textContent = 'Account created successfully! Redirecting...';
+        errorMessage.className = 'success-message';
+        errorMessage.textContent = '✓ Account created successfully! Redirecting...';
 
         const normalizedRole = loginResult.role.replace("ROLE_", "").toLowerCase();
         setTimeout(() => {
@@ -147,14 +261,16 @@ signupForm.addEventListener('submit', async (event) => {
             } else if (normalizedRole === 'student') {
                 window.location.href = '/frontend/webpages/student-homepage.html';
             }
-        }, 500);
+        }, 1000);
 
     } catch (error) {
         console.error('Signup/Login error:', error);
-        errorMessage.style.color = 'red';
-        errorMessage.textContent = `Something went wrong: ${error.message}`;
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = `✗ ${error.message}`;
     } finally {
-        createAccountBtn.disabled = false;
-        createAccountBtn.textContent = "Create Account";
+        if (!errorMessage.classList.contains('success-message')) {
+            createAccountBtn.disabled = false;
+            createAccountBtn.innerHTML = 'Create Account';
+        }
     }
 });
