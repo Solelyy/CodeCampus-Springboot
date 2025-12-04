@@ -107,13 +107,13 @@
                     <!-- Activity Title -->
                     <div class="form-group">
                         <label for="activity-title">Activity Title <span class="required">*</span></label>
-                        <input type="text" id="activity-title" required placeholder="e.g., Hello World Challenge">
+                        <input type="text" id="activity-title" required placeholder="e.g., Hello World Challenge" value="HELLO, CODECAMPUS">
                     </div>
 
                     <!-- Problem Statement -->
                     <div class="form-group">
                         <label for="activity-description">Problem Statement <span class="required">*</span></label>
-                        <textarea id="activity-description" required placeholder="Describe the problem students need to solve..."></textarea>
+                        <textarea id="activity-description" required placeholder="Describe the problem students need to solve...">Print "Hello, CodeCampus!"</textarea>
                     </div>
 
                     <!-- Difficulty -->
@@ -121,7 +121,7 @@
                         <label>Difficulty <span class="required">*</span></label>
                         <select id="activity-difficulty" class="activity-difficulty" required>
                             <option value="">Select difficulty</option>
-                            <option value="easy">Easy</option>
+                            <option value="easy" selected>Easy</option>
                             <option value="medium">Medium</option>
                             <option value="hard">Hard</option>
                         </select>
@@ -133,7 +133,7 @@
 
                         <div class="test-cases-container">
 
-                            <!-- Test Case Item -->
+                            <!-- Test Case 1 -->
                             <div class="test-case">
                                 <div class="test-case-header">
                                     <span class="test-case-number">Test Case 1</span>
@@ -142,15 +142,15 @@
 
                                 <div class="test-case-input-group">
                                     <label>Input</label>
-                                    <input type="text" class="test-input" placeholder="Example input: 10" required>
+                                    <input type="text" class="test-input" placeholder="NA" value="" disabled>
                                     <label class="no-input-label">
-                                        <input type="checkbox" class="no-input-activity"> No input needed
+                                        <input type="checkbox" class="no-input-activity" checked> No input needed
                                     </label>
                                 </div>
 
                                 <div class="test-case-output-group">
                                     <label>Expected Output</label>
-                                    <input type="text" class="test-output" placeholder="Expected output: Even" required>
+                                    <input type="text" class="test-output" placeholder="Expected output: Even" required value="Hello, CodeCampus!">
                                 </div>
                             </div>
 
