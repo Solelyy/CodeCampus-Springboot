@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Token being sent inside DOMContentLoaded:", token);
 
     const urlParams = new URLSearchParams(window.location.search);
-    const activityId = urlParams.get("activityId");
+    const activityId = Number(urlParams.get("activityId"));
 
     // --- Detect Scanner input ---
     function requiresInput(code) {
@@ -180,6 +180,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await res.json();
             outputBox.value = data.output || "";
+
+            if (data.compileError) {
+            feedback.textContent = "Compilation Error:\n" + (data.output || "");
+            feedback.className = "feedback-warning";
+            submitBtn.disabled = true; // prevent submission
+            isRunning = false;
+            return; // stop further evaluation
+        }
+
+            editor.setReadOnly(false); // student can fix errors
+            runBtn.disabled = false;   // allow re-run
+
 
             // Step 2: Evaluate
             const evalRes = await fetch(`${API_BASE_URL}/api/student/activities/evaluate`, {
