@@ -45,13 +45,15 @@ public class CodeRunnerService {
 
             String compileOutput = new BufferedReader(new InputStreamReader(compileProcess.getInputStream()))
                     .lines().reduce("", (acc, l) -> acc + l + "\n");
-            compileProcess.waitFor();
 
-            if (!compileOutput.isEmpty()) {
-                result.setOutput("Compilation Error:\n" + compileOutput);
+            int exitCode = compileProcess.waitFor(); // CHECK EXIT CODE
+
+            if (exitCode != 0) {
+                result.setOutput("Compilation Error:\n" + (compileOutput.isBlank() ? "Unknown error." : compileOutput));
                 result.setCompileError(true);
                 return result;
             }
+
 
             // Run
             ProcessBuilder runBuilder = new ProcessBuilder(getExecutable("java"), className);

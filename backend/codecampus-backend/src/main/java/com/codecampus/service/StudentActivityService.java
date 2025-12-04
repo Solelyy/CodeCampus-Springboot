@@ -77,7 +77,7 @@ public class StudentActivityService {
             }
 
             if (execResult.isCompileError()) {
-                return buildErrorResponse(execResult.getOutput() == null
+                return buildErrorResponse(execResult.getOutput().isBlank()
                         ? "Compilation failed."
                         : execResult.getOutput());
             }
@@ -119,16 +119,20 @@ public class StudentActivityService {
         ActivityDTO activityDTO = activityService.getActivityById(request.getActivityId());
         Activity activityEntity = activityService.getActivityEntityById(activityDTO.getId());
 
+        String submittedCode = request.getCode() != null ? request.getCode() : "";
+        System.out.println("Submitted code: " + submittedCode);
+
+        // Prevent empty code submissions
+        if (submittedCode.trim().isEmpty()) {
+            return buildErrorResponse("Cannot submit empty code.");
+        }
+
         List<TestCaseResultDTO> results = new ArrayList<>();
         boolean allPassed = true;
 
-        String submittedCode = request.getCode() != null ? request.getCode() : "";
-
         // Evaluate all test cases
         for (ActivityTestCaseDTO tc : activityDTO.getTestCases()) {
-            String testInput = tc.isNoInput()
-                    ? ""
-                    : (tc.getInput() != null ? tc.getInput() : "");
+            String testInput = tc.isNoInput() ? "" : (tc.getInput() != null ? tc.getInput() : "");
 
             CodeExecutionResultDTO execResult;
             try {
@@ -152,27 +156,25 @@ public class StudentActivityService {
             tcResult.setPassed(passed);
             tcResult.setExpectedOutput(expected);
             tcResult.setActualOutput(output);
-
             results.add(tcResult);
+
             if (!passed) allPassed = false;
         }
 
         int pointsEarned = allPassed ? activityDTO.getPoints() : 0;
 
-        // Fetch or create the StudentActivity record
+        // Fetch or create StudentActivity record WITHOUT saving yet
         StudentActivity studentActivity = studentActivityRepository
                 .findByStudentAndActivity(student, activityEntity)
                 .orElseGet(() -> {
                     StudentActivity sa = new StudentActivity();
                     sa.setStudent(student);
                     sa.setActivity(activityEntity);
-                    sa.setUnlocked(true); // Current activity must be unlocked
-                    sa.setCode(""); // default empty code to avoid null
-                    sa.setOutput("");
+                    sa.setUnlocked(true);
                     return sa;
                 });
 
-        // Update code, output, and points safely
+        // Update only in-memory until passed
         studentActivity.setCode(submittedCode);
         studentActivity.setOutput(results.stream()
                 .map(TestCaseResultDTO::getActualOutput)
@@ -180,30 +182,20 @@ public class StudentActivityService {
                 .trim());
         studentActivity.setEarnedPoints(pointsEarned);
 
-        // Only mark completed if all test cases pass
+        // Save ONLY if passed
         if (allPassed) {
             studentActivity.setCompleted(true);
+            studentActivityRepository.save(studentActivity);
 
-            // Unlock next activity for this student
+            // Unlock next activity
             Long nextActivityId = activityService.getNextActivityId(activityEntity.getCourse().getId(), activityEntity.getId());
+            // Unlock next activity without saving
             if (nextActivityId != null) {
                 Activity nextActivity = activityService.getActivityEntityById(nextActivityId);
-                StudentActivity nextSubmission = studentActivityRepository
-                        .findByStudentAndActivity(student, nextActivity)
-                        .orElseGet(() -> {
-                            StudentActivity sa = new StudentActivity();
-                            sa.setStudent(student);
-                            sa.setActivity(nextActivity);
-                            sa.setCode("");
-                            sa.setOutput("");
-                            return sa;
-                        });
-                nextSubmission.setUnlocked(true);
-                studentActivityRepository.save(nextSubmission);
+                // Do not create StudentActivity yet
+                // Just mark it as unlocked in memory/frontend
             }
         }
-
-        studentActivityRepository.save(studentActivity);
 
         SubmitActivityResponseDTO response = new SubmitActivityResponseDTO();
         response.setPassedAllTestCases(allPassed);
@@ -242,8 +234,6 @@ public class StudentActivityService {
         return null; // Not unlocked yet
     }
 
-
-
     /**
      * Fetch student's submission for a given activity.
      */
@@ -257,7 +247,4 @@ public class StudentActivityService {
                 activityService.getActivityEntityById(activityId)
         ).orElse(null);
     }
-
-
-    
 }

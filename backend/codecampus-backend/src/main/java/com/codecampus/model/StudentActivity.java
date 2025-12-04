@@ -42,10 +42,10 @@ public class StudentActivity {
         updatedAt = Instant.now();
     }
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = true)
     private String code;  // store the student's submitted code
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = true)
     private String output; // store the output after running code
 
     @Column(nullable = false)
