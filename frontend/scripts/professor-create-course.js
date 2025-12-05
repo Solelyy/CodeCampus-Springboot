@@ -576,4 +576,8 @@ document.getElementById('submitCourse').addEventListener('click', async () => {
 
 // Initialize form validation
 validateStep1();
+
+window.toggleQuestionType = toggleQuestionType;
+window.removeQuestion = removeQuestion;
+
 });
