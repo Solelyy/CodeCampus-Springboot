@@ -8,19 +8,18 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class CourseAnalyticsDTO {
-    // ===== SUMMARY CARDS =====
+    //Summary cards
     private int totalStudents;
     private double averagePreAssessment;
     private double courseCompletionRate; // percentage (e.g., 85.5)
 
-    // ===== ACTIVITY COMPLETION TABLE =====
+    //Activity Completion
     private List<ActivityCompletionDTO> activityCompletions;
 
-    // ===== LEADERBOARD (YOU ALREADY HAVE THIS) =====
+    //Leaderboard
     private List<LeaderboardDTO> leaderboard;
 
-    // ===== SUBMISSION PATTERN =====
+    //Submission Patter
     private String mostCommonSubmissionTimeRange;
     // Example: "6:00 PM - 9:00 PM"
-}
 }

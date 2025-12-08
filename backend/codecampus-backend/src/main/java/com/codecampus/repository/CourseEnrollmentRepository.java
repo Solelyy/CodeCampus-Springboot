@@ -37,4 +37,7 @@ public interface CourseEnrollmentRepository extends JpaRepository<CourseEnrollme
 
     // Optional: find all enrollments by course and status
     List<CourseEnrollment> findByCourseAndStatus(Course course, EnrollmentStatus status);
+
+    //For activity completion
+    int countByCourseId(long courseId);
 }
