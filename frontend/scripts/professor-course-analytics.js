@@ -1,56 +1,110 @@
 const API_BASE_URL = 'http://localhost:8081';
 let courseId = null;
 
+// Get course ID from URL
 function getCourseIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('courseId');
 }
 
-//Summary cards
+//SUMMARY CARDS DOM
 const totalStudents = document.getElementById('total-students');
 const avgPreassessment = document.getElementById('avg-preassessment');
 const courseCompletion = document.getElementById('course-completion');
 
-//Activity Completion Overview
-const activityCompletionTbl = document.getElementById('activity-table-body');
-const activityTitle = document.getElementById('activity-title');
-const activityStudents = document.getElementById('activity-total-students');
-const activityProgress = document.getElementById('activity-progress');
+//ACTIVITY COMPLETION DOM
+const activityTableBody = document.getElementById('activity-table-body');
+
+//LEADERBOARD DOM
+const leaderboardBody = document.getElementById('leaderboard-body');
+
+//SUBMISSION PATTERN DOM
+const submissionPattern = document.getElementById('time-range');
 
 document.addEventListener('DOMContentLoaded', () => {
     courseId = getCourseIdFromURL();
-    if (!courseId) console.error("Coursee ID not found.");
+    if (!courseId) return console.error("Course ID not found in URL.");
+
     loadCourseAnalytics(courseId);
 });
 
-//fetch course analytics from the backend
+// FETCH COURSE ANALYTICS
 async function loadCourseAnalytics(courseId) {
     try {
         const token = localStorage.getItem('token');
 
-        if (!token) console.error('No token found.');
-        else console.log('Token found: ' + token);
+        if (!token) {
+            console.error("No token found.");
+            return;
+        }
 
-        //Fetch analytics
-        const response = await fetch(`${API_BASE_URL}/api/`, {
-            headers: { 'Authorization': 'Bearer ' + token}
+        const response = await fetch(`${API_BASE_URL}/api/courses/${courseId}/analytics`, {
+            headers: { "Authorization": "Bearer " + token }
         });
-        if (!response.ok) throw new Error (`Failed to fetch course analytics: ${response.status}`);
 
-        const analytics = await response.json();
+        if (!response.ok) throw new Error("Failed to fetch analytics.");
 
-        renderCourseAnalytics();
+        const data = await response.json();
+        renderCourseAnalytics(data);
+
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
 }
 
-//render course analytics
+// RENDER ALL ANALYTICS
 function renderCourseAnalytics(data) {
-    //summary
-    totalStudents.textContent = `${data.totalStudents}`;
-    avgPreassessment.textContent = `${data.avgPreassessment}`;
-    courseCompletion.textContent = `${data.courseCompletion}`;
 
+    //SUMMARY CARDS
+    totalStudents.textContent = data.totalStudents;
+    avgPreassessment.textContent = data.averagePreAssessment.toFixed(1) + "%";
+    courseCompletion.textContent = data.courseCompletionRate.toFixed(1) + "%";
 
+    //ACTIVITY COMPLETION TABLE
+    renderActivityCompletion(data.activityCompletions);
+
+    //LEADERBOARD 
+    renderLeaderboard(data.leaderboard);
+
+    //SUBMISSION TIME PATTERN
+    submissionPattern.textContent = data.mostCommonSubmissionTimeRange;
+}
+
+// ACTIVITY COMPLETION TABLE
+function renderActivityCompletion(activityList) {
+    activityTableBody.innerHTML = ""; // clear placeholder row
+
+    activityList.forEach(activity => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${activity.activityTitle}</td>
+            <td>${activity.completedBy} / ${activity.totalStudents}</td>
+            <td>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${activity.progressRate}%"></div>
+                </div>
+                <span class="progress-text">${activity.progressRate.toFixed(1)}%</span>
+            </td>
+        `;
+
+        activityTableBody.appendChild(row);
+    });
+}
+
+// LEADERBOARD TABLE
+function renderLeaderboard(list) {
+    leaderboardBody.innerHTML = ""; // clear placeholder row
+
+    list.forEach((student, index) => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${student.studentName}</td>
+            <td>${student.activitiesDone}</td>
+        `;
+
+        leaderboardBody.appendChild(row);
+    });
 }

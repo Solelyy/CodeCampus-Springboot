@@ -3,9 +3,11 @@ package com.codecampus.controller;
 import com.codecampus.dto.*;
 import com.codecampus.model.Course;
 import com.codecampus.model.User;
+import com.codecampus.service.CourseAnalyticsService;
 import com.codecampus.service.CourseService;
 import com.codecampus.service.LeaderboardService;
 import com.codecampus.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,19 +23,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/courses")
 public class CourseController {
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
     private final CourseService courseService;
     private final UserService userService;
-    @Autowired
     private LeaderboardService leaderboardService;
+    private CourseAnalyticsService courseAnalyticsService;
 
-    public CourseController(CourseService courseService, UserService userService) {
-        this.courseService = courseService;
-        this.userService = userService;
-    }
 
     // LEGACY: Simple course creation
     @PostMapping
@@ -139,5 +138,12 @@ public class CourseController {
     @GetMapping("/{courseId}/leaderboard")
     public List<LeaderboardDTO> getLeaderboard(@PathVariable Long courseId) {
         return leaderboardService.getLeaderboardForCourse(courseId);
+    }
+
+    //Course analytics
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{courseId}/analytics")
+    public CourseAnalyticsDTO getCourseAnalytics(@PathVariable Long courseId) {
+        return  courseAnalyticsService.getCourseAnalytics(courseId);
     }
 }

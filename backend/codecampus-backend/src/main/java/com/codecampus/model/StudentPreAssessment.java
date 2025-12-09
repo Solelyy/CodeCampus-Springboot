@@ -1,9 +1,16 @@
 package com.codecampus.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.Instant;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "preassessment_submissions")
 public class StudentPreAssessment {
 
@@ -29,20 +36,4 @@ public class StudentPreAssessment {
     protected void onCreate() {
         createdAt = Instant.now();
     }
-
-    // --- Getters and Setters ---
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public User getStudent() { return student; }
-    public void setStudent(User student) { this.student = student; }
-
-    public PreAssessmentQuestion getQuestion() { return question; }
-    public void setQuestion(PreAssessmentQuestion question) { this.question = question; }
-
-    public String getAnswer() { return answer; }
-    public void setAnswer(String answer) { this.answer = answer; }
-
-    public Instant getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 }

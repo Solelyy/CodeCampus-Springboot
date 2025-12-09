@@ -14,7 +14,7 @@ public class PreAssessmentSubmissionDTO {
     public void setAnswers(List<AnswerDTO> answers) { this.answers = answers; }
 
     public static class AnswerDTO {
-        private Long questionId;  // ✅ Add this
+        private Long questionId;
         private String answer;
 
         public Long getQuestionId() { return questionId; }
