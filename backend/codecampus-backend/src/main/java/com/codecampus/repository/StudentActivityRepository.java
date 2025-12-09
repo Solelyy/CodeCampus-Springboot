@@ -18,5 +18,7 @@ public interface StudentActivityRepository extends JpaRepository<StudentActivity
     List<StudentActivity> findByStudentAndActivityInAndCompletedTrue(User student, List<Activity> activities);
 
     //Count activities done by students
-    int countActivityIdAndCompletedTrue(long activityId);
+    int countByActivityIdAndCompletedTrue(long activityId);
+
+    List <StudentActivity> findByActivityCourseId(long courseId);
 }

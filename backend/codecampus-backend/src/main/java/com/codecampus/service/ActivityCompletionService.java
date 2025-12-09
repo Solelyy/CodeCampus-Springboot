@@ -33,7 +33,7 @@ public class ActivityCompletionService {
 
         // Step 3. For each activity count how many completed it
         for (Activity activity : activities) {
-            int completedBy = studentActivityRepository.countActivityIdAndCompletedTrue(activity.getId());
+            int completedBy = studentActivityRepository.countByActivityIdAndCompletedTrue(activity.getId());
             double progressRate = totalStudents == 0 ? 0 : (completedBy * 100.0) / totalStudents;
 
             ActivityCompletionDTO dto = new ActivityCompletionDTO(

@@ -11,5 +11,6 @@ public interface StudentPreAssessmentRepository extends JpaRepository<StudentPre
 
     Optional<StudentPreAssessment> findByStudentIdAndQuestionId(Long studentId, Long questionId);
 
+    List <StudentPreAssessment> findByQuestionCourseId (Long courseId);
 }
 
