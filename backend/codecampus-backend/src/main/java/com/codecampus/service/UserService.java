@@ -93,6 +93,11 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new Exception("Incorrect username or password."));
 
+        // Enforce case-sensitive check
+        if (!user.getUsername().equals(username)) {
+            throw new Exception("Incorrect username or password.");
+        }
+
         // Check if account is locked
         if (user.getLockoutTime() != null && user.getLockoutTime().isAfter(LocalDateTime.now())) {
             throw new Exception("Account locked for 15 minutes. Try again later.");
