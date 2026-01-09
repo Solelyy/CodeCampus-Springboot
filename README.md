@@ -60,4 +60,5 @@ Some potential enhancements for CodeCampus include:
 - **Code sandbox**: Implement a secure, isolated sandbox environment for code evaluation to support more complex challenges safely.  
 - **Deployment**: Deploy the platform to a cloud provider for public access and testing.  
 - **Email integration**: Use a real Gmail account or email service for account creation, password recovery, and notifications.  
-- **Expanded analytics**: Track student performance trends over time for deeper insights.  
+- **Expanded analytics**: Track student performance trends over time for deeper insights.
+- **Support for additional programming languages**: Extend the platform beyond Java to allow students to practice Python, C++, or other languages.
